@@ -187,7 +187,7 @@
    are the final state, which is what a visitor who prefers reduced motion sees, still, since
    base.css then turns the animations off. */
 .flow {
-  --play: 10s;
+  --play: 4s;
 
   display: grid;
   justify-items: stretch;
