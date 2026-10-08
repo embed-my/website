@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found — Embed My</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      try {
+        const pinned = localStorage.getItem('theme')
+        if (pinned === 'light' || pinned === 'dark') document.documentElement.dataset.theme = pinned
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/styles/docs.css" />
+  </head>
+
+  <body>
+    <div class="wrap">
+      <main class="doc">
+        <article class="doc-body">
+          <h1>There is no page here</h1>
+          <p>The address may have a typo, or the page has moved.</p>
+          <ul>
+            <li><a href="/">Make an embed</a></li>
+            <li><a href="/docs/">Read the guides</a></li>
+            <li>Looking for the player page? It is <code>/h5p?src=&lt;url of a .h5p file&gt;</code>.</li>
+          </ul>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

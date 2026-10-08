@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /h5p
+Sitemap: https://embed-my.org/sitemap.txt

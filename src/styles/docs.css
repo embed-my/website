@@ -1,0 +1,135 @@
+/* A guide page: the site's top bar and footer around a column of prose, with a list of the guides beside it. */
+
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/atkinson-hyperlegible/400.css';
+@import '@fontsource/atkinson-hyperlegible/700.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+
+@import './tokens.css';
+@import './base.css';
+@import './controls.css';
+@import './layout.css';
+
+.doc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-block) 3rem;
+  padding-block: var(--space-block) var(--space-section);
+}
+
+@media (min-width: 56rem) {
+  .doc {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+}
+
+/* The guides, as a column on a wide screen and a row of chips on a narrow one. */
+.doc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  align-content: start;
+  font-size: 0.92rem;
+}
+
+@media (min-width: 56rem) {
+  .doc-nav {
+    position: sticky;
+    top: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-right: 1.5rem;
+    border-right: 1px solid var(--line);
+  }
+}
+
+.doc-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.doc-nav a:hover,
+.doc-nav a[aria-current='page'] {
+  color: var(--fg);
+}
+
+.doc-nav a[aria-current='page'] {
+  font-weight: 700;
+}
+
+.doc-body {
+  max-width: 68ch;
+}
+
+.doc-body h1 {
+  margin-bottom: 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.02em;
+}
+
+.doc-body h2 {
+  margin-top: var(--space-block);
+  margin-bottom: 0.6rem;
+  font-size: 1.35rem;
+}
+
+.doc-body h3 {
+  margin-top: var(--space-inner);
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.doc-body p,
+.doc-body ul,
+.doc-body ol {
+  margin-block: 0 1rem;
+}
+
+.doc-body li + li {
+  margin-top: 0.35rem;
+}
+
+.doc-body pre {
+  margin-block: 0 1rem;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--board-line);
+  border-radius: var(--radius-sm);
+  background: var(--board);
+  color: var(--board-ink);
+  font: 0.88rem/1.55 var(--font-mono);
+}
+
+.doc-body table {
+  width: 100%;
+  margin-block: 0 1rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.doc-body th,
+.doc-body td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc-body th {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.doc-index {
+  padding-left: 0;
+  list-style: none;
+}
+
+.doc-index li + li {
+  margin-top: 1rem;
+}
+
+.doc-footer {
+  display: block;
+}
