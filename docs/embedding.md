@@ -99,4 +99,12 @@ npx @missing-elements/h5p-verify course.h5p
 
 It opens the package in a real browser runtime and reports missing libraries, startup errors, and a screenshot. See the player's [verify guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/verify.md) for details.
 
+## With an AI assistant
+
+The player's repository ships [agent skills](https://www.skills.sh/missing-elements/h5p-offline-player) for Claude Code, Cursor, Copilot, Codex and the rest. `h5p-embed-my` teaches an assistant this service: the package link to check, the snippet, where to paste it, the xAPI relay and what the service is not. `h5p-verify` checks a package before you share it, and `h5p-normalize` makes a package's video start at once.
+
+```bash
+npx skills add missing-elements/h5p-offline-player --skill h5p-embed-my
+```
+
 If something does not work, see [Troubleshooting](troubleshooting.md).

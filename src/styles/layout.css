@@ -675,6 +675,18 @@
   font-size: 0.97rem;
 }
 
+/* A command in an answer, on the snippet's board so it reads as something to copy. */
+.faq-answer pre {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+  border: 1px solid var(--board-line);
+  border-radius: var(--radius-sm);
+  background: var(--board);
+  color: var(--board-ink);
+  font: 0.88rem/1.5 var(--font-mono);
+}
+
 .faq-more {
   color: var(--muted);
 }
