@@ -60,3 +60,31 @@ test('the guides are served, linked to one another and under the policy', async 
   await expect(page).toHaveURL(/\/docs\/privacy-and-security$/)
   expect(problems, problems.join('\n')).toEqual([])
 })
+
+test('the guide sidebar sticks, lists the chapters and marks the one being read', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/docs/hosting-packages')
+  const nav = page.locator('.doc-nav')
+  const chapters = nav.locator('.doc-nav-chapters')
+  await expect(chapters.getByRole('link', { name: 'Free places to put the file' })).toBeVisible()
+  await expect(chapters.getByRole('link', { name: 'Dropbox' })).toBeVisible()
+
+  // Read down to a sub-chapter: it is marked, visibly and for assistive technology, and the sidebar is still on screen.
+  await page.evaluate(() => document.getElementById('dropbox')?.scrollIntoView({ block: 'start' }))
+  await expect(nav.locator('[aria-current="location"]')).toHaveText('Dropbox')
+  await expect(chapters.getByRole('link', { name: 'Dropbox' })).toHaveCSS('font-weight', '700')
+  await expect(chapters.getByRole('link', { name: 'Free places to put the file' })).not.toHaveCSS('font-weight', '700')
+  const top = await nav.evaluate((element) => element.getBoundingClientRect().top)
+  expect(top).toBeGreaterThanOrEqual(0)
+  expect(top).toBeLessThan(40)
+
+  // A chapter link jumps to its heading and the mark follows.
+  await chapters.getByRole('link', { name: 'Server headers' }).click()
+  await expect(page).toHaveURL(/#server-headers$/)
+  await expect(nav.locator('[aria-current="location"]')).toHaveText('Server headers')
+
+  // At the very end, the last chapter is the one being read.
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight))
+  await expect(nav.locator('[aria-current="location"]')).toHaveText('Third-party content')
+})

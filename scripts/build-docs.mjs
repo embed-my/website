@@ -10,7 +10,14 @@
  */
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import hljs from 'highlight.js/lib/core'
+import bash from 'highlight.js/lib/languages/bash'
+import xml from 'highlight.js/lib/languages/xml'
 import { Marked } from 'marked'
+
+// Only the languages the guides use; a fence with any other name, or none, stays plain text.
+hljs.registerLanguage('html', xml)
+hljs.registerLanguage('bash', bash)
 
 const DOCS = new URL('../docs/', import.meta.url).pathname
 
@@ -38,6 +45,16 @@ const slug = (text) =>
 
 const marked = new Marked({
   renderer: {
+    /**
+     * A fenced block, coloured at build with classes the stylesheet knows, never inline styles:
+     * the pages' Content-Security-Policy allows no inline style, and classes follow the theme.
+     */
+    code({ text, lang }) {
+      const language = lang && hljs.getLanguage(lang) ? lang : null
+      const body = language ? hljs.highlight(text, { language }).value : escapeHtml(text)
+      const classes = language ? ` class="hljs language-${language}"` : ''
+      return `<pre><code${classes}>${body}</code></pre>\n`
+    },
     heading({ tokens, depth }) {
       const text = this.parser.parseInline(tokens)
       return `<h${depth} id="${slug(text)}">${text}</h${depth}>\n`
@@ -117,8 +134,10 @@ const page = ({ name, title, description, body }) => `<!doctype html>
 
       <main class="doc">
         <nav class="doc-nav" aria-label="Guides">
-          <a href="/docs/">All guides</a>
-${GUIDES.map(([slug, _]) => `          <a href="/docs/${slug}"${slug === name ? ' aria-current="page"' : ''}>${escapeHtml(titleOf(slug))}</a>`).join('\n')}
+          <a class="doc-nav-all" href="/docs/"${name === 'index' ? ' aria-current="page"' : ''}>All guides</a>
+          <ul class="doc-nav-guides">
+${GUIDES.map(([slug]) => navGuide(slug, slug === name)).join('\n')}
+          </ul>
         </nav>
         <article class="doc-body">
 ${body}
@@ -140,6 +159,42 @@ ${body}
 const titles = new Map()
 const titleOf = (slug) => titles.get(slug) ?? slug
 
+/**
+ * A guide's chapters (`##`) with their sub-chapters (`###`), as the sidebar lists them. Each id is
+ * made the way the heading renderer makes it, so the links land on the headings.
+ */
+const outlines = new Map()
+function outline(markdown) {
+  const chapters = []
+  for (const token of marked.lexer(markdown)) {
+    if (token.type !== 'heading' || token.depth < 2 || token.depth > 3) continue
+    const html = marked.parseInline(token.text)
+    // The label keeps inline code but no links: the entry is a link already.
+    const entry = { id: slug(html), label: html.replace(/<\/?a\b[^>]*>/g, ''), children: [] }
+    if (token.depth === 2 || chapters.length === 0) chapters.push(entry)
+    else chapters.at(-1).children.push(entry)
+  }
+  return chapters
+}
+
+const navList = (entries, depth) =>
+  entries.length === 0
+    ? ''
+    : `\n${'  '.repeat(depth)}<ul class="doc-nav-${depth === 7 ? 'chapters' : 'subchapters'}">\n` +
+      entries
+        .map(
+          (entry) =>
+            `${'  '.repeat(depth + 1)}<li><a href="#${entry.id}" data-chapter="${entry.id}">${entry.label}</a>${navList(entry.children, depth + 2)}</li>`
+        )
+        .join('\n') +
+      `\n${'  '.repeat(depth)}</ul>`
+
+/** One guide in the sidebar; the open one also lists its chapters. */
+const navGuide = (slug, open) =>
+  `            <li${open ? ' class="is-open"' : ''}><a href="/docs/${slug}"${open ? ' aria-current="page"' : ''}>${escapeHtml(titleOf(slug))}</a>` +
+  (open ? navList(outlines.get(slug) ?? [], 7) : '') +
+  '</li>'
+
 const sources = (await readdir(DOCS)).filter((file) => file.endsWith('.md')).sort()
 const parsed = []
 for (const file of sources) {
@@ -147,6 +202,7 @@ for (const file of sources) {
   const markdown = await readFile(join(DOCS, file), 'utf8')
   const title = /^#\s+(.+)$/m.exec(markdown)?.[1] ?? name
   titles.set(name, title)
+  outlines.set(name, outline(markdown))
   parsed.push({ name, title, markdown })
 }
 

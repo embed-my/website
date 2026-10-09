@@ -24,27 +24,23 @@
   }
 }
 
-/* The guides, as a column on a wide screen and a row of chips on a narrow one. */
+/* The guides, as a column on a wide screen and a row of chips on a narrow one. On a wide screen the
+   open guide also lists its chapters and sub-chapters, and the one being read is marked. */
 .doc-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1rem;
+  display: grid;
   align-content: start;
+  gap: 0.5rem;
   font-size: 0.92rem;
 }
 
-@media (min-width: 56rem) {
-  .doc-nav {
-    position: sticky;
-    top: 1.5rem;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-right: 1.5rem;
-    border-right: 1px solid var(--line);
-  }
+.doc-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .doc-nav a {
+  display: block;
   color: var(--muted);
   text-decoration: none;
 }
@@ -56,6 +52,83 @@
 
 .doc-nav a[aria-current='page'] {
   font-weight: 700;
+}
+
+.doc-nav-guides {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+
+/* Chapters only in the column: on a narrow screen the guide list stays a row of links. */
+.doc-nav-chapters {
+  display: none;
+}
+
+@media (min-width: 56rem) {
+  /* `align-self: start` is what lets it stick: stretched to the article's height, it has nowhere to slide. */
+  .doc-nav {
+    position: sticky;
+    top: 1.5rem;
+    align-self: start;
+    max-height: calc(100dvh - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 1rem;
+    border-right: 1px solid var(--line);
+    scrollbar-width: thin;
+  }
+
+  .doc-nav-guides {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  /* The links with a `#fragment` become scroll markers, and the one whose heading was last
+     scrolled to is `:target-current`, decided by the browser. A browser without it gets the
+     same class from src/docs.ts; `:is()` keeps the rule valid there. */
+  .doc-nav-chapters {
+    display: grid;
+    gap: 0.1rem;
+    margin: 0.5rem 0 0.4rem;
+    border-left: 1px solid var(--line);
+    scroll-target-group: auto;
+  }
+
+  .doc-nav-chapters a {
+    margin-left: -1px;
+    padding: 0.2rem 0 0.2rem 0.75rem;
+    border-left: 2px solid transparent;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .doc-nav-subchapters a {
+    padding-left: 1.6rem;
+    font-size: 0.82rem;
+  }
+
+  /* The chapter being read: the accent bar and ink. When it is a sub-chapter, its chapter gets the ink only. */
+  .doc-nav-chapters a:is(:target-current, .\:target-current) {
+    border-left-color: var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .doc-nav-chapters li:has(> ul a:is(:target-current, .\:target-current)) > a {
+    color: var(--fg);
+  }
+}
+
+/* Anchor jumps land a little below the top edge, and glide there unless motion is reduced. */
+.doc-body :is(h2, h3) {
+  scroll-margin-top: 1.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 .doc-body {
@@ -99,6 +172,33 @@
   background: var(--board);
   color: var(--board-ink);
   font: 0.88rem/1.55 var(--font-mono);
+}
+
+/* The colours of a code block, in the snippet board's own palette (src/styles/snippet.css): markup
+   dim, names blue, strings and addresses marked, comments quiet. The classes are highlight.js's. */
+.hljs-tag,
+.hljs-punctuation {
+  color: var(--board-dim);
+}
+
+.hljs-name,
+.hljs-attr,
+.hljs-attribute,
+.hljs-built_in,
+.hljs-keyword {
+  color: var(--board-attr);
+}
+
+.hljs-string,
+.hljs-number,
+.hljs-link {
+  color: var(--board-mark);
+}
+
+.hljs-comment,
+.hljs-meta {
+  color: var(--board-dim);
+  font-style: italic;
 }
 
 .doc-body table {
