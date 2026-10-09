@@ -38,7 +38,45 @@ test('the home page previews a package and writes its snippet', async ({ page })
   await expect(code).toContainText('title="Quiz"')
   await expect(code).toContainText('https://embed-my.github.io/h5p-resizer.js')
 
+  // Under the frame, what the player found: the package's own account of itself, then the host and the libraries.
+  const checks = page.locator('#checks li')
+  await expect(checks.first()).toContainText('Do you know what just happened? · Question Set · CC0 1.0 · by missing-elements')
+  await expect(checks.filter({ hasText: 'Reachable from a browser' })).toHaveAttribute('data-tone', 'ok')
+  await expect(checks.filter({ hasText: /Streams in place|Downloaded whole/ })).toContainText('MB')
+  await expect(checks.filter({ hasText: 'Carries its libraries' })).toHaveAttribute('data-tone', 'ok')
+  await expect(checks.filter({ hasText: /^Ready in \d+\.\d s/ })).toHaveCount(1)
+
   expect(problems, problems.join('\n')).toEqual([])
+})
+
+test('the lines under the preview say where missing libraries came from', async ({ page }) => {
+  await page.goto('/')
+  await page.getByLabel(/Link to the/).fill(`${PLAYER_ORIGIN}/samples/quiz-without-libraries.h5p`)
+  await page.getByRole('button', { name: 'Preview' }).click()
+  await expect(page.locator('#stage')).toHaveAttribute('data-state', 'ready', { timeout: 60_000 })
+  const line = page.locator('#checks li').filter({ hasText: 'Exported without its libraries' })
+  await expect(line).toHaveAttribute('data-tone', 'info')
+  await expect(line).toContainText("the player's bundle")
+  await expect(line.getByRole('link', { name: 'About library files' })).toHaveAttribute('href', '/docs/hosting-packages#packages-and-library-files')
+})
+
+test('a link no browser can fetch ends the wait and says what to check', async ({ page }) => {
+  await page.goto('/')
+  const minHeight = await page.locator('#opt-height').inputValue()
+  await page.getByLabel(/Link to the/).fill(`${PLAYER_ORIGIN}/samples/nothing.h5p`)
+  await page.getByRole('button', { name: 'Preview' }).click()
+  const stage = page.locator('#stage')
+  await expect(stage).toHaveAttribute('data-state', 'failed', { timeout: 40_000 })
+  await expect(page.locator('#stage-status')).toHaveText('The preview could not play this link. See below for what to check.')
+  // And it stays failed: the frame's notice reports a height afterwards, which is not the activity's.
+  await page.waitForTimeout(1_000)
+  await expect(stage).toHaveAttribute('data-state', 'failed')
+  await expect(page.locator('#measured')).toBeHidden()
+  await expect(page.locator('#opt-height')).toHaveValue(minHeight)
+  const line = page.locator('#checks li')
+  await expect(line).toHaveCount(1)
+  await expect(line).toHaveAttribute('data-tone', 'bad')
+  await expect(line.getByRole('link', { name: 'What to check' })).toHaveAttribute('href', '/docs/troubleshooting#the-preview-says-the-package-cannot-be-fetched')
 })
 
 test('a sample chip fills the link in from the player origin', async ({ page }) => {

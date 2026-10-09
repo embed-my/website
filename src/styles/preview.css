@@ -1,5 +1,5 @@
 /* Step 3, second half: the stage the preview plays on. Its `data-state` is set by src/ui/preview.ts:
-   `empty`, `loading`, `ready` or `stalled`. */
+   `empty`, `loading`, `ready`, `stalled` or `failed`. */
 
 .stage {
   position: relative;
@@ -87,7 +87,7 @@
   display: none;
 }
 
-.stage[data-state='stalled'] .stage-status {
+.stage:is([data-state='stalled'], [data-state='failed']) .stage-status {
   border-color: var(--warn);
   color: var(--fg);
 }
@@ -115,4 +115,65 @@
   gap: 0.4rem 0.6rem;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+/* What the player found: one line per thing a visitor will feel, with a dot in the colour of how much. */
+.report {
+  margin: 1rem 0 0;
+}
+
+.report-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.checks {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.checks li {
+  --dot: var(--muted);
+
+  position: relative;
+  padding-left: 1.3rem;
+  color: var(--fg);
+}
+
+.checks li::before {
+  content: '';
+  position: absolute;
+  top: 0.5em;
+  left: 0.15rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.checks li[data-tone='ok'] {
+  --dot: var(--ok);
+}
+
+.checks li[data-tone='info'] {
+  --dot: var(--accent-2);
+}
+
+.checks li[data-tone='warn'] {
+  --dot: var(--warn);
+}
+
+.checks li[data-tone='bad'] {
+  --dot: var(--danger);
+}
+
+.checks a {
+  white-space: nowrap;
 }

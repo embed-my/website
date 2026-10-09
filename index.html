@@ -290,6 +290,11 @@
             <div class="stage-status" id="stage-status" role="status" aria-live="polite"></div>
           </div>
           <p class="measured" id="measured" hidden></p>
+          <!-- What the player found out about the package, from the frame's report: src/report.ts writes the lines. -->
+          <div class="report" id="report" hidden>
+            <h3 class="report-title">What the player found</h3>
+            <ul class="checks" id="checks"></ul>
+          </div>
         </section>
 
         <section class="step" aria-labelledby="h-snippet">

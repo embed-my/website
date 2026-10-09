@@ -40,7 +40,9 @@ const preview = createPreview(
     stage,
     frame: byId('preview', HTMLIFrameElement),
     status: byId('stage-status', HTMLElement),
-    measured: byId('measured', HTMLElement)
+    measured: byId('measured', HTMLElement),
+    report: byId('report', HTMLElement),
+    checks: byId('checks', HTMLElement)
   },
   {
     playerOrigin: new URL(PLAYER_URL).origin,
