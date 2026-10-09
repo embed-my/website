@@ -119,6 +119,7 @@ const page = ({ name, title, description, body }) => `<!doctype html>
         </a>
         <nav aria-label="Site">
           <a href="/docs/">Guides</a>
+          <a href="/player">Player</a>
           <a href="/docs/troubleshooting">Help</a>
         </nav>
         <div class="topbar-actions">

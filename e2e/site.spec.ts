@@ -88,3 +88,13 @@ test('the guide sidebar sticks, lists the chapters and marks the one being read'
   await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight))
   await expect(nav.locator('[aria-current="location"]')).toHaveText('Third-party content')
 })
+
+test('the player page is served, linked from the top bar and under the policy', async ({ page }) => {
+  const problems = watchConsole(page)
+  await page.goto('/')
+  await page.getByRole('navigation', { name: 'Site' }).getByRole('link', { name: 'Player' }).click()
+  await expect(page).toHaveURL(/\/player$/)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('The player')
+  await expect(page.getByRole('link', { name: 'github.com/missing-elements/h5p-offline-player', exact: true })).toBeVisible()
+  expect(problems, problems.join('\n')).toEqual([])
+})

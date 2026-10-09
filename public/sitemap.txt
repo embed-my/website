@@ -6,3 +6,4 @@ https://embed-my.org/docs/privacy-and-security
 https://embed-my.org/docs/results-and-xapi
 https://embed-my.org/docs/accessibility
 https://embed-my.org/docs/troubleshooting
+https://embed-my.org/player

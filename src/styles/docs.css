@@ -131,6 +131,11 @@
   }
 }
 
+/* A page of prose without the guides beside it, such as /player. */
+.page {
+  padding-block: var(--space-block) var(--space-section);
+}
+
 .doc-body {
   max-width: 68ch;
 }

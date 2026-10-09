@@ -36,6 +36,7 @@ Content-Security-Policy all follow it.
 | `src/ui/` | One module per part of the page: package form, preview, options, snippet board, theme switch |
 | `src/styles/` | `main.css` imports the fonts, the tokens, then one file per part of the page |
 | `docs/*.md` | The guides, in Markdown. `scripts/build-docs.mjs` turns them into `docs/*.html` (generated, not committed) before Vite runs, served at `/docs/<name>`; `src/docs.ts` and `src/styles/docs.css` are their script and styles |
+| `player.html` | `/player`: what h5p-offline-player is and where its code, packages, tools and skills are |
 | `404.html` | The page GitHub Pages shows for an address that has nothing |
 | `e2e/`, `playwright.config.ts` | The browser tests: the home page previews a sample and writes its snippet, the guides link up, and nothing violates the pages' Content-Security-Policy |
 | `public/` | Copied into the build as it is: `CNAME`, `logo.svg` (the full logo), `favicon.svg` (its mark alone, also the header logo), `robots.txt`, `sitemap.txt` |

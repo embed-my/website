@@ -94,6 +94,7 @@
         </a>
         <nav aria-label="Site">
           <a href="/docs/">Guides</a>
+          <a href="/player">Player</a>
           <a href="/docs/troubleshooting">Help</a>
         </nav>
         <div class="topbar-actions">
@@ -278,7 +279,7 @@
               </div>
             </details>
           </div>
-          <p class="step-intro">This is the frame your visitors will get, played by the same player, <a href="https://github.com/missing-elements/h5p-offline-player">h5p-offline-player</a>. If it works here, it works on your page.</p>
+          <p class="step-intro">This is the frame your visitors will get, played by the same player, <a href="/player">h5p-offline-player</a>. If it works here, it works on your page.</p>
           <div class="stage" id="stage" data-state="empty">
             <div class="stage-empty">
               <svg class="icon" aria-hidden="true"><use href="#i-activity" /></svg>
@@ -418,7 +419,7 @@
               <summary><span>Where do I get an <code>.h5p</code> file?</span></summary>
               <div class="faq-answer">
                 <p>From wherever the activity was made. Lumi, H5P.com, h5p.org and the H5P plugins for Moodle, WordPress and Drupal all offer a download, usually under the activity's <strong>Reuse</strong> button.</p>
-                <p>Make sure the export includes its libraries. Exports from H5P.com and h5p.org often hold only the content and rely on the site they came from; such a file plays there but not anywhere else. Choose a complete export, then check it in the preview above. <a href="/docs/hosting-packages#packages-and-library-files">Packages and library files →</a></p>
+                <p>Exports from H5P.com and h5p.org often hold only the content and rely on the site they came from. Those play here too: the player keeps the H5P hub's libraries and adds them as the activity loads. Check the file in the preview above. <a href="/docs/hosting-packages#packages-and-library-files">Packages and library files →</a></p>
               </div>
             </details>
             <details class="faq-item">
@@ -551,11 +552,11 @@
             <a href="/docs/accessibility">Accessibility</a>
             <a href="/docs/troubleshooting">Help</a>
             <a href="#support">Support</a>
-            <a href="https://github.com/missing-elements/h5p-offline-player">Player</a>
+            <a href="/player">Player</a>
             <a href="https://github.com/embed-my">GitHub</a>
           </nav>
           <p>
-            Packages play in <a href="https://github.com/missing-elements/h5p-offline-player">h5p-offline-player</a>,
+            Packages play in <a href="/player">h5p-offline-player</a>,
             an open-source player that reads the <code>.h5p</code> file in the browser (MIT). The H5P runtime inside the
             frame is h5p-php-library, GPL-3.0. No accounts, no cookies, no tracking, no learner records.
           </p>

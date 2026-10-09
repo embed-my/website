@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The player — Embed My</title>
+    <meta name="description" content="h5p-offline-player, the open-source browser-only H5P player behind Embed My: what it is, where its code and packages are, and how to run it yourself." />
+    <link rel="canonical" href="https://embed-my.org/player" />
+    <meta name="theme-color" content="#7847a0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- The same pinned-theme script as index.html, for the same reason: no flash of the wrong theme. -->
+    <script>
+      try {
+        const pinned = localStorage.getItem('theme')
+        if (pinned === 'light' || pinned === 'dark') document.documentElement.dataset.theme = pinned
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/styles/docs.css" />
+    <script type="module" src="/src/docs.ts"></script>
+  </head>
+
+  <body>
+    <svg hidden>
+      <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </symbol>
+      <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.9 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3" />
+      </symbol>
+    </svg>
+
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Embed My, home">
+          <img class="brand-mark" src="/favicon.svg" alt="" width="32" height="32" />
+          <span class="brand-text">
+            <span class="brand-name">embed-my</span>
+            <span class="brand-tagline">Your content, anywhere</span>
+          </span>
+        </a>
+        <nav aria-label="Site">
+          <a href="/docs/">Guides</a>
+          <a href="/player" aria-current="page">Player</a>
+          <a href="/docs/troubleshooting">Help</a>
+        </nav>
+        <div class="topbar-actions">
+          <button type="button" class="icon-button" id="theme-toggle" aria-label="Switch theme">
+            <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon" /></svg>
+            <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun" /></svg>
+          </button>
+          <a class="icon-button" href="https://github.com/embed-my" rel="noopener" aria-label="Embed My on GitHub" title="Embed My on GitHub">
+            <svg class="icon" aria-hidden="true"><use href="#i-github" /></svg>
+          </a>
+        </div>
+      </header>
+
+      <main class="page">
+        <article class="doc-body">
+          <h1>The player</h1>
+          <p>
+            Every activity on Embed My plays in <strong>h5p-offline-player</strong>, an open-source H5P player that runs
+            entirely in the browser. It reads the <code>.h5p</code> archive in place through a Service Worker and hands
+            the files to the H5P runtime: nothing is unpacked on a server, and there is no server at all. Embed My is a
+            front for it: the page that writes the snippet, and a frame that runs the player on its own address.
+          </p>
+
+          <h2 id="what-it-does">What it does</h2>
+          <ul>
+            <li>Plays any <code>.h5p</code> package from a URL, or from a file picked on the device, with no upload.</li>
+            <li>Starts a large package after a few kilobytes on a host that answers Range requests, and streams its video.</li>
+            <li>Shows H5P's own toolbar on request: rights of use, download, fullscreen.</li>
+            <li>Emits xAPI statements and the content's saved state as events, for a page or an LMS to collect.</li>
+            <li>Ships as one web component, <code>&lt;h5p-player&gt;</code>, plus a worker; the H5P runtime is a package of its own.</li>
+          </ul>
+
+          <h2 id="where-it-is">Where it is</h2>
+          <table>
+            <tr>
+              <th>Source and documentation</th>
+              <td><a href="https://github.com/missing-elements/h5p-offline-player" rel="noopener">github.com/missing-elements/h5p-offline-player</a></td>
+            </tr>
+            <tr>
+              <th>Setup guide</th>
+              <td><a href="https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md" rel="noopener">h5p-player-setup.md</a>: with a bundler, with no build step, or as an iframe</td>
+            </tr>
+            <tr>
+              <th>The player on npm</th>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-offline-player" rel="noopener">@missing-elements/h5p-offline-player</a> (MIT)</td>
+            </tr>
+            <tr>
+              <th>The H5P runtime on npm</th>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-runtime" rel="noopener">@missing-elements/h5p-runtime</a> (GPL-3.0), the core the frame loads</td>
+            </tr>
+            <tr>
+              <th>Libraries for bare exports</th>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-libraries" rel="noopener">@missing-elements/h5p-libraries</a>, every hub content type's libraries, for packages that ship without their own</td>
+            </tr>
+            <tr>
+              <th>Demo site</th>
+              <td><a href="https://h5p-offline-player.vercel.app/" rel="noopener">h5p-offline-player.vercel.app</a></td>
+            </tr>
+            <tr>
+              <th>Agent skills</th>
+              <td><a href="https://www.skills.sh/missing-elements/h5p-offline-player" rel="noopener">skills.sh/missing-elements/h5p-offline-player</a>, for Claude Code, Cursor, Copilot, Codex and the rest</td>
+            </tr>
+            <tr>
+              <th>Issues</th>
+              <td><a href="https://github.com/missing-elements/h5p-offline-player/issues" rel="noopener">github.com/missing-elements/h5p-offline-player/issues</a>, for anything about how a package plays</td>
+            </tr>
+          </table>
+
+          <h2 id="tools">Tools that come with it</h2>
+          <ul>
+            <li><code>npx @missing-elements/h5p-verify course.h5p</code> plays a package in a real browser runtime and reports missing libraries, start-up errors and a screenshot, before you share it.</li>
+            <li><code>npx @missing-elements/h5p-normalize course.h5p</code> rewrites a package once so that its video starts at once instead of after the whole file has downloaded.</li>
+          </ul>
+
+          <h2 id="run-it-yourself">Run it yourself</h2>
+          <p>
+            Embed My is the way to use the player with nothing installed. If you would rather have nothing from anyone,
+            put the player on your own site: it is three files and a line of HTML, and the
+            <a href="https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md" rel="noopener">setup guide</a>
+            covers each way to do it. Your packages stay as they are. The
+            <a href="https://github.com/embed-my/embed-my.github.io" rel="noopener">player origin</a> of Embed My is a
+            small example of exactly that.
+          </p>
+
+          <h2 id="licences">Licences</h2>
+          <p>
+            The player, its workers and its tools are MIT. The H5P core runtime it loads inside the frame comes from
+            <a href="https://github.com/h5p/h5p-php-library" rel="noopener">h5p-php-library</a> and is GPL-3.0, published
+            as a package of its own with its
+            <a href="https://embed-my.github.io/assets/runtime-LICENSE.txt">licence</a> and
+            <a href="https://embed-my.github.io/assets/runtime-NOTICE.txt">notices</a> served beside it. The content inside a
+            package carries its own licence. The project is independent of H5P Group; “H5P” is a trademark of H5P Group.
+          </p>
+        </article>
+      </main>
+
+      <footer class="footer doc-footer">
+        <p>
+          Something wrong on this page? Open an issue on
+          <a href="https://github.com/embed-my/website/issues" rel="noopener">GitHub</a>.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

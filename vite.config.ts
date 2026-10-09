@@ -3,8 +3,8 @@ import { readdirSync } from 'node:fs'
 import { defineConfig, type Plugin } from 'vitest/config'
 
 /*
- * The pages: the site, the guides (generated into docs/ by scripts/build-docs.mjs before Vite
- * runs) and the 404 page. The player page the snippet frames is on its own origin,
+ * The pages: the site, the player page, the guides (generated into docs/ by scripts/build-docs.mjs
+ * before Vite runs) and the 404 page. The player page the snippet frames is on its own origin,
  * embed-my/embed-my.github.io.
  */
 const docs = Object.fromEntries(
@@ -68,7 +68,7 @@ export default defineConfig({
   test: { include: ['src/**/*.test.ts'] },
   build: {
     rollupOptions: {
-      input: { main: 'index.html', 404: '404.html', ...docs }
+      input: { main: 'index.html', player: 'player.html', 404: '404.html', ...docs }
     }
   }
 })
