@@ -32,13 +32,13 @@ H5P content itself may contact services named by the package, such as YouTube, V
 
 One request the frame can make on its own: a package exported without its libraries takes them from a bundle on the player origin, and for a content type that bundle lacks, from the H5P hub at `api.h5p.org`. That request names the content type, not the visitor, and is made only when the bundle falls short.
 
-## Data protection and the GDPR
+## Data protection
 
 Checking a package on embed-my.org involves only you: your browser fetches the package from its host and plays it, and Embed My never receives it.
 
-A snippet on someone else's page is different. When the page opens, each visitor's browser requests the sizing script and the frame from GitHub Pages, and GitHub receives the visitor's IP address and the page's address. The package host receives the IP address too. The player keeps its files and the package's index in the browser's storage on the visitor's device. Embed My is a free project, not a company, so there is no data-processing agreement to sign, and GitHub's own agreements cover GitHub's customers, not the visitors of a page that embeds a snippet.
+A snippet on someone else's page is different. When the page opens, each visitor's browser requests the sizing script and the frame from GitHub Pages, and GitHub receives the visitor's IP address and the page's address. The package host receives the IP address too. The player keeps its files and the package's index in the browser's storage on the visitor's device. Embed My is a free tool, not a company, so there is no data-processing agreement to sign, and GitHub's own agreements cover GitHub's customers, not the visitors of a page that embeds a snippet.
 
-Many schools and companies in the EU cannot accept that. Ask whoever looks after data protection before putting a snippet on an organisation's pages. The alternative that removes the question is to run [the player](https://github.com/missing-elements/h5p-offline-player) on a host the organisation controls, with the packages on that host too: then no third party is involved.
+Many schools and companies cannot accept that under their data-protection rules. Ask whoever looks after data protection before putting a snippet on an organisation's pages. The alternative that removes the question is to run [the player](https://github.com/missing-elements/h5p-offline-player) on a host the organisation controls, with the packages on that host too: then no third party is involved.
 
 ## What you should still protect
 

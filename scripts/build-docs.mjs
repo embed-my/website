@@ -24,7 +24,7 @@ const DOCS = new URL('../docs/', import.meta.url).pathname
 /** The guides in the order the index lists them, with the line the index says about each. */
 const GUIDES = [
   ['hosting-packages', 'Where to put the .h5p file, CORS and Range headers, packages without libraries, slow video'],
-  ['privacy-and-security', 'What the iframe isolates, what is saved, cookies, the GDPR, and what you still need to protect'],
+  ['privacy-and-security', 'What the iframe isolates, what is saved, cookies, data protection, and what you still need to protect'],
   ['troubleshooting', 'Common problems and how to report one']
 ]
 

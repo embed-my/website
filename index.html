@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Embed My — check that an H5P file plays</title>
-    <meta name="description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found: content type, licence, missing libraries, whether the host serves it well. No account, nothing to install." />
+    <meta name="description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found: content type, licence, missing libraries, and whether the host serves it well." />
     <link rel="canonical" href="https://embed-my.org/" />
     <meta name="theme-color" content="#7847a0" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Embed My" />
     <meta property="og:url" content="https://embed-my.org/" />
     <meta property="og:title" content="Embed My — check that an H5P file plays" />
-    <meta property="og:description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found about it. No account, nothing to install." />
+    <meta property="og:description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found about it." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Inline on purpose, ahead of the stylesheet: a pinned theme has to be on <html> before the
          first paint, or a visitor who pinned the opposite of their system setting sees the page
@@ -50,10 +50,6 @@
       <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z" />
         <path d="M8.75 12l2.25 2.25 4.25-4.5" />
-      </symbol>
-      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3.5 2" />
       </symbol>
       <symbol id="i-question" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="9" />
@@ -97,7 +93,6 @@
         <section class="hero">
           <div class="hero-text">
             <h1>Check that an H5P file plays, right in your browser.</h1>
-            <p class="eyebrow">No account · Nothing to install · Nothing stored</p>
             <p class="lede">
               Paste a link to an H5P package and watch it play in a standard H5P runtime. Under the preview, the
               player says what it found: the content type and licence, whether the libraries were in the file,
@@ -228,8 +223,8 @@
             <p>
               The snippet frames the same player from <span class="nowrap">embed-my.github.io</span>, a GitHub Pages site
               kept by one person. There is no service agreement, and nobody to sign a data-processing agreement with:
-              when the page opens, each visitor's browser contacts GitHub, a US company, and keeps the player's files on
-              the device. Many schools and companies cannot accept that under the GDPR. Use it on public pages where that
+              when the page opens, each visitor's browser contacts GitHub and keeps the player's files on the device.
+              Many schools and companies cannot accept that under their data-protection rules. Use it on public pages where that
               is fine, and <a href="/player">run the player yourself</a> for anything that has to keep working.
             </p>
           </div>
@@ -277,10 +272,10 @@
         </section>
 
         <section class="safety" id="safety" aria-labelledby="h-safety">
-          <h2 class="step-title" id="h-safety"><svg class="safety-icon" aria-hidden="true"><use href="#i-shield" /></svg>Is a snippet safe to put on my page?</h2>
+          <h2 class="step-title" id="h-safety"><svg class="safety-icon" aria-hidden="true"><use href="#i-shield" /></svg>What a snippet does on your page</h2>
           <p class="step-intro">
-            Yes, with the care you would give any embed. An iframe is a window onto another site, and the browser keeps
-            what runs in it apart from your page. Here is what that means for this snippet, and where it stops.
+            An iframe is a window onto another site, and the browser keeps what runs in it apart from your page. Here is
+            what that means for this snippet, and where it stops. Whether that is enough for your page is your call.
           </p>
           <ul class="safety-list">
             <li>
@@ -296,7 +291,7 @@
               Leave it out and the frame keeps the minimum height.
             </li>
             <li>
-              <strong>No accounts, no cookies, no tracking, no learner records.</strong>
+              <strong>No cookies, no tracking, no learner records.</strong>
               The frame loads no analytics and reports to no one. Answers are not saved anywhere, so a reload starts
               the activity over. The browser caches the package's files and address so it loads faster next time; it
               keeps nothing about the learner.
@@ -330,46 +325,6 @@
           <p><a href="/docs/privacy-and-security">Privacy and security in full →</a></p>
         </section>
 
-        <section class="safety" id="lasting" aria-labelledby="h-lasting">
-          <h2 class="step-title" id="h-lasting"><svg class="safety-icon" aria-hidden="true"><use href="#i-clock" /></svg>How long will an embed work?</h2>
-          <p class="step-intro">
-            There is no promise. It is meant to keep working for as long as this project is on GitHub, with no expiry and
-            nothing to renew, but it is a free project kept by one person, not a service with an agreement behind it.
-          </p>
-          <ul class="safety-list">
-            <li>
-              <strong>The snippet uses an address that cannot expire.</strong>
-              It points at <span class="nowrap">embed-my.github.io</span>, which GitHub provides to this project for
-              free, for as long as the project exists. Nothing to renew, and no one else can claim it. The
-              <span class="nowrap">embed-my.org</span> you see in your browser is only a nicer name for this website;
-              the snippet does not depend on it, so every embed already on a page would keep working if that name were
-              ever lost.
-            </li>
-            <li>
-              <strong>Your package stays yours.</strong>
-              The <code>.h5p</code> file lives on your host, not here. Embed My only points at it, so nothing of yours is
-              lost if this project ends.
-            </li>
-            <li>
-              <strong>If the project ever stops, the frame shows an error.</strong>
-              Your page itself keeps working: a frame that cannot load and a script that is not found break nothing
-              around them. The activity is what goes missing.
-            </li>
-            <li>
-              <strong>You can run the same player yourself.</strong>
-              The player is <a href="https://github.com/missing-elements/h5p-offline-player">h5p-offline-player</a>, open source (MIT). Put it on your own site, or on
-              any static host, and point the snippet at it. Nothing about your package has to change.
-            </li>
-          </ul>
-          <div class="safety-limits">
-            <p class="safety-limits-title">If you would rather load nothing from anyone</p>
-            <p>
-              The iframe is only a window, but <code>h5p-resizer.js</code> runs on your page. Copy it to your own site
-              and change the <code>src</code> in the snippet to your copy: it is sixty lines, MIT-licensed, and needs
-              no updates. The frame is then the only thing your page takes from Embed My.
-            </p>
-          </div>
-        </section>
 
         <section class="faq" id="faq" aria-labelledby="h-faq">
           <h2 class="step-title" id="h-faq"><svg class="safety-icon" aria-hidden="true"><use href="#i-question" /></svg>Questions people ask</h2>
@@ -398,54 +353,20 @@
               <summary><span>Is there a maximum file size?</span></summary>
               <div class="faq-answer">
                 <p>Not from Embed My, which never holds your file. The player reads the package in place: it fetches the archive's index with a few kilobytes, pulls only what the activity asks for, and never holds more than 8 MB in memory. On a host that answers Range requests, as GitHub Pages does, a 300 MB package starts within seconds; what limits you there is your host and your visitors' connection.</p>
-                <p>On a host without Range requests the whole file downloads and is stored in the visitor's browser before anything plays, and a package larger than the browser allows fails with a storage error. That allowance varies by browser and is smaller inside another site's page, so keep packages there to tens of megabytes, or move to a host that supports ranges. Hosts have caps of their own too: GitHub refuses single files over 100 MB.</p>
+                <p>On a host without Range requests the whole file downloads and is stored in the browser before anything plays, and a package larger than the browser allows fails with a storage error. That allowance varies by browser and is smaller inside another site's page, so keep packages there to tens of megabytes, or move to a host that supports ranges. Hosts have caps of their own too: GitHub refuses single files over 100 MB.</p>
                 <p>Big packages are big because of video. Run the package through <code>h5p-normalize</code> once and the video starts before the file has finished downloading. <a href="/docs/hosting-packages#how-big-can-a-package-be">How big can a package be →</a></p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>Can I embed it on WordPress, Google Sites, Squarespace, Wix…?</span></summary>
-              <div class="faq-answer">
-                <p>On any page where you can paste HTML: look for the site's <strong>HTML</strong>, <strong>Embed</strong>, <strong>Custom HTML</strong> or <strong>iframe</strong> block. If the site keeps the iframe but removes the script, the activity still plays, at the minimum height you set above.</p>
-                <p>A site whose embed block takes only a web address, not HTML, can be given the frame's address alone: the <code>src</code> of the iframe in the snippet.</p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>Why is the activity cut off, or followed by blank space?</span></summary>
-              <div class="faq-answer">
-                <p>The sizing script is missing, or your site removed it. Paste the snippet into a block that keeps scripts, or set the minimum height to the height the preview measures: it fills that field in for you once the activity has loaded. <a href="/docs/troubleshooting">Troubleshooting →</a></p>
               </div>
             </details>
             <details class="faq-item">
               <summary><span>Which browsers and devices does it work on?</span></summary>
               <div class="faq-answer">
-                <p>Current Chrome, Edge, Firefox and Safari, on desktop and on phones. The page that holds the frame has to be served over <code>https://</code>.</p>
-                <p>The built-in browsers inside some social and messaging apps cannot run it. The frame then shows a link that opens the activity on its own page.</p>
+                <p>Current Chrome, Edge, Firefox and Safari, on desktop and on phones. The built-in browsers inside some social and messaging apps cannot run the player; open this page in a regular browser instead.</p>
               </div>
             </details>
             <details class="faq-item">
-              <summary><span>Can I see learners' scores or results?</span></summary>
+              <summary><span>Does it check accessibility?</span></summary>
               <div class="faq-answer">
-                <p>Not here. Embed My keeps no accounts and no records, so treat an embed as an ungraded activity: visitors do it, and nothing is stored.</p>
-                <p>If you need results, run <a href="/player">the player</a> on your own site: it reports every xAPI statement as an event, for your page or an LMS to collect.</p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>Can I update the activity after embedding it?</span></summary>
-              <div class="faq-answer">
-                <p>Yes. Replace the file at the same address and leave the snippet as it is. The player tells versions apart by the file's <code>ETag</code> or modification date, which nearly every host sends, so visitors get the new version on their next load.</p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>Can I put several activities on one page?</span></summary>
-              <div class="faq-answer">
-                <p>Yes. Paste one snippet per activity. The script line only needs to be on the page once; extra copies do nothing.</p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>Is it accessible?</span></summary>
-              <div class="faq-answer">
-                <p>The frame has a title that screen readers announce, the one you set above, and supports fullscreen. Inside it, keyboard and screen-reader behaviour come from the H5P content type and from how the activity was authored.</p>
-                <p>Before publishing, run through the activity with the keyboard alone, give video and audio captions or a transcript, and keep essential information available outside the activity too.</p>
+                <p>Keyboard and screen-reader behaviour come from the H5P content type and from how the activity was authored, and this check does not test them. Run through the activity here with the keyboard alone, and check that video and audio have captions or a transcript.</p>
               </div>
             </details>
             <details class="faq-item">
@@ -456,16 +377,10 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span>Can I use a snippet on a school or company site in the EU?</span></summary>
+              <summary><span>Can I use a snippet on a school or company site?</span></summary>
               <div class="faq-answer">
-                <p>Ask whoever looks after data protection there first, and expect a no. Each visitor's browser contacts GitHub, a US company, when the page opens, and stores the player's files on the device. Embed My is a free project, not a company, so there is no data-processing agreement to sign.</p>
+                <p>Ask whoever looks after data protection there first, and expect a no. Each visitor's browser contacts GitHub when the page opens, and stores the player's files on the device. Embed My is a free tool, not a company, so there is no data-processing agreement to sign.</p>
                 <p>Checking a package here is different: only you open this page, and the package goes from its host to your browser. For an organisation's own pages, run <a href="/player">the player</a> on a host it controls.</p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary><span>What does it cost?</span></summary>
-              <div class="faq-answer">
-                <p>Nothing. Embed My is free and open source, with no accounts, plans or limits of its own, and no guarantees either. The only thing you might pay for is wherever you host your package.</p>
               </div>
             </details>
           </div>
@@ -484,9 +399,9 @@
             </span>
           </a>
           <p>
-            Embed My is a free, open-source project that puts interactive learning activities and documents on any
-            website, without installing anything there. It is for teachers, instructional designers and anyone who runs
-            a portfolio, school, course or department site, a blog or a CMS page that cannot take an H5P plugin.
+            Embed My is a free, open-source tool for checking that an H5P package plays: paste a link, watch it play,
+            and read what the player found. It is for authors, teachers and developers who want to know a package works
+            before they upload it to an LMS or share it.
           </p>
           <p>
             Questions, ideas and bug reports are welcome on <a href="https://github.com/embed-my">GitHub</a>.
@@ -503,7 +418,7 @@
           <p>
             Packages play in <a href="/player">h5p-offline-player</a>,
             an open-source player that reads the <code>.h5p</code> file in the browser (MIT). The H5P runtime inside the
-            frame is h5p-php-library, GPL-3.0. No accounts, no cookies, no tracking, no learner records.
+            frame is h5p-php-library, GPL-3.0. No cookies, no tracking, no learner records.
           </p>
           <p>
             The sample packages are the player's demo content: the quiz and the glossary are CC0, the interactive
