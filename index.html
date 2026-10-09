@@ -233,11 +233,11 @@
           <details class="more">
             <summary>Where can the file live?</summary>
             <ul>
-              <li>On any host that gives it a public <code>https://</code> address and allows cross-origin requests (CORS). GitHub Pages does both as it comes.</li>
+              <li>On any host that gives it a public <code>https://</code> address and allows cross-origin requests (CORS). Free ones that do, tested: Dropbox with one edit to the link, a GitHub repository, Zenodo, Backblaze B2. Google Drive and OneDrive share links do not.</li>
               <li>Large packages start faster on a host that answers Range requests; without them the whole file downloads first, which still works.</li>
               <li>The link appears in your page's HTML, so treat the file as public and never use a secret or expiring link.</li>
             </ul>
-            <p><a href="/docs/hosting-packages">Preparing and hosting packages →</a></p>
+            <p><a href="/docs/hosting-packages#free-places-to-put-the-file">Free places to put the file →</a></p>
           </details>
         </section>
 
@@ -424,8 +424,8 @@
             <details class="faq-item">
               <summary><span>Can the file live on Google Drive, Dropbox or OneDrive?</span></summary>
               <div class="faq-answer">
-                <p>Not through their ordinary share links. Those open a preview page rather than the file, and the file is not sent with the header a browser needs (CORS). Some of these services can give a direct link; test it in the preview, because many still lack the header.</p>
-                <p>The sure way is a host that gives the file a direct <code>https://…/name.h5p</code> address and allows cross-origin requests. GitHub Pages does both as it comes, and so does most web hosting where you can set a header. <a href="/docs/hosting-packages">Preparing and hosting packages →</a></p>
+                <p><strong>Dropbox, yes</strong>, with one edit to the share link: replace <code>www.dropbox.com</code> with <code>dl.dropboxusercontent.com</code> and <code>dl=0</code> with <code>dl=1</code>. The unedited link redirects without the header a browser needs (CORS).</p>
+                <p><strong>Google Drive and OneDrive, no.</strong> Their links send the file without that header, and there is no setting to add it. A free GitHub repository, Zenodo or Backblaze B2 all work instead. <a href="/docs/hosting-packages#free-places-to-put-the-file">Free places to put the file →</a></p>
               </div>
             </details>
             <details class="faq-item">
