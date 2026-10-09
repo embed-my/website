@@ -24,9 +24,8 @@ Checked on 9 October 2026 from the Embed My player origin, by request headers an
 | **GitHub** public repository | 1 GB per repository | the GitHub website | yes | 25 MB from the browser, 100 MB with git | playing a package |
 | **Zenodo** | 50 GB per record | the Zenodo website | yes | no stated limit | playing a package |
 | **Backblaze B2** | 10 GB, downloads up to 3× that a month | the Backblaze website | yes | no stated limit | headers |
-| **Cloudflare Pages** | 500 uploads a month | drag and drop in the dashboard | no, the whole file downloads first | 25 MB | headers |
 
-What does not work, and why: **Google Drive**, **OneDrive** and **SharePoint** share links send the file without the CORS header and offer no way to add it; the **Internet Archive** sends the header on its redirect but not from the servers that deliver the file; **Neocities** free sites do not accept `.h5p` files; **jsDelivr** serves an altered copy of a binary file, which the player refuses; **Supabase** free projects pause after a week without activity; **GitLab Pages** needs a build pipeline and identity verification; **LMS file links** (Moodle, Canvas, Google Classroom) need a login. **Netlify**, **Vercel** and **Cloudflare R2** work for anyone comfortable adding a headers file or a bucket setting; see the end of this section.
+Google Drive and OneDrive share links do not work: they send the file without the CORS header, and there is no setting to add it.
 
 ### Dropbox
 
@@ -68,24 +67,9 @@ Plain file storage with a generous free tier and no card to sign up.
 
 The first 10 GB are free, and so are downloads up to three times what you store each month; beyond that Backblaze charges by the gigabyte, with a card on file.
 
-### Cloudflare Pages
-
-Fine for small packages, and nothing to configure.
-
-1. Create a free account. In the dashboard, **Workers & Pages → Create → Drag and drop your files**, and drop a folder that holds the `.h5p` file.
-2. The address is `https://<project>.pages.dev/quiz.h5p`.
-
-Every file is sent with the CORS header already. Pages does not answer Range requests, so the whole package downloads before it plays, and a single file cannot be larger than 25 MB.
-
 ### Your own or your school's web host
 
 Any web space that serves files over HTTPS works once it sends the CORS header. Ask whoever runs it to add `Access-Control-Allow-Origin: *` for the folder, which on Apache is one line in `.htaccess` and on nginx one `add_header` line. WordPress refuses `.h5p` uploads to its media library unless an administrator allows the file type.
-
-### For the technically minded
-
-- **Netlify** (free tier, drag and drop): add a file named `_headers` at the top of the folder you drop, containing `/*` on one line and `  Access-Control-Allow-Origin: *` on the next.
-- **Vercel** (Hobby tier, non-commercial use): add a `vercel.json` with a `headers` rule setting the same header for `/(.*)`.
-- **Cloudflare R2** (10 GB free, free downloads): enabling R2 goes through a checkout that asks for a payment method; then set the bucket's CORS policy and give it a public address.
 
 ## Server headers
 
