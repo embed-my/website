@@ -17,7 +17,7 @@ An export without its libraries normally plays anyway: the player takes them fro
 
 ## The activity is cut off or leaves blank space
 
-The resizer script from the generated snippet is missing or was stripped by your site. Use the platform's dedicated **Embed**, **Custom HTML**, or **iframe** block, which usually keeps scripts, or ask the site administrator to allow the script. If scripts cannot be used at all, set the iframe's height to fit the activity. See [The resizer script](embedding.md#the-resizer-script).
+The resizer script from the generated snippet is missing or was stripped by your site. Use the platform's dedicated **Embed**, **Custom HTML**, or **iframe** block, which usually keeps scripts, or ask the site administrator to allow the script. If scripts cannot be used at all, set the minimum height on embed-my.org to the height the preview measures, which it fills in for you.
 
 ## A video is slow to start
 
@@ -33,7 +33,7 @@ Check that the page containing the iframe is served over `https://`. On `http://
 
 ## The host blocks the iframe
 
-The site's Content Security Policy must allow `frame-src https://embed-my.github.io`. If it cannot, link to the activity's Embed My page instead. See [Sites that restrict iframes](embedding.md#sites-that-restrict-iframes).
+The site's Content Security Policy must allow `frame-src https://embed-my.github.io`. If it cannot, link to the activity's Embed My page instead: the `src` of the iframe in the snippet, opened on its own.
 
 ## Other problems
 

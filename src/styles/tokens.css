@@ -15,7 +15,6 @@
   /* The two inks of the logo's wordmark: purple leads, blue follows. */
   --accent: #7847a0;
   --accent-ink: #ffffff;
-  --accent-soft: color-mix(in srgb, var(--accent) 9%, transparent);
   --accent-2: #2b76b1;
   --danger: #b3261e;
   --warn: #8a5a00;

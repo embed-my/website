@@ -1,27 +1,20 @@
-import { isFormat, type Format } from '../config'
-import { originOf, type DisplayOptions } from '../snippet'
+import type { DisplayOptions } from '../snippet'
 
-/** Steps 1 and 3: the format card and the display options, read from the form as it stands. */
+/** Step 3: the display options, read from the form as it stands. */
 
 export interface OptionsParts {
-  /** The format cards' radio buttons. */
-  formats: HTMLInputElement[]
   title: HTMLInputElement
   copyright: HTMLInputElement
   reuse: HTMLInputElement
   minHeight: HTMLInputElement
-  xapi: HTMLInputElement
 }
 
 /** What the visitor chose. */
 export interface EmbedOptions {
-  format: Format
   /** The frame title as typed; empty when none was. */
   title: string
   display: DisplayOptions
   minHeight: number
-  /** The origin xAPI statements go to, or `null` for none. */
-  xapiOrigin: string | null
 }
 
 /** What a change affects: the display options change the frame itself, the rest only the snippet. */
@@ -38,29 +31,25 @@ export interface Options {
 }
 
 export function createOptions(parts: OptionsParts, onChange: (change: OptionsChange) => void): Options {
-  const { formats, title, copyright, reuse, minHeight, xapi } = parts
+  const { title, copyright, reuse, minHeight } = parts
   // The height in the markup, for when the field is cleared or out of range.
   const defaultHeight = Number.parseInt(minHeight.defaultValue, 10)
   // Whether the visitor has typed a height; a measurement never overwrites one.
   let heightTyped = false
 
   for (const input of [copyright, reuse]) input.addEventListener('change', () => onChange('display'))
-  for (const input of [title, minHeight, xapi]) input.addEventListener('input', () => onChange('snippet'))
+  for (const input of [title, minHeight]) input.addEventListener('input', () => onChange('snippet'))
   minHeight.addEventListener('input', () => {
     heightTyped = true
   })
-  for (const input of formats) input.addEventListener('change', () => onChange('snippet'))
 
   return {
     read() {
-      const format = formats.find((input) => input.checked)?.value ?? ''
       const height = Number.parseInt(minHeight.value, 10)
       return {
-        format: isFormat(format) ? format : 'h5p',
         title: title.value.trim(),
         display: { copyright: copyright.checked, reuse: reuse.checked },
-        minHeight: minHeight.validity.valid && height > 0 ? height : defaultHeight,
-        xapiOrigin: originOf(xapi.value)
+        minHeight: minHeight.validity.valid && height > 0 ? height : defaultHeight
       }
     },
 

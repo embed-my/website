@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Embed My — embed H5P activities on any website</title>
-    <meta name="description" content="Paste a link to an H5P package, preview it, and copy an iframe snippet for any page you can edit. No plugin, no account, nothing stored." />
+    <title>Embed My — check that an H5P file plays</title>
+    <meta name="description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found: content type, licence, missing libraries, whether the host serves it well. No account, nothing to install." />
     <link rel="canonical" href="https://embed-my.org/" />
     <meta name="theme-color" content="#7847a0" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Embed My" />
     <meta property="og:url" content="https://embed-my.org/" />
-    <meta property="og:title" content="Embed My — embed H5P activities on any website" />
-    <meta property="og:description" content="Put an interactive activity on any page you can edit. Paste a link to an H5P package, preview it, copy the snippet." />
+    <meta property="og:title" content="Embed My — check that an H5P file plays" />
+    <meta property="og:description" content="Paste a link to an H5P package and watch it play in your browser, with what the player found about it. No account, nothing to install." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Inline on purpose, ahead of the stylesheet: a pinned theme has to be on <html> before the
          first paint, or a visitor who pinned the opposite of their system setting sees the page
@@ -46,19 +46,7 @@
         <rect x="3" y="4" width="18" height="16" rx="2.5" />
         <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none" />
       </symbol>
-      <symbol id="i-document" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
-        <path d="M14 3v5h5M9 13h6M9 17h6" />
-      </symbol>
-      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 8v8M8 12h8" />
-      </symbol>
       <!-- The tick's check mark takes its colour from the `stroke` of the element that uses it. -->
-      <symbol id="i-tick" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" fill="currentColor" stroke="none" />
-        <path d="M8 12.5l2.5 2.5L16 9.5" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-      </symbol>
       <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z" />
         <path d="M8.75 12l2.25 2.25 4.25-4.5" />
@@ -74,9 +62,6 @@
       <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 4v16M5 13l7 7 7-7" />
       </symbol>
-      <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10z" />
-      </symbol>
       <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="9" y="9" width="11" height="11" rx="2" />
         <path d="M5 15V5a2 2 0 0 1 2-2h10" />
@@ -89,7 +74,7 @@
           <img class="brand-mark" src="/favicon.svg" alt="" width="32" height="32" />
           <span class="brand-text">
             <span class="brand-name">embed-my</span>
-            <span class="brand-tagline">Your content, anywhere</span>
+            <span class="brand-tagline">Test your activities here</span>
           </span>
         </a>
         <nav aria-label="Site">
@@ -111,27 +96,26 @@
       <main>
         <section class="hero">
           <div class="hero-text">
-            <h1>Put an interactive activity on any page you can edit.</h1>
+            <h1>Check that an H5P file plays, right in your browser.</h1>
             <p class="eyebrow">No account · Nothing to install · Nothing stored</p>
             <p class="lede">
-              Paste a link to an H5P package, watch it play, and copy an iframe snippet for your website,
-              portfolio or course page. The activity runs in its own frame, so your site needs no plugin
-              and keeps no learner data.
+              Paste a link to an H5P package and watch it play in a standard H5P runtime. Under the preview, the
+              player says what it found: the content type and licence, whether the libraries were in the file,
+              and whether the host serves it in a way browsers can use.
             </p>
             <ul class="needs" aria-label="What you need">
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>An <code>.h5p</code> file you may share</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>An <code>.h5p</code> file</li>
               <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>A public <code>https://</code> link to it</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>A page where you can paste HTML</li>
             </ul>
-            <p><a class="primary hero-cta" href="#h-link">Try it with your file ↓</a></p>
+            <p><a class="primary hero-cta" href="#h-link">Check your file ↓</a></p>
           </div>
 
-          <!-- How it goes, as a looping animation: the link, the snippet, the activity on the page.
+          <!-- How it goes, as an animation that plays once: the link, what the player found, the activity playing.
                Decorative; the sentence before it says the same for a screen reader. Styled in layout.css. -->
-          <p class="sr-only">How it works: paste the link to your .h5p file, copy the snippet, paste it into your page, and the activity plays there.</p>
+          <p class="sr-only">How it works: paste the link to your .h5p file, the player lists what it found about the package, and the activity plays as learners will see it.</p>
           <div class="flow" aria-hidden="true">
             <div class="flow-step flow-file">
-              <span class="flow-label">1 · Your file</span>
+              <span class="flow-label">1 · Your link</span>
               <div class="flow-card flow-link">
                 <svg class="icon" aria-hidden="true"><use href="#i-activity" /></svg>
                 <span class="flow-url">https://my-school.edu/week-1-quiz.h5p</span>
@@ -139,15 +123,16 @@
             </div>
             <svg class="flow-arrow flow-arrow-1" aria-hidden="true"><use href="#i-arrow-down" /></svg>
             <div class="flow-step flow-snippet">
-              <span class="flow-label">2 · The snippet</span>
-              <div class="flow-card flow-code">
-                <code><span class="tk-tag">&lt;iframe </span><span class="tk-attr">src</span><span class="tk-tag">="</span><span class="tk-url">https://embed-my.github.io/h5p?src=…/week-1-quiz.h5p</span><span class="tk-tag">"&gt;&lt;/iframe&gt;</span></code>
-                <span class="flow-copy"><span class="flow-copy-idle">Copy</span><span class="flow-copy-done">Copied</span></span>
-              </div>
+              <span class="flow-label">2 · What the player found</span>
+              <ul class="flow-card checks flow-checks">
+                <li data-tone="info">Week 1 quiz · Question Set · CC BY 4.0</li>
+                <li data-tone="ok">Reachable from a browser</li>
+                <li data-tone="ok">Streams in place</li>
+              </ul>
             </div>
             <svg class="flow-arrow flow-arrow-2" aria-hidden="true"><use href="#i-arrow-down" /></svg>
             <div class="flow-step flow-page">
-              <span class="flow-label">3 · Your page</span>
+              <span class="flow-label">3 · As learners see it</span>
               <div class="flow-card flow-site">
                 <div class="flow-bar"><span class="flow-dots"><span></span><span></span><span></span></span><span class="flow-address">my-school.edu/year-7/science</span></div>
                 <div class="flow-body">
@@ -169,38 +154,8 @@
           </div>
         </section>
 
-        <section class="step" aria-labelledby="h-format">
-          <h2 class="step-title" id="h-format"><span class="step-no" aria-hidden="true">1</span>Choose what to embed</h2>
-          <fieldset>
-            <legend class="sr-only">Format</legend>
-            <div class="cards">
-              <label class="card">
-                <input class="sr-only" type="radio" name="format" value="h5p" checked />
-                <svg class="card-icon" aria-hidden="true"><use href="#i-activity" /></svg>
-                <span class="card-name">H5P package</span>
-                <span class="card-desc">Quizzes, interactive video, course presentations and every other H5P content type, from one <code>.h5p</code> file.</span>
-                <span class="card-status">Available</span>
-                <svg class="card-tick" aria-hidden="true"><use href="#i-tick" /></svg>
-              </label>
-              <label class="card card-planned">
-                <input class="sr-only" type="radio" name="format" value="pdf" disabled />
-                <svg class="card-icon" aria-hidden="true"><use href="#i-document" /></svg>
-                <span class="card-name">PDF document</span>
-                <span class="card-desc">A handbook, a worksheet or a reading, shown in a viewer with the same paste-an-iframe workflow.</span>
-                <span class="card-status">Planned</span>
-              </label>
-              <a class="card card-link" href="https://github.com/embed-my" rel="noopener">
-                <svg class="card-icon" aria-hidden="true"><use href="#i-plus" /></svg>
-                <span class="card-name">Something else?</span>
-                <span class="card-desc">Tell us what you would like to embed next, or what did not work with a package you have.</span>
-                <span class="card-status">Suggest it on GitHub ↗</span>
-              </a>
-            </div>
-          </fieldset>
-        </section>
-
         <section class="step" aria-labelledby="h-link">
-          <h2 class="step-title" id="h-link"><span class="step-no" aria-hidden="true">2</span>Paste the link to the file</h2>
+          <h2 class="step-title" id="h-link"><span class="step-no" aria-hidden="true">1</span>Paste the link to the file</h2>
           <form class="package-form" id="package-form">
             <div class="field">
               <label for="src">Link to the <code>.h5p</code> file</label>
@@ -220,7 +175,7 @@
                   aria-describedby="src-hint"
                   aria-errormessage="src-error"
                 />
-                <button class="primary" type="submit">Preview</button>
+                <button class="primary" type="submit">Check</button>
               </div>
               <p class="error-msg" id="src-error">Paste a link that starts with <code>https://</code> and ends in <code>.h5p</code>.</p>
             </div>
@@ -236,14 +191,48 @@
             <ul>
               <li>On any host that gives it a public <code>https://</code> address and allows cross-origin requests (CORS). Free ones that do, tested: Dropbox with one edit to the link, a GitHub repository, Zenodo, Backblaze B2. Google Drive and OneDrive share links do not.</li>
               <li>Large packages start faster on a host that answers Range requests; without them the whole file downloads first, which still works.</li>
-              <li>The link appears in your page's HTML, so treat the file as public and never use a secret or expiring link.</li>
+              <li>The player fetches the file straight from your host in your browser. Embed My never receives or keeps it.</li>
             </ul>
             <p><a href="/docs/hosting-packages#free-places-to-put-the-file">Free places to put the file →</a></p>
           </details>
         </section>
 
         <section class="step" aria-labelledby="h-preview">
-          <h2 class="step-title" id="h-preview"><span class="step-no" aria-hidden="true">3</span>Set the display options and check the preview</h2>
+          <h2 class="step-title" id="h-preview"><span class="step-no" aria-hidden="true">2</span>Watch it play, and read what the player found</h2>
+          <p class="step-intro">
+            Played by <a href="/player">h5p-offline-player</a> with the standard H5P runtime and the H5P hub's libraries.
+            A package that plays here will very likely play in an LMS too, but an LMS can run older libraries or changes
+            of its own, so try it there before a lesson.
+          </p>
+          <div class="stage" id="stage" data-state="empty">
+            <div class="stage-empty">
+              <svg class="icon" aria-hidden="true"><use href="#i-activity" /></svg>
+              <span>Your activity plays here once you paste a link above, or pick a sample.</span>
+            </div>
+            <iframe id="preview" title="Preview of the activity" allow="fullscreen"></iframe>
+            <!-- On the page from the start, so a screen reader announces what goes into it. -->
+            <div class="stage-status" id="stage-status" role="status" aria-live="polite"></div>
+          </div>
+          <p class="measured" id="measured" hidden></p>
+          <!-- What the player found out about the package, from the frame's report: src/report.ts writes the lines. -->
+          <div class="report" id="report" hidden>
+            <h3 class="report-title">What the player found</h3>
+            <ul class="checks" id="checks"></ul>
+          </div>
+        </section>
+
+        <section class="step" aria-labelledby="h-snippet">
+          <h2 class="step-title" id="h-snippet"><span class="step-no" aria-hidden="true">3</span>Optional: show it on a public page</h2>
+          <div class="no-guarantee" role="note">
+            <p class="no-guarantee-title">A free extra, with no guarantees</p>
+            <p>
+              The snippet frames the same player from <span class="nowrap">embed-my.github.io</span>, a GitHub Pages site
+              kept by one person. There is no service agreement, and nobody to sign a data-processing agreement with:
+              when the page opens, each visitor's browser contacts GitHub, a US company, and keeps the player's files on
+              the device. Many schools and companies cannot accept that under the GDPR. Use it on public pages where that
+              is fine, and <a href="/player">run the player yourself</a> for anything that has to keep working.
+            </p>
+          </div>
           <div class="options">
             <div class="option">
               <label class="field-label" for="opt-title">Frame title</label>
@@ -266,39 +255,7 @@
               </div>
               <span class="hint" id="opt-height-hint">Filled in from the preview; type a height to keep your own. It applies only if your site strips the sizing script.</span>
             </div>
-            <details class="dev">
-              <summary>For developers: receive xAPI statements</summary>
-              <div class="option">
-                <label class="field-label" for="opt-xapi">Your page's origin</label>
-                <input type="url" id="opt-xapi" placeholder="https://your-site.example" autocomplete="off" spellcheck="false" aria-describedby="opt-xapi-hint" />
-                <span class="hint" id="opt-xapi-hint">
-                  The frame then posts every statement to that origin with <code>postMessage</code>, and to no other.
-                  Check <code>event.origin</code> and <code>event.source</code> before using one. <br>
-                  <a href="/docs/results-and-xapi">Results, xAPI and grades →</a>
-                </span>
-              </div>
-            </details>
           </div>
-          <p class="step-intro">This is the frame your visitors will get, played by the same player, <a href="/player">h5p-offline-player</a>. If it works here, it works on your page.</p>
-          <div class="stage" id="stage" data-state="empty">
-            <div class="stage-empty">
-              <svg class="icon" aria-hidden="true"><use href="#i-activity" /></svg>
-              <span>Your activity appears here once you paste a link above, or pick a sample.</span>
-            </div>
-            <iframe id="preview" title="Preview of the embedded activity" allow="fullscreen"></iframe>
-            <!-- On the page from the start, so a screen reader announces what goes into it. -->
-            <div class="stage-status" id="stage-status" role="status" aria-live="polite"></div>
-          </div>
-          <p class="measured" id="measured" hidden></p>
-          <!-- What the player found out about the package, from the frame's report: src/report.ts writes the lines. -->
-          <div class="report" id="report" hidden>
-            <h3 class="report-title">What the player found</h3>
-            <ul class="checks" id="checks"></ul>
-          </div>
-        </section>
-
-        <section class="step" aria-labelledby="h-snippet">
-          <h2 class="step-title" id="h-snippet"><span class="step-no" aria-hidden="true">4</span>Copy the snippet into your page</h2>
           <div class="board" id="board" data-example>
             <div class="board-bar">
               <span class="board-label" id="board-label">Example · a sample quiz, or paste a link above</span>
@@ -313,7 +270,6 @@
             <p>Paste it into your page's <strong>HTML</strong>, <strong>Embed</strong> or <strong>Custom HTML</strong> block and publish. The second line keeps the frame the height of the activity; if your site strips scripts, keep the iframe and the minimum height does the job.</p>
             <p>Then open the published page in a private window and run through the activity once, as a visitor would.</p>
             <div class="after-links">
-              <a href="/docs/embedding">Embedding guide</a>
               <a href="/docs/privacy-and-security">Privacy and security</a>
               <a href="/docs/troubleshooting">Troubleshooting</a>
             </div>
@@ -321,7 +277,7 @@
         </section>
 
         <section class="safety" id="safety" aria-labelledby="h-safety">
-          <h2 class="step-title" id="h-safety"><svg class="safety-icon" aria-hidden="true"><use href="#i-shield" /></svg>Is it safe to put on my page?</h2>
+          <h2 class="step-title" id="h-safety"><svg class="safety-icon" aria-hidden="true"><use href="#i-shield" /></svg>Is a snippet safe to put on my page?</h2>
           <p class="step-intro">
             Yes, with the care you would give any embed. An iframe is a window onto another site, and the browser keeps
             what runs in it apart from your page. Here is what that means for this snippet, and where it stops.
@@ -346,9 +302,8 @@
               keeps nothing about the learner.
             </li>
             <li>
-              <strong>Results go only where you say.</strong>
-              On its own, the frame tells your page one thing: its height. xAPI statements are sent only if you name
-              your page's origin in the developer options, and then to that origin alone.
+              <strong>The frame tells your page one thing.</strong>
+              Its height, so the sizing script can fit it. Answers, scores and statements stay inside the frame.
             </li>
             <li>
               <strong>Open source, both halves.</strong>
@@ -369,17 +324,17 @@
               </li>
               <li>Packages embedded on the same site share the frame's storage there: one package's scripts can read another's files and address.</li>
               <li>The package link is public in your page's HTML. Never use a secret or expiring link, and keep personal data out of the package.</li>
-              <li>The frame and the script come from Embed My. You trust this service as you trust any embed, which is why all of it is open source.</li>
+              <li>The frame and the script come from Embed My, on GitHub Pages. GitHub receives each visitor's IP address and your page's address, and the package host receives the IP address too. Check your organisation's data-protection rules before using a snippet on its pages.</li>
             </ul>
           </div>
           <p><a href="/docs/privacy-and-security">Privacy and security in full →</a></p>
         </section>
 
         <section class="safety" id="lasting" aria-labelledby="h-lasting">
-          <h2 class="step-title" id="h-lasting"><svg class="safety-icon" aria-hidden="true"><use href="#i-clock" /></svg>How long will my embed work?</h2>
+          <h2 class="step-title" id="h-lasting"><svg class="safety-icon" aria-hidden="true"><use href="#i-clock" /></svg>How long will an embed work?</h2>
           <p class="step-intro">
-            For as long as this project is on GitHub. There is no expiry and nothing to renew, and the address in the
-            snippet is one that cannot expire.
+            There is no promise. It is meant to keep working for as long as this project is on GitHub, with no expiry and
+            nothing to renew, but it is a free project kept by one person, not a service with an agreement behind it.
           </p>
           <ul class="safety-list">
             <li>
@@ -414,13 +369,18 @@
               no updates. The frame is then the only thing your page takes from Embed My.
             </p>
           </div>
-          <p><a href="/docs/embedding#how-long-an-embed-works">How long an embed works, in full →</a></p>
         </section>
 
         <section class="faq" id="faq" aria-labelledby="h-faq">
           <h2 class="step-title" id="h-faq"><svg class="safety-icon" aria-hidden="true"><use href="#i-question" /></svg>Questions people ask</h2>
           <div class="faq-list">
             <details class="faq-item" open>
+              <summary><span>If it plays here, will it play in my LMS?</span></summary>
+              <div class="faq-answer">
+                <p>Very likely, not certainly. The player runs the standard H5P runtime with the H5P hub's current libraries. Moodle, WordPress or another LMS may run older library versions or changes of their own, and a package made for one site can need a library only that site has. A failure here is the more useful result: a link the browser cannot reach, a package that is not an archive, or libraries that nobody serves will fail in most places.</p>
+              </div>
+            </details>
+            <details class="faq-item">
               <summary><span>Where do I get an <code>.h5p</code> file?</span></summary>
               <div class="faq-answer">
                 <p>From wherever the activity was made. Lumi, H5P.com, h5p.org and the H5P plugins for Moodle, WordPress and Drupal all offer a download, usually under the activity's <strong>Reuse</strong> button.</p>
@@ -443,7 +403,7 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span>Does it work on WordPress, Moodle, Google Sites, Squarespace, Wix…?</span></summary>
+              <summary><span>Can I embed it on WordPress, Google Sites, Squarespace, Wix…?</span></summary>
               <div class="faq-answer">
                 <p>On any page where you can paste HTML: look for the site's <strong>HTML</strong>, <strong>Embed</strong>, <strong>Custom HTML</strong> or <strong>iframe</strong> block. If the site keeps the iframe but removes the script, the activity still plays, at the minimum height you set above.</p>
                 <p>A site whose embed block takes only a web address, not HTML, can be given the frame's address alone: the <code>src</code> of the iframe in the snippet.</p>
@@ -466,7 +426,7 @@
               <summary><span>Can I see learners' scores or results?</span></summary>
               <div class="faq-answer">
                 <p>Not here. Embed My keeps no accounts and no records, so treat an embed as an ungraded activity: visitors do it, and nothing is stored.</p>
-                <p>A developer can receive every xAPI statement on your own page as it happens, with the developer option above, and send it to a learning record store. Nothing is sent unless you ask for it that way. <a href="/docs/results-and-xapi">Results, xAPI and grades →</a></p>
+                <p>If you need results, run <a href="/player">the player</a> on your own site: it reports every xAPI statement as an event, for your page or an LMS to collect.</p>
               </div>
             </details>
             <details class="faq-item">
@@ -485,7 +445,7 @@
               <summary><span>Is it accessible?</span></summary>
               <div class="faq-answer">
                 <p>The frame has a title that screen readers announce, the one you set above, and supports fullscreen. Inside it, keyboard and screen-reader behaviour come from the H5P content type and from how the activity was authored.</p>
-                <p>Before publishing, run through the activity with the keyboard alone, give video and audio captions or a transcript, and keep essential information available outside the activity too. <a href="/docs/accessibility">Accessibility →</a></p>
+                <p>Before publishing, run through the activity with the keyboard alone, give video and audio captions or a transcript, and keep essential information available outside the activity too.</p>
               </div>
             </details>
             <details class="faq-item">
@@ -496,40 +456,22 @@
               </div>
             </details>
             <details class="faq-item">
+              <summary><span>Can I use a snippet on a school or company site in the EU?</span></summary>
+              <div class="faq-answer">
+                <p>Ask whoever looks after data protection there first, and expect a no. Each visitor's browser contacts GitHub, a US company, when the page opens, and stores the player's files on the device. Embed My is a free project, not a company, so there is no data-processing agreement to sign.</p>
+                <p>Checking a package here is different: only you open this page, and the package goes from its host to your browser. For an organisation's own pages, run <a href="/player">the player</a> on a host it controls.</p>
+              </div>
+            </details>
+            <details class="faq-item">
               <summary><span>What does it cost?</span></summary>
               <div class="faq-answer">
-                <p>Nothing. Embed My is free and open source, with no accounts, plans or limits of its own. The only thing you might pay for is wherever you host your package.</p>
+                <p>Nothing. Embed My is free and open source, with no accounts, plans or limits of its own, and no guarantees either. The only thing you might pay for is wherever you host your package.</p>
               </div>
             </details>
           </div>
           <p class="faq-more">Something else? See the <a href="/docs/troubleshooting">troubleshooting guide</a>, or ask on <a href="https://github.com/embed-my">GitHub</a>.</p>
         </section>
 
-        <section class="support" id="support" aria-labelledby="h-support">
-          <h2 class="step-title" id="h-support"><svg class="safety-icon" aria-hidden="true"><use href="#i-heart" /></svg>Support the project</h2>
-          <p class="step-intro">
-            Embed My is free, with no accounts and no advertising, and the plan is to keep it that way. If it has saved
-            you a plugin, an install or a licence, here are three ways to give something back.
-          </p>
-          <ul class="support-ways">
-            <li>
-              <strong>Buy me a coffee</strong>
-              <p>A one-off thank-you. It pays for the domain and for the hours that go into the player and this site.</p>
-              <a class="support-link" href="https://buymeacoffee.com/alekswebnet" rel="noopener">buymeacoffee.com/alekswebnet ↗</a>
-            </li>
-            <li>
-              <strong>Donate through Donatello</strong>
-              <p>The same thank-you by another route, for anyone who prefers it.</p>
-              <a class="support-link" href="https://donatello.to/OleksandrShevchuk" rel="noopener">donatello.to/OleksandrShevchuk ↗</a>
-            </li>
-            <li>
-              <strong>Star it, share it, improve it</strong>
-              <p>The real work is done by <a href="https://github.com/missing-elements/h5p-offline-player">h5p-offline-player</a>, the open-source player this site is a front for. A star there helps people find it; a word to a colleague helps more. Bug reports, ideas and pull requests are welcome.</p>
-              <a class="support-link" href="https://github.com/missing-elements/h5p-offline-player" rel="noopener">github.com/missing-elements/h5p-offline-player ↗</a>
-            </li>
-          </ul>
-          <p class="support-note">Donations are gifts, not purchases: nothing unlocks, and the service stays the same for everyone.</p>
-        </section>
       </main>
 
       <footer class="footer">
@@ -538,7 +480,7 @@
             <img src="/favicon.svg" alt="" width="48" height="48" />
             <span>
               <span class="brand-name">embed-my</span>
-              <span class="footer-tagline">Your content, anywhere</span>
+              <span class="footer-tagline">Test your activities here</span>
             </span>
           </a>
           <p>
@@ -554,9 +496,7 @@
           <nav class="footer-links" aria-label="More">
             <a href="/docs/">Guides</a>
             <a href="/docs/privacy-and-security">Privacy and security</a>
-            <a href="/docs/accessibility">Accessibility</a>
             <a href="/docs/troubleshooting">Help</a>
-            <a href="#support">Support</a>
             <a href="/player">Player</a>
             <a href="https://github.com/embed-my">GitHub</a>
           </nav>

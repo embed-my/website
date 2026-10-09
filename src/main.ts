@@ -1,4 +1,4 @@
-import { EXAMPLE, FALLBACK_TITLE, FORMATS, PLAYER_URL, PREVIEW_STALL_MS, SAMPLES_ORIGIN, SITE_ORIGIN } from './config'
+import { EMBED_PATH, EXAMPLE, FALLBACK_TITLE, PLAYER_URL, PREVIEW_STALL_MS, SAMPLES_ORIGIN, SITE_ORIGIN } from './config'
 import { buildSnippet, displayFlags, embedUrl, titleFromUrl } from './snippet'
 import { allOf, byId } from './ui/dom'
 import { createOptions } from './ui/options'
@@ -21,12 +21,10 @@ const previewTitle = byId('h-preview', HTMLElement)
 
 const options = createOptions(
   {
-    formats: allOf(document, 'input[name="format"]', HTMLInputElement),
     title: byId('opt-title', HTMLInputElement),
     copyright: byId('opt-copyright', HTMLInputElement),
     reuse: byId('opt-reuse', HTMLInputElement),
-    minHeight: byId('opt-height', HTMLInputElement),
-    xapi: byId('opt-xapi', HTMLInputElement)
+    minHeight: byId('opt-height', HTMLInputElement)
   },
   (change) => {
     renderSnippet()
@@ -60,15 +58,14 @@ const board = createSnippetBoard({
 })
 
 function renderSnippet(): void {
-  const { format, title, display, minHeight, xapiOrigin } = options.read()
+  const { title, display, minHeight } = options.read()
   const tokens = buildSnippet({
     site: SITE_ORIGIN,
-    path: FORMATS[format].path,
+    path: EMBED_PATH,
     src: src ?? EXAMPLE.src,
     title: title || (src ? titleFromUrl(src) || FALLBACK_TITLE : EXAMPLE.title),
     display,
-    minHeight,
-    xapiOrigin
+    minHeight
   })
   board.show(tokens, { example: src === null })
 }

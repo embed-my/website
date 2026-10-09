@@ -1,4 +1,4 @@
-/** Step 2: the link to the package, and the sample buttons that fill it in. */
+/** Step 1: the link to the package, and the sample buttons that fill it in. */
 
 export interface PackageFormParts {
   form: HTMLFormElement

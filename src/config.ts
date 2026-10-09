@@ -24,14 +24,9 @@ export const PLAYER_URL = import.meta.env.VITE_PLAYER_URL || `${SITE_ORIGIN}/h5p
  */
 export const SAMPLES_ORIGIN = new URL(PLAYER_URL).origin
 
-/** The formats the cards offer, keyed by their radio button's value, with the path of each one's embed page. */
-export const FORMATS = {
-  h5p: { path: '/h5p' },
-} as const
+/** The embed page's path on the player origin. */
+export const EMBED_PATH = '/h5p'
 
-export type Format = keyof typeof FORMATS
-
-export const isFormat = (value: string): value is Format => Object.hasOwn(FORMATS, value)
 
 /** What the snippet shows before a link is pasted: the example from the embedding guide. */
 export const EXAMPLE = {

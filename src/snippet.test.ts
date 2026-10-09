@@ -1,17 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { EXAMPLE, FORMATS, SITE_ORIGIN } from './config'
-import { buildSnippet, displayFlags, embedUrl, originOf, snippetText, titleFromUrl, type SnippetRequest } from './snippet'
+import { EMBED_PATH, EXAMPLE, SITE_ORIGIN } from './config'
+import { buildSnippet, displayFlags, embedUrl, snippetText, titleFromUrl, type SnippetRequest } from './snippet'
 
 const NO_TOOLBAR = { copyright: false, reuse: false }
 
 const request = (overrides: Partial<SnippetRequest> = {}): SnippetRequest => ({
   site: SITE_ORIGIN,
-  path: FORMATS.h5p.path,
+  path: EMBED_PATH,
   src: EXAMPLE.src,
   title: EXAMPLE.title,
   display: NO_TOOLBAR,
   minHeight: 540,
-  xapiOrigin: null,
   ...overrides
 })
 
@@ -31,11 +30,9 @@ describe('buildSnippet', () => {
     )
   })
 
-  it('adds the display flags and the xAPI origin, with the ampersands escaped for HTML', () => {
-    const text = snippetText(
-      buildSnippet(request({ display: { copyright: true, reuse: false }, xapiOrigin: 'https://school.example' }))
-    )
-    expect(text).toContain('quiz.h5p&amp;frame&amp;copyright&amp;xapi=https://school.example"')
+  it('adds the display flags, with the ampersands escaped for HTML', () => {
+    const text = snippetText(buildSnippet(request({ display: { copyright: true, reuse: false } })))
+    expect(text).toContain('quiz.h5p&amp;frame&amp;copyright"')
   })
 
   it('escapes the title, so a quote cannot end the attribute', () => {
@@ -64,8 +61,8 @@ describe('displayFlags', () => {
 
 describe('embedUrl', () => {
   it('encodes what would break the package link, leaves `:` and `/` readable, and keeps flags bare', () => {
-    expect(embedUrl('https://player.example/embed', 'https://a.example/x y.h5p?v=1&k=2', ['frame'], { xapi: 'https://b.example' })).toBe(
-      'https://player.example/embed?src=https://a.example/x%20y.h5p%3Fv%3D1%26k%3D2&frame&xapi=https://b.example'
+    expect(embedUrl('https://player.example/embed', 'https://a.example/x y.h5p?v=1&k=2', ['frame'])).toBe(
+      'https://player.example/embed?src=https://a.example/x%20y.h5p%3Fv%3D1%26k%3D2&frame'
     )
   })
 
@@ -74,20 +71,6 @@ describe('embedUrl', () => {
     const params = new URL(embedUrl('https://player.example/embed', src, ['frame'])).searchParams
     expect(params.get('src')).toBe(src)
     expect(params.has('frame')).toBe(true)
-  })
-})
-
-describe('originOf', () => {
-  it('cuts a page address down to its origin', () => {
-    expect(originOf(' https://school.example/courses/1?x=y ')).toBe('https://school.example')
-    expect(originOf('http://localhost:5173/')).toBe('http://localhost:5173')
-  })
-
-  it('refuses what is not an http(s) address', () => {
-    expect(originOf('')).toBeNull()
-    expect(originOf('school.example')).toBeNull()
-    expect(originOf('javascript:alert(1)')).toBeNull()
-    expect(originOf('data:text/html,hi')).toBeNull()
   })
 })
 

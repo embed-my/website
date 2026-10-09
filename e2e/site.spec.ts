@@ -29,7 +29,7 @@ test('the home page previews a package and writes its snippet', async ({ page })
   await page.goto('/')
 
   await page.getByLabel(/Link to the/).fill(SAMPLE)
-  await page.getByRole('button', { name: 'Preview' }).click()
+  await page.getByRole('button', { name: 'Check' }).click()
 
   // The preview frame says hello, then reports a height, which becomes the snippet's minimum height.
   await expect(page.locator('#stage')).toHaveAttribute('data-state', 'ready', { timeout: 40_000 })
@@ -54,7 +54,7 @@ test('the home page previews a package and writes its snippet', async ({ page })
 test('the lines under the preview say where missing libraries came from', async ({ page }) => {
   await page.goto('/')
   await page.getByLabel(/Link to the/).fill(`${PLAYER_ORIGIN}/samples/quiz-without-libraries.h5p`)
-  await page.getByRole('button', { name: 'Preview' }).click()
+  await page.getByRole('button', { name: 'Check' }).click()
   await expect(page.locator('#stage')).toHaveAttribute('data-state', 'ready', { timeout: 60_000 })
   const line = page.locator('#checks li').filter({ hasText: 'Exported without its libraries' })
   await expect(line).toHaveAttribute('data-tone', 'info')
@@ -66,7 +66,7 @@ test('a link no browser can fetch ends the wait and says what to check', async (
   await page.goto('/')
   const minHeight = await page.locator('#opt-height').inputValue()
   await page.getByLabel(/Link to the/).fill(`${PLAYER_ORIGIN}/samples/nothing.h5p`)
-  await page.getByRole('button', { name: 'Preview' }).click()
+  await page.getByRole('button', { name: 'Check' }).click()
   const stage = page.locator('#stage')
   await expect(stage).toHaveAttribute('data-state', 'failed', { timeout: 40_000 })
   await expect(page.locator('#stage-status')).toHaveText('The preview could not play this link. See below for what to check.')
@@ -155,7 +155,7 @@ for (const scheme of ['light', 'dark'] as const) {
       await page.goto(path)
       if (path === '/') {
         await page.getByLabel(/Link to the/).fill(SAMPLE)
-        await page.getByRole('button', { name: 'Preview' }).click()
+        await page.getByRole('button', { name: 'Check' }).click()
         await expect(page.locator('#checks li').filter({ hasText: 'Ready in' })).toBeVisible({ timeout: 40_000 })
         // The illustration plays once; check it where it ends.
         await page.evaluate(() => document.getAnimations().forEach((animation) => animation.finish()))

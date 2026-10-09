@@ -23,11 +23,8 @@ const DOCS = new URL('../docs/', import.meta.url).pathname
 
 /** The guides in the order the index lists them, with the line the index says about each. */
 const GUIDES = [
-  ['embedding', 'Display options, the resizer script, browser support, sites that restrict iframes, and a pre-publish checklist'],
   ['hosting-packages', 'Where to put the .h5p file, CORS and Range headers, packages without libraries, slow video'],
-  ['privacy-and-security', 'What the iframe isolates, what is saved, cookies, and what you still need to protect'],
-  ['results-and-xapi', 'Why scores do not reach a gradebook, and how a page can receive xAPI statements'],
-  ['accessibility', 'What Embed My provides and what activity authors must check'],
+  ['privacy-and-security', 'What the iframe isolates, what is saved, cookies, the GDPR, and what you still need to protect'],
   ['troubleshooting', 'Common problems and how to report one']
 ]
 
@@ -114,7 +111,7 @@ const page = ({ name, title, description, body }) => `<!doctype html>
           <img class="brand-mark" src="/favicon.svg" alt="" width="32" height="32" />
           <span class="brand-text">
             <span class="brand-name">embed-my</span>
-            <span class="brand-tagline">Your content, anywhere</span>
+            <span class="brand-tagline">Test your activities here</span>
           </span>
         </a>
         <nav aria-label="Site">
@@ -221,8 +218,8 @@ await writeFile(
   page({
     name: 'index',
     title: 'Guides',
-    description: 'How to embed an H5P activity with Embed My: hosting the package, display options, privacy, results, accessibility and troubleshooting.',
-    body: `<h1>Guides</h1>\n<p>Everything about putting an H5P activity on a page with Embed My. Start with the first one.</p>\n<ul class="doc-index">\n${index}\n</ul>`
+    description: 'How to check an H5P package with Embed My, and optionally embed it: hosting the file, display options, privacy, results, accessibility and troubleshooting.',
+    body: `<h1>Guides</h1>\n<p>Everything about checking an H5P package with Embed My, and about the optional snippet. Start with the first one.</p>\n<ul class="doc-index">\n${index}\n</ul>`
   })
 )
 

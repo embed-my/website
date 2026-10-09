@@ -31,34 +31,11 @@ export function displayFlags({ copyright, reuse }: DisplayOptions): string[] {
 const encodeQueryValue = (value: string) => encodeURIComponent(value).replace(/%3A/gi, ':').replace(/%2F/gi, '/')
 
 /**
- * An embed page's address for a package: `src` first, then the bare flags, then named values.
- * Written out by hand, because URLSearchParams would turn a bare flag into `frame=`.
+ * An embed page's address for a package: `src` first, then the bare flags. Written out by hand,
+ * because URLSearchParams would turn a bare flag into `frame=`.
  */
-export function embedUrl(
-  page: string,
-  src: string,
-  flags: readonly string[] = [],
-  values: Readonly<Record<string, string>> = {}
-): string {
-  const params = [
-    `src=${encodeQueryValue(src)}`,
-    ...flags,
-    ...Object.entries(values).map(([name, value]) => `${name}=${encodeQueryValue(value)}`)
-  ]
-  return `${page}?${params.join('&')}`
-}
-
-/**
- * The origin of an http(s) address, or `null` for anything else. The player posts xAPI statements
- * to exactly this origin, so a full page address is cut down to it.
- */
-export function originOf(value: string): string | null {
-  try {
-    const url = new URL(value.trim())
-    return url.protocol === 'https:' || url.protocol === 'http:' ? url.origin : null
-  } catch {
-    return null
-  }
+export function embedUrl(page: string, src: string, flags: readonly string[] = []): string {
+  return `${page}?${[`src=${encodeQueryValue(src)}`, ...flags].join('&')}`
 }
 
 /** A title made from a package's file name, `…/week-1-quiz.h5p` → `Week 1 quiz`; `''` when there is none. */
@@ -90,7 +67,7 @@ export interface Token {
 export interface SnippetRequest {
   /** The origin the snippet points at. */
   site: string
-  /** The embed page's path there, by format: `/h5p`. */
+  /** The embed page's path there: `/h5p`. */
   path: string
   /** The package's address. */
   src: string
@@ -99,16 +76,14 @@ export interface SnippetRequest {
   display: DisplayOptions
   /** The frame's height in CSS pixels, for a site that strips the sizing script. */
   minHeight: number
-  /** The origin the frame posts xAPI statements to, or `null` for none. */
-  xapiOrigin: string | null
 }
 
 const ENTITIES: Readonly<Record<string, string>> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }
 const escapeAttribute = (value: string) => value.replace(/[&<>"]/g, (char) => ENTITIES[char] ?? char)
 
 /** The snippet as tokens: the iframe, and the sizing script that keeps it the height of the activity. */
-export function buildSnippet({ site, path, src, title, display, minHeight, xapiOrigin }: SnippetRequest): Token[] {
-  const url = embedUrl(site + path, src, displayFlags(display), xapiOrigin ? { xapi: xapiOrigin } : {})
+export function buildSnippet({ site, path, src, title, display, minHeight }: SnippetRequest): Token[] {
+  const url = embedUrl(site + path, src, displayFlags(display))
   const tag = (text: string): Token => ({ kind: 'tag', text })
   const attribute = (name: string, value: string, kind: 'value' | 'url' = 'value'): Token[] => [
     { kind: 'attr', text: name },

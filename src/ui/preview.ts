@@ -2,7 +2,7 @@ import { describeFailure, describePackage, readPlayerMessage, type Check } from 
 import { HELLO, readResizerMessage } from '../resizer'
 
 /**
- * Step 3, second half: the preview. The frame loads the player's embed page and is sized by the same resizer
+ * Step 2: the preview. The frame loads the player's embed page and is sized by the same resizer
  * protocol `/h5p-resizer.js` handles on a visitor's page. The stage's `data-state` drives
  * src/styles/preview.css. Under the frame, the lines the embed page's report turns into: what
  * the package is, whether the host streams it, where its libraries came from, how long it took.

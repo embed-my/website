@@ -1,5 +1,5 @@
-/* Step 3, first half: the display options, a compact panel above the preview they change. Each
-   option is label, control, then its hint in smaller type. */
+/* Step 3, first half: the display options, a compact panel above the snippet they change, and the
+   preview above them. Each option is label, control, then its hint in smaller type. */
 
 .options {
   display: grid;
@@ -105,22 +105,4 @@
 
 .with-unit span {
   color: var(--muted);
-}
-
-.dev {
-  grid-column: 1 / -1;
-}
-
-.dev summary {
-  width: max-content;
-  max-width: 100%;
-  color: var(--accent);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.dev .option {
-  max-width: 34rem;
-  margin-top: 0.75rem;
 }

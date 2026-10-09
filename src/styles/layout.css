@@ -245,49 +245,12 @@
   color: var(--line-strong);
 }
 
-.flow-code {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+/* What the player found, as the list under the preview draws it, smaller. Two classes, to win over
+   `.checks`, which preview.css sets later. */
+.flow-card.flow-checks {
+  margin: 0;
   padding: 0.7rem 0.9rem;
-  background: var(--board);
-  color: var(--board-ink);
-}
-
-.flow-code code {
-  min-width: 0;
-  overflow: hidden;
-  font: 0.8rem/1.5 var(--font-mono);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* The copy button, which the loop presses: "Copy" gives way to "Copied". */
-.flow-copy {
-  position: relative;
-  flex: none;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid var(--board-dim);
-  border-radius: 999px;
-  color: var(--board-ink);
-  font: 700 0.75rem/1 var(--font-body);
-}
-
-.flow-copy-idle {
-  opacity: 0;
-}
-
-.flow-copy-done {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--ok);
-}
-
-.flow-copy:has(.flow-copy-done) {
-  border-color: var(--ok);
+  font-size: 0.85rem;
 }
 
 /* The visitor's page, in somebody else's colours. */
@@ -427,14 +390,6 @@
   animation: flow-snippet var(--play) ease-in-out 1 both;
 }
 
-.flow-copy-idle {
-  animation: flow-copy-idle var(--play) steps(1) 1 both;
-}
-
-.flow-copy-done {
-  animation: flow-copy-done var(--play) steps(1) 1 both;
-}
-
 .flow-arrow-2 {
   animation: flow-arrow-2 var(--play) ease-in-out 1 both;
 }
@@ -469,16 +424,6 @@
 @keyframes flow-snippet {
   0%, 15% { opacity: 0; transform: translateY(8px); }
   21%, 100% { opacity: 1; transform: none; }
-}
-
-@keyframes flow-copy-idle {
-  0%, 29% { opacity: 1; }
-  30%, 100% { opacity: 0; }
-}
-
-@keyframes flow-copy-done {
-  0%, 29% { opacity: 0; }
-  30%, 100% { opacity: 1; }
 }
 
 @keyframes flow-arrow-2 {
@@ -692,53 +637,6 @@
 
 .faq-more {
   color: var(--muted);
-}
-
-/* ---------------------------------------------------------------- support */
-
-/* Ways to give something back, each a card with its link at the foot. */
-.support {
-  display: grid;
-  gap: var(--space-block);
-  padding-block: var(--space-section);
-  border-top: 1px solid var(--line);
-}
-
-.support-ways {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.support-ways li {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 0.5rem;
-  padding: var(--space-inner) 1.5rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.support-ways strong {
-  color: var(--fg);
-  font: 600 1rem/1.3 var(--font-display);
-}
-
-.support-link {
-  justify-self: start;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
-
-.support-note {
-  color: var(--muted);
-  font-size: 0.92rem;
 }
 
 /* ---------------------------------------------------------------- footer */

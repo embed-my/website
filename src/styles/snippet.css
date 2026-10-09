@@ -1,4 +1,4 @@
-/* Step 4: the snippet on its board, and what to do with it. The token classes are the kinds in
+/* Step 3, second half: the snippet on its board, and what to do with it. The token classes are the kinds in
    src/snippet.ts; attribute values carry no class. */
 
 .board {
@@ -101,4 +101,23 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.25rem;
+}
+
+/* Step 3's notice: what the snippet is and is not, before the options. */
+.no-guarantee {
+  margin: 0.75rem 0 1.25rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--warn);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.no-guarantee p {
+  margin: 0;
+}
+
+.no-guarantee-title {
+  margin-bottom: 0.35rem !important;
+  font-weight: 700;
 }
