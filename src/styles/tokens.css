@@ -25,10 +25,10 @@
      marked in its orange. */
   --board: #fbfaff;
   --board-ink: #1c1a27;
-  --board-dim: #77738a;
+  --board-dim: #5d596f;
   --board-line: #dad7e4;
-  --board-attr: #2b76b1;
-  --board-mark: #9a4d12;
+  --board-attr: #1a5f96;
+  --board-mark: #8a440f;
   --board-mark-bg: rgb(255 208 96 / 0.3);
 
   /* Which of the theme switch's two icons shows: the theme a press would bring. */

@@ -36,9 +36,10 @@
   tab-size: 2;
 }
 
-/* Before a link is pasted the board shows the example, a little dimmed: it still copies. */
+/* Before a link is pasted the board shows the example, a little dimmed: it still copies. Dimmed no
+   further than its dim tokens keep 4.5:1. */
 .board[data-example] pre {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .tk-tag {

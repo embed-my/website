@@ -34,6 +34,9 @@ export interface Preview {
 
 type StageState = 'empty' | 'loading' | 'ready' | 'stalled' | 'failed'
 
+/** How each tone of a line is spoken. */
+const TONE_WORDS: Record<Check['tone'], string> = { ok: 'Good', info: 'Note', warn: 'Warning', bad: 'Problem' }
+
 export function createPreview({ stage, frame, status, measured, report, checks }: PreviewParts, settings: PreviewSettings): Preview {
   let stallTimer = 0
   let alive = false
@@ -89,7 +92,11 @@ export function createPreview({ stage, frame, status, measured, report, checks }
       ...lines.map((line) => {
         const item = document.createElement('li')
         item.dataset.tone = line.tone
-        item.append(line.text)
+        // The colour and the shape say the tone to the eye; this says it to a screen reader.
+        const tone = document.createElement('span')
+        tone.className = 'sr-only'
+        tone.textContent = `${TONE_WORDS[line.tone]}: `
+        item.append(tone, line.text)
         if (line.link) {
           const anchor = document.createElement('a')
           anchor.href = line.link.href

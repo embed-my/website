@@ -41,6 +41,7 @@
 
 .doc-nav a {
   display: block;
+  min-block-size: 24px;
   color: var(--muted);
   text-decoration: none;
 }

@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import { expect, test, type Page } from '@playwright/test'
 
 /*
@@ -44,7 +46,7 @@ test('the home page previews a package and writes its snippet', async ({ page })
   await expect(checks.filter({ hasText: 'Reachable from a browser' })).toHaveAttribute('data-tone', 'ok')
   await expect(checks.filter({ hasText: /Streams in place|Downloaded whole/ })).toContainText('MB')
   await expect(checks.filter({ hasText: 'Carries its libraries' })).toHaveAttribute('data-tone', 'ok')
-  await expect(checks.filter({ hasText: /^Ready in \d+\.\d s/ })).toHaveCount(1)
+  await expect(checks.filter({ hasText: /Ready in \d+\.\d s/ })).toHaveCount(1)
 
   expect(problems, problems.join('\n')).toEqual([])
 })
@@ -136,3 +138,37 @@ test('the player page is served, linked from the top bar and under the policy', 
   await expect(page.getByRole('link', { name: 'github.com/missing-elements/h5p-offline-player', exact: true })).toBeVisible()
   expect(problems, problems.join('\n')).toEqual([])
 })
+
+/*
+ * Accessibility, by axe-core's WCAG 2.2 A and AA rules, on every kind of page in both themes. The
+ * home page is checked with a package previewed, so the lines under the frame are in it. The
+ * frame is the player origin's and is left out: its content is the package's.
+ */
+const AXE = readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'), 'utf8')
+
+for (const scheme of ['light', 'dark'] as const) {
+  test(`every kind of page passes axe in the ${scheme} theme`, async ({ page }) => {
+    test.setTimeout(90_000)
+    await page.emulateMedia({ colorScheme: scheme })
+    const found: string[] = []
+    for (const path of ['/', '/docs/', '/docs/hosting-packages', '/player', '/404.html']) {
+      await page.goto(path)
+      if (path === '/') {
+        await page.getByLabel(/Link to the/).fill(SAMPLE)
+        await page.getByRole('button', { name: 'Preview' }).click()
+        await expect(page.locator('#checks li').filter({ hasText: 'Ready in' })).toBeVisible({ timeout: 40_000 })
+        // The illustration plays once; check it where it ends.
+        await page.evaluate(() => document.getAnimations().forEach((animation) => animation.finish()))
+      }
+      // Evaluated rather than added as a script tag, which the pages' policy would refuse.
+      await page.evaluate(AXE)
+      const violations = await page.evaluate(async () => {
+        const axe = (window as unknown as { axe: { run: (context: object, options: object) => Promise<{ violations: { id: string; nodes: { target: string[] }[] }[] }> } }).axe
+        const result = await axe.run({ exclude: [['iframe']] }, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] })
+        return result.violations.map((violation) => `${violation.id}: ${violation.nodes.map((node) => node.target.join(' ')).join(', ')}`)
+      })
+      found.push(...violations.map((violation) => `${path} ${violation}`))
+    }
+    expect(found, found.join('\n')).toEqual([])
+  })
+}

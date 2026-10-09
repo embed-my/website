@@ -291,7 +291,10 @@
 }
 
 /* The visitor's page, in somebody else's colours. */
+/* A light page in both themes, like most sites a snippet lands on: the tokens it uses are the light ones. */
 .flow-site {
+  --ok: #1d7a42;
+
   overflow: hidden;
   background: #fbf7f0;
   color: #2b2622;

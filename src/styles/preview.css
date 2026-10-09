@@ -139,39 +139,51 @@
   line-height: 1.45;
 }
 
+/* Each tone has its own shape as well as its colour, so it reads without colour: a tick, an i, an
+   exclamation mark, a cross. The mark is decoration (`/ ''`); the tone is spoken from the hidden
+   word src/ui/preview.ts puts first in the line. */
 .checks li {
   --dot: var(--muted);
+  --mark: '';
 
   position: relative;
-  padding-left: 1.3rem;
+  padding-left: 1.6rem;
   color: var(--fg);
 }
 
 .checks li::before {
-  content: '';
+  content: var(--mark) / '';
   position: absolute;
-  top: 0.5em;
-  left: 0.15rem;
-  width: 0.6rem;
-  height: 0.6rem;
+  top: 0.12em;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
   border-radius: 50%;
   background: var(--dot);
+  color: var(--surface);
+  font: 700 0.72rem/1 var(--font-body);
 }
 
 .checks li[data-tone='ok'] {
   --dot: var(--ok);
+  --mark: '✓';
 }
 
 .checks li[data-tone='info'] {
   --dot: var(--accent-2);
+  --mark: 'i';
 }
 
 .checks li[data-tone='warn'] {
   --dot: var(--warn);
+  --mark: '!';
 }
 
 .checks li[data-tone='bad'] {
   --dot: var(--danger);
+  --mark: '✕';
 }
 
 .checks a {
