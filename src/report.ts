@@ -196,6 +196,9 @@ export function describeFailure(code: string, message: string): Check {
       }
     case 'quota':
       return { tone: 'bad', text: "No room: this browser's storage is full, so the package could not be unpacked." }
+    case 'refused':
+      // The embed page turned the address down before loading anything, and says why.
+      return { tone: 'bad', text: message || 'The player refused this address.', link: fetching }
     default:
       return { tone: 'bad', text: `The content did not start${message ? `: ${message}` : '.'}` }
   }

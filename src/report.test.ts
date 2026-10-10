@@ -116,6 +116,7 @@ describe('describeFailure', () => {
   it('passes the player’s own words on for the rest', () => {
     expect(describeFailure('runtime', 'H5P.Foo is not a function').text).toBe('The content did not start: H5P.Foo is not a function')
     expect(describeFailure('network', '').text).toBe('The file could not be fetched.')
+    expect(describeFailure('refused', 'The package address is not a URL.').text).toBe('The package address is not a URL.')
   })
 })
 

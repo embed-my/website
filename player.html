@@ -100,6 +100,10 @@
               <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-libraries" rel="noopener">@missing-elements/h5p-libraries</a>, every hub content type's libraries, for packages that ship without their own</td>
             </tr>
             <tr>
+              <th>Self-hosted embeds</th>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-embed" rel="noopener">@missing-elements/h5p-embed</a> (MIT), the embed page as a static site for a domain of your own</td>
+            </tr>
+            <tr>
               <th>Demo site</th>
               <td><a href="https://h5p-offline-player.vercel.app/" rel="noopener">h5p-offline-player.vercel.app</a></td>
             </tr>
@@ -121,12 +125,17 @@
 
           <h2 id="run-it-yourself">Run it yourself</h2>
           <p>
-            Embed My is the way to use the player with nothing installed. If you would rather have nothing from anyone,
-            put the player on your own site: it is three files and a line of HTML, and the
+            For embeds an organisation controls, write the same embed page as a static site with
+            <a href="https://github.com/missing-elements/h5p-offline-player/tree/main/packages/embed#readme" rel="noopener">h5p-embed</a>
+            and deploy it to a domain of your own. Snippets then point at that domain, and no third party sits between
+            your learners and your content. It can also limit which hosts packages come from and which sites may frame it.
+          </p>
+          <pre><code>npx @missing-elements/h5p-embed h5p-player</code></pre>
+          <p>
+            To put the player straight into your own pages instead, the
             <a href="https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md" rel="noopener">setup guide</a>
-            covers each way to do it. Your packages stay as they are. The
-            <a href="https://github.com/embed-my/embed-my.github.io" rel="noopener">player origin</a> of Embed My is a
-            small example of exactly that.
+            covers each way to do it. Your packages stay as they are either way. Embed My's own
+            <a href="https://github.com/embed-my/embed-my.github.io" rel="noopener">player origin</a> is h5p-embed's page.
           </p>
 
           <h2 id="licences">Licences</h2>
