@@ -107,7 +107,7 @@ const page = ({ name, title, description, body }) => `<!doctype html>
 
     <div class="wrap">
       <header class="topbar">
-        <a class="brand" href="/" aria-label="Embed My, home">
+        <a class="brand" href="/">
           <img class="brand-mark" src="/favicon.svg" alt="" width="32" height="32" />
           <span class="brand-text">
             <span class="brand-name">embed-my</span>

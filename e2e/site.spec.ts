@@ -31,9 +31,13 @@ test('the home page previews a package and writes its snippet', async ({ page })
   await page.getByLabel(/Link to the/).fill(SAMPLE)
   await page.getByRole('button', { name: 'Check' }).click()
 
-  // The preview frame says hello, then reports a height, which becomes the snippet's minimum height.
+  // The preview frame says hello, then reports a height, which becomes the snippet's starting height.
   await expect(page.locator('#stage')).toHaveAttribute('data-state', 'ready', { timeout: 40_000 })
   await expect(page.locator('#measured')).toContainText('Measured height')
+  // The measurement is the snippet's starting height, which the sizing script can lower as well as raise.
+  const measured = (await page.locator('#measured').textContent())?.match(/(\d+) px/)?.[1]
+  await expect(page.locator('#code')).toContainText(`height: ${measured}px`)
+  await expect(page.locator('#code')).not.toContainText('min-height')
 
   const code = page.locator('#code')
   await expect(code).toContainText(`https://embed-my.github.io/h5p?src=${SAMPLE}`)
@@ -64,7 +68,6 @@ test('the lines under the preview say where missing libraries came from', async 
 
 test('a link no browser can fetch ends the wait and says what to check', async ({ page }) => {
   await page.goto('/')
-  const minHeight = await page.locator('#opt-height').inputValue()
   await page.getByLabel(/Link to the/).fill(`${PLAYER_ORIGIN}/samples/nothing.h5p`)
   await page.getByRole('button', { name: 'Check' }).click()
   const stage = page.locator('#stage')
@@ -74,7 +77,7 @@ test('a link no browser can fetch ends the wait and says what to check', async (
   await page.waitForTimeout(1_000)
   await expect(stage).toHaveAttribute('data-state', 'failed')
   await expect(page.locator('#measured')).toBeHidden()
-  await expect(page.locator('#opt-height')).toHaveValue(minHeight)
+  await expect(page.locator('#code')).toContainText('height: 540px')
   const line = page.locator('#checks li')
   await expect(line).toHaveCount(1)
   await expect(line).toHaveAttribute('data-tone', 'bad')

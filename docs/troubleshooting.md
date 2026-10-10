@@ -17,7 +17,7 @@ An export without its libraries normally plays anyway: the player takes them fro
 
 ## The activity is cut off or leaves blank space
 
-The resizer script from the generated snippet is missing or was stripped by your site. Use the platform's dedicated **Embed**, **Custom HTML**, or **iframe** block, which usually keeps scripts, or ask the site administrator to allow the script. If scripts cannot be used at all, set the minimum height on embed-my.org to the height the preview measures, which it fills in for you.
+The resizer script from the generated snippet is missing or was stripped by your site. Use the platform's dedicated **Embed**, **Custom HTML**, or **iframe** block, which usually keeps scripts, or ask the site administrator to allow the script. If scripts cannot be used at all, the frame keeps the height the preview measured; raise the `height` in the snippet's `style` if the activity needs more room on your page.
 
 ## A video is slow to start
 

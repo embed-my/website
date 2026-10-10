@@ -1,4 +1,4 @@
-import { EMBED_PATH, EXAMPLE, FALLBACK_TITLE, PLAYER_URL, PREVIEW_STALL_MS, SAMPLES_ORIGIN, SITE_ORIGIN } from './config'
+import { DEFAULT_HEIGHT, EMBED_PATH, EXAMPLE, FALLBACK_TITLE, PLAYER_URL, PREVIEW_STALL_MS, SAMPLES_ORIGIN, SITE_ORIGIN } from './config'
 import { buildSnippet, displayFlags, embedUrl, titleFromUrl } from './snippet'
 import { allOf, byId } from './ui/dom'
 import { createOptions } from './ui/options'
@@ -15,6 +15,9 @@ import { initThemeToggle } from './ui/theme-toggle'
 /** The package being embedded, once a link has been sent; until then the snippet is the example. */
 let src: string | null = null
 
+/** The snippet's starting height: the preview's latest measurement of the activity, or the default. */
+let height: number = DEFAULT_HEIGHT
+
 const stage = byId('stage', HTMLElement)
 
 const previewTitle = byId('h-preview', HTMLElement)
@@ -23,8 +26,7 @@ const options = createOptions(
   {
     title: byId('opt-title', HTMLInputElement),
     copyright: byId('opt-copyright', HTMLInputElement),
-    reuse: byId('opt-reuse', HTMLInputElement),
-    minHeight: byId('opt-height', HTMLInputElement)
+    reuse: byId('opt-reuse', HTMLInputElement)
   },
   (change) => {
     renderSnippet()
@@ -45,7 +47,11 @@ const preview = createPreview(
   {
     playerOrigin: new URL(PLAYER_URL).origin,
     stallAfterMs: PREVIEW_STALL_MS,
-    onHeight: (height) => options.suggestMinHeight(height)
+    onHeight(measured) {
+      if (measured === height) return
+      height = measured
+      renderSnippet()
+    }
   }
 )
 
@@ -58,14 +64,14 @@ const board = createSnippetBoard({
 })
 
 function renderSnippet(): void {
-  const { title, display, minHeight } = options.read()
+  const { title, display } = options.read()
   const tokens = buildSnippet({
     site: SITE_ORIGIN,
     path: EMBED_PATH,
     src: src ?? EXAMPLE.src,
     title: title || (src ? titleFromUrl(src) || FALLBACK_TITLE : EXAMPLE.title),
     display,
-    minHeight
+    height
   })
   board.show(tokens, { example: src === null })
 }
@@ -87,6 +93,7 @@ initPackageForm(
     samplesOrigin: SAMPLES_ORIGIN,
     onPackage(value) {
       src = value
+      height = DEFAULT_HEIGHT
       renderSnippet()
       loadPreview()
       const motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'

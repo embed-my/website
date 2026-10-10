@@ -23,8 +23,8 @@ export interface PreviewSettings {
   playerOrigin: string
   /** How long the frame may stay silent before the stage offers to open it on its own. */
   stallAfterMs: number
-  /** Called with each height the activity reports; says whether the snippet took it as its minimum height. */
-  onHeight: (height: number) => boolean
+  /** Called with each height the activity reports once it is up; the snippet starts at that height. */
+  onHeight: (height: number) => void
 }
 
 export interface Preview {
@@ -76,13 +76,10 @@ export function createPreview({ stage, frame, status, measured, report, checks }
     status.append(link)
   }
 
-  // The measured height goes to the options, which take it as the minimum height unless the
-  // visitor typed one; the line under the frame says which happened.
+  // The measured height becomes the snippet's starting height; the line under the frame says so.
   const showHeight = (height: number) => {
-    const taken = settings.onHeight(height)
-    measured.textContent = taken
-      ? `Measured height: ${height} px, set as the snippet's minimum height.`
-      : `Measured height: ${height} px. The snippet keeps the minimum height you typed.`
+    settings.onHeight(height)
+    measured.textContent = `Measured height: ${height} px, the snippet's starting height. On your page the sizing script follows the activity from there.`
     measured.hidden = false
   }
 

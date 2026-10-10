@@ -66,7 +66,7 @@
 
     <div class="wrap">
       <header class="topbar">
-        <a class="brand" href="/" aria-label="Embed My, home">
+        <a class="brand" href="/">
           <img class="brand-mark" src="/favicon.svg" alt="" width="32" height="32" />
           <span class="brand-text">
             <span class="brand-name">embed-my</span>
@@ -242,14 +242,6 @@
               </div>
               <span class="hint" id="opt-toolbar-hint">The bar H5P sites show under an activity, with the buttons you tick: Rights of use lists the licences in the package, Reuse lets visitors download it. Tick neither and there is no bar.</span>
             </div>
-            <div class="option">
-              <label class="field-label" for="opt-height">Minimum height</label>
-              <div class="with-unit">
-                <input type="number" id="opt-height" value="540" min="100" max="4000" inputmode="numeric" aria-describedby="opt-height-hint" />
-                <span>px</span>
-              </div>
-              <span class="hint" id="opt-height-hint">Filled in from the preview; type a height to keep your own. It applies only if your site strips the sizing script.</span>
-            </div>
           </div>
           <div class="board" id="board" data-example>
             <div class="board-bar">
@@ -262,7 +254,7 @@
             <pre><code id="code"></code></pre>
           </div>
           <div class="after">
-            <p>Paste it into your page's <strong>HTML</strong>, <strong>Embed</strong> or <strong>Custom HTML</strong> block and publish. The second line keeps the frame the height of the activity; if your site strips scripts, keep the iframe and the minimum height does the job.</p>
+            <p>Paste it into your page's <strong>HTML</strong>, <strong>Embed</strong> or <strong>Custom HTML</strong> block and publish. The second line keeps the frame the height of the activity; if your site strips scripts, keep the iframe, which keeps the height measured in the preview.</p>
             <p>Then open the published page in a private window and run through the activity once, as a visitor would.</p>
             <div class="after-links">
               <a href="/docs/privacy-and-security">Privacy and security</a>
@@ -288,7 +280,7 @@
               <strong>One script runs on your page, and it is sixty lines.</strong>
               The iframe is only a window. The <code>h5p-resizer.js</code> line is the one piece of code the snippet runs on
               your page itself: it sets the frame's height when the frame reports it, nothing else, and you can read it.
-              Leave it out and the frame keeps the minimum height.
+              Leave it out and the frame keeps the height measured in the preview.
             </li>
             <li>
               <strong>No cookies, no tracking, no learner records.</strong>
@@ -391,7 +383,7 @@
 
       <footer class="footer">
         <div class="footer-org">
-          <a class="footer-brand" href="/" aria-label="Embed My, home">
+          <a class="footer-brand" href="/">
             <img src="/favicon.svg" alt="" width="48" height="48" />
             <span>
               <span class="brand-name">embed-my</span>

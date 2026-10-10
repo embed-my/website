@@ -74,15 +74,18 @@ export interface SnippetRequest {
   /** The frame's accessible name. */
   title: string
   display: DisplayOptions
-  /** The frame's height in CSS pixels, for a site that strips the sizing script. */
-  minHeight: number
+  /**
+   * The frame's starting height in CSS pixels: the height measured in the preview. The sizing script
+   * replaces it with the content's own, up or down; a site that strips the script keeps it.
+   */
+  height: number
 }
 
 const ENTITIES: Readonly<Record<string, string>> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }
 const escapeAttribute = (value: string) => value.replace(/[&<>"]/g, (char) => ENTITIES[char] ?? char)
 
 /** The snippet as tokens: the iframe, and the sizing script that keeps it the height of the activity. */
-export function buildSnippet({ site, path, src, title, display, minHeight }: SnippetRequest): Token[] {
+export function buildSnippet({ site, path, src, title, display, height }: SnippetRequest): Token[] {
   const url = embedUrl(site + path, src, displayFlags(display))
   const tag = (text: string): Token => ({ kind: 'tag', text })
   const attribute = (name: string, value: string, kind: 'value' | 'url' = 'value'): Token[] => [
@@ -102,7 +105,7 @@ export function buildSnippet({ site, path, src, title, display, minHeight }: Sni
     newline,
     ...attribute('allow', 'fullscreen'),
     newline,
-    ...attribute('style', `width: 100%; min-height: ${minHeight}px; border: 0`),
+    ...attribute('style', `width: 100%; height: ${height}px; border: 0`),
     tag('\n></iframe>\n<script '),
     ...attribute('src', `${site}/h5p-resizer.js`),
     tag('></script>')

@@ -92,17 +92,3 @@
     transform: scale(1);
   }
 }
-
-.with-unit {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.with-unit input {
-  width: 6rem;
-}
-
-.with-unit span {
-  color: var(--muted);
-}

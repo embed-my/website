@@ -10,7 +10,7 @@ const request = (overrides: Partial<SnippetRequest> = {}): SnippetRequest => ({
   src: EXAMPLE.src,
   title: EXAMPLE.title,
   display: NO_TOOLBAR,
-  minHeight: 540,
+  height: 540,
   ...overrides
 })
 
@@ -23,7 +23,7 @@ describe('buildSnippet', () => {
         '  title="Sample quiz"',
         '  loading="lazy"',
         '  allow="fullscreen"',
-        '  style="width: 100%; min-height: 540px; border: 0"',
+        '  style="width: 100%; height: 540px; border: 0"',
         '></iframe>',
         '<script src="https://embed-my.github.io/h5p-resizer.js"></script>'
       ].join('\n')

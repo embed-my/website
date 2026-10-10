@@ -34,6 +34,9 @@ export const EXAMPLE = {
   title: 'Sample quiz',
 } as const
 
+/** The snippet's height before a preview has measured one. */
+export const DEFAULT_HEIGHT = 540
+
 /** The frame title when none was typed and the file name gives none. */
 export const FALLBACK_TITLE = 'Interactive activity'
 
