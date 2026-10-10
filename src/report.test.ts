@@ -84,13 +84,14 @@ describe('describePackage', () => {
     const cached = describePackage({ ...quiz, libraryBundle: { ...bundle, fromCache: true } }, { playerOrigin: PLAYER })
     expect(cached.find((line) => line.text.startsWith('Exported without'))?.text).toContain('already had')
 
-    const hub = describePackage(
-      { ...quiz, libraryBundle: { url: 'https://api.h5p.org/v1/content-types/H5P.Foo', origin: 'https://api.h5p.org', fromCache: false } },
+    // Only an address that names its own `libraries=` source gets here: the player has no other.
+    const elsewhere = describePackage(
+      { ...quiz, libraryBundle: { url: 'https://cdn.example.org/libraries.h5p', origin: 'https://cdn.example.org', fromCache: false } },
       { playerOrigin: PLAYER }
     )
-    const line = hub.find((item) => item.text.startsWith('Exported without'))
+    const line = elsewhere.find((item) => item.text.startsWith('Exported without'))
     expect(line?.tone).toBe('warn')
-    expect(line?.text).toContain('https://api.h5p.org')
+    expect(line?.text).toContain('https://cdn.example.org')
   })
 
   it('leaves out what it was not told', () => {

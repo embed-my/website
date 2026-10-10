@@ -30,7 +30,7 @@ The pages and the script are served by GitHub Pages. Like any web host, GitHub s
 
 H5P content itself may contact services named by the package, such as YouTube, Vimeo, Google Fonts, MathJax, or an organization-hosted media service. Review a package and its third-party content before publishing it.
 
-One request the frame can make on its own: a package exported without its libraries takes them from a bundle on the player origin, and for a content type that bundle lacks, from the H5P hub at `api.h5p.org`. That request names the content type, not the visitor, and is made only when the bundle falls short.
+The frame asks no one else for libraries. A package exported without its libraries takes them from a bundle on the player origin, and from nowhere else.
 
 ## Data protection
 

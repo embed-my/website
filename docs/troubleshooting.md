@@ -13,7 +13,7 @@ Check that:
 
 ## The activity works in my LMS but not in Embed My
 
-An export without its libraries normally plays anyway: the player takes them from its own bundle, then from the H5P hub. If the preview still names missing libraries, the package needs one the hub does not serve. Re-export a complete package, including libraries. See [Packages and library files](hosting-packages.md#packages-and-library-files).
+An export without its libraries normally plays anyway: the player takes them from its own bundle of the H5P hub's libraries. If the preview still names missing libraries, the package needs one the bundle does not carry, such as a newer version or one written for a single site. Re-export a complete package, including libraries. See [Packages and library files](hosting-packages.md#packages-and-library-files).
 
 ## The activity is cut off or leaves blank space
 

@@ -98,9 +98,9 @@ GitHub Pages meets both requirements as it comes. The player's [setup guide](htt
 
 An H5P package normally includes the libraries it needs. Exports from H5P.com and h5p.org usually contain only `content/` and expect the site they came from to provide the libraries.
 
-Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type it serves, about 10 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. For a content type the bundle does not carry yet, the player asks the H5P hub itself, at `api.h5p.org`; that is the one request the frame makes to a third party on its own, and it is made only then. See [Privacy and security](privacy-and-security.md).
+Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type the hub serves, about 10 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
 
-If the preview still reports missing libraries, the package needs a library the hub does not serve, such as one written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
+If the preview still reports missing libraries, the package needs a library the bundle does not carry: a newer version than the bundle has, or one written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
 
 ## How big can a package be?
 

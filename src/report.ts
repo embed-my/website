@@ -162,7 +162,7 @@ export function describePackage(report: PackageReport, { playerOrigin }: { playe
   } else {
     checks.push({
       tone: 'warn',
-      text: `Exported without its libraries, and the player's bundle lacks this content type: they came from ${libraryBundle.origin}, a request to a third party on every visitor's first play.`,
+      text: `Exported without its libraries: they came from ${libraryBundle.origin}, a library source on another site, which every visitor's browser contacts on its first play.`,
       link: { href: `${HOSTING}#packages-and-library-files`, text: 'About library files' }
     })
   }
