@@ -79,7 +79,7 @@ describe('describePackage', () => {
     const bundle = { url: `${PLAYER}/assets/libraries-abc.h5p`, origin: PLAYER, fromCache: false }
     const own = describePackage({ ...quiz, libraryBundle: bundle }, { playerOrigin: PLAYER })
     expect(own.find((line) => line.text.startsWith('Exported without'))).toMatchObject({ tone: 'info' })
-    expect(own.find((line) => line.text.startsWith('Exported without'))?.text).toContain('about 10 MB')
+    expect(own.find((line) => line.text.startsWith('Exported without'))?.text).toContain('about 14 MB')
 
     const cached = describePackage({ ...quiz, libraryBundle: { ...bundle, fromCache: true } }, { playerOrigin: PLAYER })
     expect(cached.find((line) => line.text.startsWith('Exported without'))?.text).toContain('already had')

@@ -22,7 +22,7 @@ describe('buildSnippet', () => {
         '  src="https://embed-my.github.io/h5p?src=https://embed-my.github.io/samples/quiz.h5p"',
         '  title="Sample quiz"',
         '  loading="lazy"',
-        '  allow="fullscreen"',
+        '  allow="fullscreen; microphone; camera"',
         '  style="width: 100%; height: 540px; border: 0"',
         '></iframe>',
         '<script src="https://embed-my.github.io/h5p-resizer.js"></script>'

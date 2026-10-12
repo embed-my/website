@@ -204,7 +204,7 @@
               <svg class="icon" aria-hidden="true"><use href="#i-activity" /></svg>
               <span>Your activity plays here once you paste a link above, or pick a sample.</span>
             </div>
-            <iframe id="preview" title="Preview of the activity" allow="fullscreen"></iframe>
+            <iframe id="preview" title="Preview of the activity" allow="fullscreen; microphone; camera"></iframe>
             <!-- On the page from the start, so a screen reader announces what goes into it. -->
             <div class="stage-status" id="stage-status" role="status" aria-live="polite"></div>
           </div>
@@ -273,8 +273,8 @@
             <li>
               <strong>The activity runs on Embed My's own address, not on your site.</strong>
               H5P packages contain JavaScript. Inside the frame it cannot read your site's cookies, logins or storage,
-              or touch your page's content. The snippet grants the frame one permission, fullscreen: no camera,
-              microphone or location.
+              or touch your page's content. The snippet grants the frame fullscreen, and the microphone and camera
+              for activities that record or film; the browser asks the visitor before either is used. No location.
             </li>
             <li>
               <strong>One script runs on your page, and it is sixty lines.</strong>

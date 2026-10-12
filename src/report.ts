@@ -156,7 +156,7 @@ export function describePackage(report: PackageReport, { playerOrigin }: { playe
       tone: 'info',
       text: libraryBundle.fromCache
         ? "Exported without its libraries: they came from the player's bundle, from the copy this browser already had."
-        : "Exported without its libraries: they came from the player's bundle, about 10 MB, downloaded once per browser and kept.",
+        : "Exported without its libraries: they came from the player's bundle, about 14 MB, downloaded once per browser and kept.",
       link: { href: `${HOSTING}#packages-and-library-files`, text: 'About library files' }
     })
   } else {

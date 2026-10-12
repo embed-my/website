@@ -103,7 +103,7 @@ export function buildSnippet({ site, path, src, title, display, height }: Snippe
     newline,
     ...attribute('loading', 'lazy'),
     newline,
-    ...attribute('allow', 'fullscreen'),
+    ...attribute('allow', 'fullscreen; microphone; camera'),
     newline,
     ...attribute('style', `width: 100%; height: ${height}px; border: 0`),
     tag('\n></iframe>\n<script '),

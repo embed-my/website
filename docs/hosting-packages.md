@@ -98,7 +98,7 @@ GitHub Pages meets both requirements as it comes. The player's [setup guide](htt
 
 An H5P package normally includes the libraries it needs. Exports from H5P.com and h5p.org usually contain only `content/` and expect the site they came from to provide the libraries.
 
-Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type the hub serves, about 10 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
+Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type the hub serves, about 14 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
 
 A package written for an older version of a library plays too. The bundle carries the newest version of each library, and before the activity starts the player converts the content with that library's own upgrade steps, as Moodle, WordPress and the other H5P plugins do when a site installs a newer version. If a step fails, the activity plays as it was written.
 
