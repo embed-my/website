@@ -12,7 +12,7 @@ Embed only packages you trust, as you would any script.
 
 ## When the frame is opened on its own
 
-The frame's address can also be opened directly, as a link, which [Troubleshooting](troubleshooting.md) suggests for some app browsers. Opened that way, a package from another site would share the player origin's own storage with every other package opened like that, so the page plays it as data: none of the package's own scripts run, and its libraries come from the player's bundle. A package that cannot play without its own copy of a library waits for a click, and the page names the site it comes from before running it.
+The frame's address can also be opened directly, as a link, which [Troubleshooting](troubleshooting.md) suggests for some app browsers. Opened that way, a package from another site would share the player origin's own storage with every other package opened like that, so the page plays it as data: none of the package's own scripts run, its libraries come from the player's bundle, and its content is checked against those libraries' field definitions before it is shown, as the H5P plugins for Moodle, WordPress and Drupal check an upload. A package that cannot play without its own copy of a library waits for a click, and the page names the site it comes from before running it.
 
 ## What the frame can do to your page
 

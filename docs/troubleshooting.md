@@ -25,7 +25,7 @@ The media is probably compressed inside the archive or not arranged for progress
 
 ## The activity does not load in an app's built-in browser
 
-Some in-app browsers give a frame no Service Worker, and the frame shows a link to open the activity on its own page. Share that link, or the page's own URL to open in a regular browser. Opened on its own, the activity plays without its package's own scripts; one that needs them asks first and names the site it comes from.
+Some in-app browsers give a frame no Service Worker, and the frame shows a link to open the activity on its own page. Share that link, or the page's own URL to open in a regular browser. Opened on its own, the activity plays without its package's own scripts, and its text keeps only the formatting its content type allows, as in an H5P plugin; one that needs its own scripts asks first and names the site it comes from.
 
 ## Nothing plays on my page
 
