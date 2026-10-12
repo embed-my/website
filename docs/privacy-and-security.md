@@ -10,6 +10,10 @@ Browsers give the Embed My frame separate storage for each site that embeds it, 
 
 Embed only packages you trust, as you would any script.
 
+## When the frame is opened on its own
+
+The frame's address can also be opened directly, as a link, which [Troubleshooting](troubleshooting.md) suggests for some app browsers. Opened that way, a package from another site would share the player origin's own storage with every other package opened like that, so the page plays it as data: none of the package's own scripts run, and its libraries come from the player's bundle. A package that cannot play without its own copy of a library waits for a click, and the page names the site it comes from before running it.
+
 ## What the frame can do to your page
 
 The snippet gives the frame no permission beyond fullscreen: no camera, microphone or location. It cannot read or change your page. But browsers let any iframe navigate the whole tab once the visitor has clicked inside it, so a hostile package could send a visitor who clicks on it to another address. That is one more reason to embed only packages you trust. A site that wants to rule it out can add `sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"` to the iframe; test the activity afterwards, because a sandbox also stops the frame's own "Open it on its own" link.
