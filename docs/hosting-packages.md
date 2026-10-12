@@ -100,7 +100,9 @@ An H5P package normally includes the libraries it needs. Exports from H5P.com an
 
 Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type the hub serves, about 10 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
 
-If the preview still reports missing libraries, the package needs a library the bundle does not carry: a newer version than the bundle has, or one written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
+A package written for an older version of a library plays too. The bundle carries the newest version of each library, and before the activity starts the player converts the content with that library's own upgrade steps, as Moodle, WordPress and the other H5P plugins do when a site installs a newer version. If a step fails, the activity plays as it was written.
+
+If the preview still reports missing libraries, the package needs a library the bundle does not carry. Usually it is newer than the bundle: the bundle is rebuilt from the H5P hub every week, and a later release usually carries it. Less often it is a library written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
 
 ## How big can a package be?
 
