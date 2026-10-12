@@ -356,9 +356,16 @@
               </div>
             </details>
             <details class="faq-item">
+              <summary><span>Can H5P's own buttons be in my language?</span></summary>
+              <div class="faq-answer">
+                <p>Yes, in more than fifty languages. H5P's own buttons and dialogs, such as <strong>Fullscreen</strong>, <strong>Rights of use</strong> and the licence names, follow a <code>lang</code> on the frame's address: add <code>&amp;lang=de</code>, or <code>&amp;lang=pt-BR</code>, to the end of the <code>src</code> in the snippet. Without it they are in English. The frame cannot read your page's language itself, because it runs on another site.</p>
+                <p>The activity's own text is in whatever language it was written in. The translations come from Moodle's language packs, so a few strings may stay in English.</p>
+              </div>
+            </details>
+            <details class="faq-item">
               <summary><span>Does it check accessibility?</span></summary>
               <div class="faq-answer">
-                <p>Keyboard and screen-reader behaviour come from the H5P content type and from how the activity was authored, and this check does not test them. Run through the activity here with the keyboard alone, and check that video and audio have captions or a transcript.</p>
+                <p>Keyboard and screen-reader behaviour come from the H5P content type and from how the activity was authored, and this check does not test them. The frame does tell screen readers the content's language, the one the package declares in its <code>h5p.json</code>. Run through the activity here with the keyboard alone, and check that video and audio have captions or a transcript.</p>
               </div>
             </details>
             <details class="faq-item">

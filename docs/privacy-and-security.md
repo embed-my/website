@@ -20,7 +20,7 @@ The script line, `h5p-resizer.js`, is the one part of the snippet that runs on y
 
 No learner records. The embed page never turns on the player's resume feature, so answers and progress are not saved anywhere, and reloading the page starts the activity over. Embed My stores nothing on its side either.
 
-The visitor's browser does cache the package's files and address (Cache Storage and IndexedDB on the player's origin, kept separate per embedding site) so the next load is faster. Clearing the browser's site data removes it.
+The visitor's browser does cache the package's files, and keeps a list of the packages played there with each one's address, title, licence details, language and when it was last played (Cache Storage and IndexedDB on the player's origin, kept separate per embedding site), so the next load is faster. The list shows which activities were opened on that device. Clearing the browser's site data removes both.
 
 ## Cookies and tracking
 
