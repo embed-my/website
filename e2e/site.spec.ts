@@ -49,7 +49,10 @@ test('the home page previews a package and writes its snippet', async ({ page })
   await expect(checks.first()).toContainText('Do you know what just happened? · Question Set · CC0 1.0 · by missing-elements')
   await expect(checks.filter({ hasText: 'Reachable from a browser' })).toHaveAttribute('data-tone', 'ok')
   await expect(checks.filter({ hasText: /Streams in place|Downloaded whole/ })).toContainText('MB')
-  await expect(checks.filter({ hasText: 'Carries its libraries' })).toHaveAttribute('data-tone', 'ok')
+  // The quiz carries its libraries. A player that plays them from its own pack (player origin with
+  // `pack`) plays the older ones at the pack's newer versions and says so, which is worth knowing,
+  // not a fault; one that attaches a whole bundle plays them as exported.
+  await expect(checks.filter({ hasText: 'Carries its libraries' })).toHaveAttribute('data-tone', /^(ok|info)$/)
   await expect(checks.filter({ hasText: /Ready in \d+\.\d s/ })).toHaveCount(1)
 
   expect(problems, problems.join('\n')).toEqual([])
@@ -62,7 +65,7 @@ test('the lines under the preview say where missing libraries came from', async 
   await expect(page.locator('#stage')).toHaveAttribute('data-state', 'ready', { timeout: 60_000 })
   const line = page.locator('#checks li').filter({ hasText: 'Exported without its libraries' })
   await expect(line).toHaveAttribute('data-tone', 'info')
-  await expect(line).toContainText("the player's bundle")
+  await expect(line).toContainText("the player added the ones it needs from its library pack")
   await expect(line.getByRole('link', { name: 'About library files' })).toHaveAttribute('href', '/docs/hosting-packages#packages-and-library-files')
 })
 

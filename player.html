@@ -72,10 +72,11 @@
           <ul>
             <li>Plays any <code>.h5p</code> package from a URL, or from a file picked on the device, with no upload.</li>
             <li>Starts a large package after a few kilobytes on a host that answers Range requests, and streams its video.</li>
-            <li>Plays exports that ship without their libraries, from a pack of the H5P hub's libraries, and upgrades content written for older library versions before it starts, with each library's own upgrade steps.</li>
-            <li>Shows H5P's own toolbar on request: rights of use, download, fullscreen. Its buttons and dialogs come in more than fifty languages, following the page's language.</li>
-            <li>Emits xAPI statements and the content's saved state as events, for a page or an LMS to collect.</li>
-            <li>Ships as one web component, <code>&lt;h5p-player&gt;</code>, plus a worker; the H5P runtime is a package of its own.</li>
+            <li>Plays exports that ship without their libraries from a pack of the H5P hub's libraries, downloading only the ones a package needs. A package that carries older versions plays the pack's newer ones, its content upgraded first with each library's own upgrade steps, and content made for a version newer than the hub's plays at the newest one there is.</li>
+            <li>Plays packages you did not make as data, with <code>untrusted</code>: none of their own code runs, and their content is checked against its libraries' field definitions, as the H5P plugins check an upload.</li>
+            <li>Shows H5P's own toolbar on request: rights of use, download, fullscreen. Its buttons and dialogs come in more than fifty languages, in the language the package declares, so they match its text.</li>
+            <li>Emits xAPI statements and the content's saved state as events, for a page or an LMS to collect, and runs as a cmi5 unit or, packed by h5p-embed, as a SCORM 1.2 or 2004 activity.</li>
+            <li>Ships as one web component, <code>&lt;h5p-player&gt;</code>, plus its workers; the H5P runtime is a package of its own.</li>
           </ul>
 
           <h2 id="where-it-is">Where it is</h2>
@@ -86,7 +87,7 @@
             </tr>
             <tr>
               <th>Setup guide</th>
-              <td><a href="https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md" rel="noopener">h5p-player-setup.md</a>: with a bundler, with no build step, or as an iframe</td>
+              <td><a href="https://github.com/missing-elements/h5p-offline-player/blob/main/docs/setup.md" rel="noopener">Setting up the player</a>: with a bundler, with no build step, or as an embed page in an iframe</td>
             </tr>
             <tr>
               <th>The player on npm</th>
@@ -102,7 +103,15 @@
             </tr>
             <tr>
               <th>Self-hosted embeds</th>
-              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-embed" rel="noopener">@missing-elements/h5p-embed</a> (MIT), the embed page as a static site for a domain of your own</td>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-embed" rel="noopener">@missing-elements/h5p-embed</a> (MIT), the embed page as a static site for a domain of your own, and a package as a SCORM zip for an LMS</td>
+            </tr>
+            <tr>
+              <th>Making packages</th>
+              <td><a href="https://www.npmjs.com/package/@missing-elements/h5p-author" rel="noopener">@missing-elements/h5p-author</a> (MIT), a package of any hub content type from a short JSON source</td>
+            </tr>
+            <tr>
+              <th>VS Code extension</th>
+              <td><a href="https://marketplace.visualstudio.com/items?itemName=MissingElements.h5p-preview" rel="noopener">H5P Preview</a>, which plays <code>.h5p</code> files in an editor tab, offline; Cursor and VSCodium install it from <a href="https://open-vsx.org/extension/MissingElements/h5p-preview" rel="noopener">Open VSX</a></td>
             </tr>
             <tr>
               <th>Demo site</th>
@@ -120,8 +129,10 @@
 
           <h2 id="tools">Tools that come with it</h2>
           <ul>
-            <li><code>npx @missing-elements/h5p-verify course.h5p</code> plays a package in a real browser runtime and reports missing libraries, start-up errors and a screenshot, before you share it.</li>
+            <li><code>npx @missing-elements/h5p-verify course.h5p</code> plays a package in a real browser runtime and reports missing libraries, start-up errors and a screenshot, before you share it. With <code>--preview</code> it opens the package in the real player in your own browser instead, for a person to play through.</li>
             <li><code>npx @missing-elements/h5p-normalize course.h5p</code> rewrites a package once so that its video starts at once instead of after the whole file has downloaded.</li>
+            <li><code>npx @missing-elements/h5p-author build rivers.json rivers.h5p</code> builds a playable package from a short JSON source that holds only what differs from the content type's defaults, checking every field as H5P's editor would. The h5p-author agent skill writes that source from a prompt or a lesson.</li>
+            <li><code>npx @missing-elements/h5p-embed --scorm course.h5p</code> writes a package as a SCORM zip that reports the score, the time and the learner's place to an LMS such as Moodle; <a href="https://h5p-offline-player.vercel.app/demo/scorm.html" rel="noopener">its page</a> does the same in the browser, with nothing uploaded.</li>
           </ul>
 
           <h2 id="run-it-yourself">Run it yourself</h2>
@@ -131,10 +142,10 @@
             and deploy it to a domain of your own. Snippets then point at that domain, and no third party sits between
             your learners and your content. It can also limit which hosts packages come from and which sites may frame it.
           </p>
-          <pre><code>npx @missing-elements/h5p-embed h5p-player</code></pre>
+          <pre><code>npx @missing-elements/h5p-embed@latest h5p-player</code></pre>
           <p>
             To put the player straight into your own pages instead, the
-            <a href="https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md" rel="noopener">setup guide</a>
+            <a href="https://github.com/missing-elements/h5p-offline-player/blob/main/docs/setup.md" rel="noopener">setup guide</a>
             covers each way to do it. Your packages stay as they are either way. Embed My's own
             <a href="https://github.com/embed-my/embed-my.github.io" rel="noopener">player origin</a> is h5p-embed's page.
           </p>

@@ -12,11 +12,11 @@ Embed only packages you trust, as you would any script.
 
 ## When the frame is opened on its own
 
-The frame's address can also be opened directly, as a link, which [Troubleshooting](troubleshooting.md) suggests for some app browsers. Opened that way, a package from another site would share the player origin's own storage with every other package opened like that, so the page plays it as data: none of the package's own scripts run, its libraries come from the player's bundle, and its content is checked against those libraries' field definitions before it is shown, as the H5P plugins for Moodle, WordPress and Drupal check an upload. A package that cannot play without its own copy of a library waits for a click, and the page names the site it comes from before running it.
+The frame's address can also be opened directly, as a link, which [Troubleshooting](troubleshooting.md) suggests for some app browsers. Opened that way, a package from another site would share the player origin's own storage with every other package opened like that, so the page plays it as data: none of the package's own scripts run, its libraries come from the player's own library pack, and its content is checked against those libraries' field definitions before it is shown, as the H5P plugins for Moodle, WordPress and Drupal check an upload. A package that cannot play without its own copy of a library waits for a click, and the page names the site it comes from before running it.
 
 ## What the frame can do to your page
 
-The snippet gives the frame fullscreen, and the microphone and camera for the content types that record or film: Audio Recorder, Speak the Words and AR Scavenger. The browser asks the visitor before the frame uses either, and for an activity that does neither you can take `microphone; camera` out of the `allow` attribute. The frame gets no location. It cannot read or change your page. But browsers let any iframe navigate the whole tab once the visitor has clicked inside it, so a hostile package could send a visitor who clicks on it to another address. That is one more reason to embed only packages you trust. A site that wants to rule it out can add `sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"` to the iframe; test the activity afterwards, because a sandbox also stops the frame's own "Open it on its own" link.
+The snippet gives the frame fullscreen, and the microphone and camera. Audio Recorder and Speak the Words record with the microphone; the camera is for AR Scavenger, which the player [does not run](troubleshooting.md#an-ar-scavenger-activity-shows-only-its-title). The browser asks the visitor before the frame uses either, and for an activity that does neither you can take `microphone; camera` out of the `allow` attribute. The frame gets no location. It cannot read or change your page. But browsers let any iframe navigate the whole tab once the visitor has clicked inside it, so a hostile package could send a visitor who clicks on it to another address. That is one more reason to embed only packages you trust. A site that wants to rule it out can add `sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"` to the iframe; test the activity afterwards, because a sandbox also stops the frame's own "Open it on its own" link.
 
 The script line, `h5p-resizer.js`, is the one part of the snippet that runs on your page itself, with the same rights as your own scripts. It is about sixty lines, it only sets an iframe's height when that frame reports it, and you can read it at the address in the snippet. Leave it out and the frame keeps the height in the `style` attribute.
 
@@ -24,7 +24,7 @@ The script line, `h5p-resizer.js`, is the one part of the snippet that runs on y
 
 No learner records. The embed page never turns on the player's resume feature, so answers and progress are not saved anywhere, and reloading the page starts the activity over. Embed My stores nothing on its side either.
 
-The visitor's browser does cache the package's files, and keeps a list of the packages played there with each one's address, title, licence details, language and when it was last played (Cache Storage and IndexedDB on the player's origin, kept separate per embedding site), so the next load is faster. The list shows which activities were opened on that device. Clearing the browser's site data removes both.
+The visitor's browser does cache the package's files and the files of the player's library pack it used, and keeps a list of the packages played there with each one's address, title, licence details, language and when it was last played (Cache Storage and IndexedDB on the player's origin, kept separate per embedding site), so the next load is faster. The list shows which activities were opened on that device. Clearing the browser's site data removes both.
 
 ## Cookies and tracking
 
@@ -34,7 +34,7 @@ The pages and the script are served by GitHub Pages. Like any web host, GitHub s
 
 H5P content itself may contact services named by the package, such as YouTube, Vimeo, Google Fonts, MathJax, or an organization-hosted media service. Review a package and its third-party content before publishing it.
 
-The frame asks no one else for libraries. A package exported without its libraries takes them from a bundle on the player origin, and from nowhere else.
+The frame asks no one else for libraries. A package exported without its libraries takes the ones it needs from the library pack on the player origin, and from nowhere else.
 
 ## Data protection
 

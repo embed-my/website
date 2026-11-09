@@ -7,6 +7,13 @@
  * reach visitors, what did it cost, and what does the package say it is.
  */
 
+/** A library that played at another version than the package carries or names: `H5P.Video`, `1.6.66`, `1.6.79`. */
+export interface LibraryVersion {
+  library: string
+  from: string
+  to: string
+}
+
 export interface PackageReport {
   /** How the bytes were reached: streamed in place, downloaded whole, or picked from disk. */
   source: { type: 'range-http' | 'chunked' | 'file'; size: number | null } | null
@@ -18,8 +25,14 @@ export interface PackageReport {
     authors?: string[]
     mainLibrary?: string
   } | null
-  /** Where libraries the package did not carry came from; `null` when it carried its own. */
-  libraryBundle: { url: string; origin: string; fromCache: boolean } | null
+  /**
+   * Where libraries came from that the package did not carry, or newer versions of those it did:
+   * `refreshed` lists the libraries it carries that played at the pack's newer version (player
+   * 0.10). `null` when it played only its own.
+   */
+  libraryBundle: { url: string; origin: string; fromCache: boolean; refreshed: LibraryVersion[] } | null
+  /** Libraries that played at an older version than the content names, as no source had it (player 1.2). */
+  downgradedLibraries: LibraryVersion[]
   /** From the package being set to the content being up, on the page's connection. */
   elapsedMs: number | null
 }
@@ -31,6 +44,18 @@ const isRecord = (value: unknown): value is Record<string, unknown> => typeof va
 const optionalString = (value: unknown): string | undefined => (typeof value === 'string' && value.trim() ? value.trim() : undefined)
 
 const sizeOf = (value: unknown): number | null => (typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null)
+
+/** A list of `{ library, from, to }`, keeping only the entries that give all three as text. */
+const versionsOf = (value: unknown): LibraryVersion[] =>
+  Array.isArray(value)
+    ? value.flatMap((item) => {
+        if (!isRecord(item)) return []
+        const library = optionalString(item.library)
+        const from = optionalString(item.from)
+        const to = optionalString(item.to)
+        return library && from && to ? [{ library, from, to }] : []
+      })
+    : []
 
 /** A message from the player's page, read as it documents them, or `null` for anything else. */
 export function readPlayerMessage(data: unknown): PlayerMessage | null {
@@ -64,11 +89,14 @@ export function readPlayerMessage(data: unknown): PlayerMessage | null {
   if (isRecord(data.libraryBundle)) {
     const url = optionalString(data.libraryBundle.url)
     const origin = optionalString(data.libraryBundle.origin)
-    if (url && origin) libraryBundle = { url, origin, fromCache: data.libraryBundle.fromCache === true }
+    if (url && origin) {
+      libraryBundle = { url, origin, fromCache: data.libraryBundle.fromCache === true, refreshed: versionsOf(data.libraryBundle.refreshed) }
+    }
   }
 
+  const downgradedLibraries = versionsOf(data.downgradedLibraries)
   const elapsedMs = sizeOf(data.elapsedMs)
-  return { action: 'report', report: { source, metadata, libraryBundle, elapsedMs } }
+  return { action: 'report', report: { source, metadata, libraryBundle, downgradedLibraries, elapsedMs } }
 }
 
 /* ------------------------------------------------------------------ the lines */
@@ -117,10 +145,19 @@ export function licenceName(license: string, version?: string): string {
   return version && !license.includes(version) ? `${license} ${version}` : license
 }
 
+/** Two libraries by name and version, the rest counted: `Blanks 1.14.13 → 1.14.37, Drag Text 1.10.17 → 1.10.50 and 6 more`. */
+function libraryList(versions: LibraryVersion[], words: (version: LibraryVersion) => string): string {
+  const named = versions.slice(0, 2).map(words)
+  const rest = versions.length - named.length
+  return rest > 0 ? `${named.join(', ')} and ${rest} more` : named.join(' and ')
+}
+
+const LIBRARY_FILES = { href: `${HOSTING}#packages-and-library-files`, text: 'About library files' }
+
 /** The lines for a package that plays, in the order a visitor reads them: what it is, then how it got here. */
 export function describePackage(report: PackageReport, { playerOrigin }: { playerOrigin: string }): Check[] {
   const checks: Check[] = []
-  const { source, metadata, libraryBundle, elapsedMs } = report
+  const { source, metadata, libraryBundle, downgradedLibraries, elapsedMs } = report
 
   if (metadata) {
     const parts = [
@@ -149,21 +186,41 @@ export function describePackage(report: PackageReport, { playerOrigin }: { playe
     }
   }
 
+  const own = libraryBundle?.origin === playerOrigin
+  const elsewhere = libraryBundle && !own ? `${libraryBundle.origin}, a library source on another site, which every visitor's browser contacts on its first play` : ''
   if (!libraryBundle) {
     checks.push({ tone: 'ok', text: 'Carries its libraries: nothing else had to be fetched.' })
-  } else if (libraryBundle.origin === playerOrigin) {
+  } else if (libraryBundle.refreshed.length) {
+    // A package that carries its libraries, some of them older than the pack's (player 0.10).
+    const { refreshed } = libraryBundle
+    const list = libraryList(refreshed, ({ library, from, to }) => `${contentTypeName(library)} ${from} → ${to}`)
+    const count = refreshed.length === 1 ? 'one of them' : `${refreshed.length} of them`
+    checks.push({
+      tone: own ? 'info' : 'warn',
+      text: own
+        ? `Carries its libraries, and plays ${count} at the newer version in the player's library pack: ${list}.`
+        : `Carries its libraries, and plays ${count} at a newer version from ${elsewhere}: ${list}.`,
+      link: LIBRARY_FILES
+    })
+  } else if (own) {
     checks.push({
       tone: 'info',
       text: libraryBundle.fromCache
-        ? "Exported without its libraries: they came from the player's bundle, from the copy this browser already had."
-        : "Exported without its libraries: they came from the player's bundle, about 14 MB, downloaded once per browser and kept.",
-      link: { href: `${HOSTING}#packages-and-library-files`, text: 'About library files' }
+        ? "Exported without its libraries: the player added the ones it needs from its library pack, from the copy this browser already had."
+        : "Exported without its libraries: the player added the ones it needs from its library pack, downloaded once per browser and kept.",
+      link: LIBRARY_FILES
     })
   } else {
+    checks.push({ tone: 'warn', text: `Exported without its libraries: they came from ${elsewhere}.`, link: LIBRARY_FILES })
+  }
+
+  if (downgradedLibraries.length) {
+    // Content made for a newer minor version than any source has, played at the newest older one (player 1.2).
+    const list = libraryList(downgradedLibraries, ({ library, from, to }) => `${contentTypeName(library)} ${from}, played at ${to}`)
     checks.push({
       tone: 'warn',
-      text: `Exported without its libraries: they came from ${libraryBundle.origin}, a library source on another site, which every visitor's browser contacts on its first play.`,
-      link: { href: `${HOSTING}#packages-and-library-files`, text: 'About library files' }
+      text: `Made for newer libraries than the player has: ${list}. Most newer versions only add fields, but a part can be missing or drawn wrong, so check every part.`,
+      link: { href: `${HOSTING}#content-made-for-newer-libraries`, text: 'About newer libraries' }
     })
   }
 

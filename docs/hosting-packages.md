@@ -87,22 +87,30 @@ For large packages, also support ranged requests and expose their headers:
 
 ```text
 Accept-Ranges: bytes
-Access-Control-Expose-Headers: Content-Range, Accept-Ranges, Content-Length
+Access-Control-Expose-Headers: Content-Range, Accept-Ranges, Content-Length, ETag
 ```
 
 With them, a large package starts playing after a few kilobytes. Without them, it is downloaded whole before anything plays, which still works. A simple range such as `bytes=0-99` needs no CORS preflight, so a host that ignores `OPTIONS` requests is not a problem.
 
-GitHub Pages meets both requirements as it comes. The player's [setup guide](https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md#requirements) describes exactly what it checks.
+An `ETag` or `Last-Modified` header lets the player tell a file republished at the same address from the old one, and a visitor who comes back reads almost nothing of the package again. The frame can read `Last-Modified` from any host, and an `ETag` only when the host lists it in `Access-Control-Expose-Headers`, as above.
+
+GitHub Pages meets both requirements as it comes. The player's [setup guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/setup.md#requirements) lists exactly what it needs.
 
 ## Packages and library files
 
 An H5P package normally includes the libraries it needs. Exports from H5P.com and h5p.org usually contain only `content/` and expect the site they came from to provide the libraries.
 
-Embed My plays those too. The player keeps a bundle of the H5P hub's libraries for every content type the hub serves, about 14 MB, served from the player origin and downloaded once per browser, and a package that ships without its libraries takes them from there. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
+Embed My plays those too. The player keeps a pack of the H5P hub's libraries for every content type the hub serves, one file per library, served from the player origin. A package that ships without its libraries downloads only the ones it needs from there, and the browser keeps each one for the next package that uses it. It asks no other site for libraries. See [Privacy and security](privacy-and-security.md).
 
-A package written for an older version of a library plays too. The bundle carries the newest version of each library, and before the activity starts the player converts the content with that library's own upgrade steps, as Moodle, WordPress and the other H5P plugins do when a site installs a newer version. If a step fails, the activity plays as it was written.
+A package written for an older version of a library plays too, and so does one that carries an older version. The pack has the newest version of each library, the player plays that one, and before the activity starts it converts the content with the library's own upgrade steps, as Moodle, WordPress and the other H5P plugins do when a site installs a newer version. If a step fails, the activity plays as it was written. The lines under the preview name the libraries that played newer than the package carries them. To play them exactly as exported instead, add `&refresh-libraries=off` to the end of the `src` in the snippet.
 
-If the preview still reports missing libraries, the package needs a library the bundle does not carry. Usually it is newer than the bundle: the bundle is rebuilt from the H5P hub every week, and a later release usually carries it. Less often it is a library written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
+If the preview still reports missing libraries, the package needs a library the pack does not carry: a new major version the H5P hub does not serve yet, or a library written for a single site. Export the activity as a complete package, including libraries, when your authoring tool offers that option. The player's [libraries guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/libraries.md) explains how library sources work.
+
+### Content made for newer libraries
+
+H5P.com gets a library's new version weeks before the H5P hub serves it, so an activity made there in those weeks can name a version that nobody else has yet. The player plays it at the newest version of that library the pack has, and the lines under the preview say which.
+
+Most new versions only add fields, which the older version ignores. Where one changed the shape of the content, a part of the activity can be missing or drawn wrong, so play through every part of it. To refuse such a package instead, add `&downgrade-libraries=off` to the end of the `src` in the snippet. The pack follows the H5P hub, so once the hub serves the newer version, a later release of the player plays the activity as made.
 
 ## How big can a package be?
 
