@@ -324,7 +324,7 @@
             <details class="faq-item" open>
               <summary><span>If it plays here, will it play in my LMS?</span></summary>
               <div class="faq-answer">
-                <p>Very likely, not certainly. The player runs the standard H5P runtime with the H5P hub's current libraries, and upgrades content written for older library versions first, as an LMS does when it installs newer ones. Moodle, WordPress or another LMS may run older library versions or changes of their own, and a package made for one site can need a library only that site has. A failure here is the more useful result: a link the browser cannot reach, a package that is not an archive, or libraries that nobody serves will fail in most places.</p>
+                <p>Very likely, not certainly. The player runs the standard H5P runtime with the H5P hub's current libraries, and upgrades content written for older library versions first, as an LMS does when it installs newer ones. Moodle, WordPress or another LMS may run older library versions or changes of their own, and a package made for one site can need a library only that site has. Content made for a library version newer than the hub's, as H5P.com sometimes has for a few weeks, plays at the newest version there is, and the lines under the preview say so. A failure here is the more useful result: a link the browser cannot reach, a package that is not an archive, or libraries that nobody serves will fail in most places.</p>
               </div>
             </details>
             <details class="faq-item">
@@ -358,8 +358,8 @@
             <details class="faq-item">
               <summary><span>Can H5P's own buttons be in my language?</span></summary>
               <div class="faq-answer">
-                <p>Yes, in more than fifty languages. H5P's own buttons and dialogs, such as <strong>Fullscreen</strong>, <strong>Rights of use</strong> and the licence names, follow a <code>lang</code> on the frame's address: add <code>&amp;lang=de</code>, or <code>&amp;lang=pt-BR</code>, to the end of the <code>src</code> in the snippet. Without it they are in English. The frame cannot read your page's language itself, because it runs on another site.</p>
-                <p>The activity's own text is in whatever language it was written in. The translations come from Moodle's language packs, so a few strings may stay in English.</p>
+                <p>Yes, in the activity's own language, in any of more than fifty. H5P's own buttons and dialogs, such as <strong>Fullscreen</strong>, <strong>Rights of use</strong> and the licence names, follow the language the package declares in its <code>h5p.json</code>, which H5P's own exports write, so they match the activity's text whatever language your page is in.</p>
+                <p>For a package that declares no language, add <code>&amp;lang=de</code>, or <code>&amp;lang=pt-BR</code>, to the end of the <code>src</code> in the snippet; without it they are in English. The translations come from Moodle's language packs, so a few strings may stay in English.</p>
               </div>
             </details>
             <details class="faq-item">
@@ -369,9 +369,9 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span>Can an AI assistant check a package for me?</span></summary>
+              <summary><span>Can an AI assistant check a package for me, or make one?</span></summary>
               <div class="faq-answer">
-                <p>Yes. The player's repository ships <a href="https://www.skills.sh/missing-elements/h5p-offline-player" rel="noopener">agent skills</a> for Claude Code, Cursor, Copilot, Codex and the rest. <code>h5p-verify</code> plays a package in a real H5P runtime in a headless browser and reports start-up, errors, missing libraries and a screenshot: the same check as this page, without a link. Two companions make a package's video start at once, and put the player on a site of your own.</p>
+                <p>Yes. The player's repository ships <a href="https://www.skills.sh/missing-elements/h5p-offline-player" rel="noopener">agent skills</a> for Claude Code, Cursor, Copilot, Codex and the rest, and none needs an API key or an H5P server. <code>h5p-verify</code> plays a package in a real H5P runtime in a headless browser and reports start-up, errors, missing libraries and a screenshot: the same check as this page, without a link. <code>h5p-author</code> turns a prompt or a lesson into an activity of any of 28 content types, checks it and opens it for you to play. The others make a package's video start at once, put the player on a site of your own, and turn a package into a SCORM zip for an LMS.</p>
                 <pre><code>npx skills add missing-elements/h5p-offline-player --skill h5p-verify</code></pre>
               </div>
             </details>

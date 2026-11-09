@@ -13,7 +13,11 @@ Check that:
 
 ## The activity works in my LMS but not in Embed My
 
-An export without its libraries normally plays anyway: the player takes them from its own bundle of the H5P hub's libraries, and upgrades content written for older library versions before it starts. If the preview still names missing libraries, the package needs one the bundle does not carry: usually a version newer than the bundle, less often one written for a single site. Re-export a complete package, including libraries. See [Packages and library files](hosting-packages.md#packages-and-library-files).
+An export without its libraries normally plays anyway: the player takes the ones it needs from its own pack of the H5P hub's libraries, and upgrades content written for older library versions before it starts. Content made for a newer version than the pack has plays at the newest one it has, and the preview says so. If the preview still names missing libraries, the package needs one the pack does not carry: a new major version, or a library written for a single site. Re-export a complete package, including libraries. See [Packages and library files](hosting-packages.md#packages-and-library-files).
+
+## An AR Scavenger activity shows only its title
+
+The player does not run AR Scavenger. It writes its 3D and AR scripts into the page as inline scripts, which the frame's security policy refuses, so the activity shows its title and no scene, here and wherever the player runs.
 
 ## The activity is cut off or leaves blank space
 
@@ -37,7 +41,7 @@ The site's Content Security Policy must allow `frame-src https://embed-my.github
 
 ## Other problems
 
-The player's [troubleshooting table](https://github.com/missing-elements/h5p-offline-player/blob/main/h5p-player-setup.md#troubleshooting) covers error codes and less common symptoms in detail, such as formulas shown as raw LaTeX or a missing copyright button.
+The player's [troubleshooting guide](https://github.com/missing-elements/h5p-offline-player/blob/main/docs/troubleshooting.md) covers error codes and less common symptoms in detail, such as formulas shown as raw LaTeX or a missing copyright button.
 
 ## Reporting a problem
 
