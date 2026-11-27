@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {%- if csp %}
+  <meta http-equiv="Content-Security-Policy" content="{{ csp | safe }}">
+  {%- endif %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    // Only a page in a frame is told its theme in its address (?theme=dark), by the page that frames it, whose
+    // theme may not be the system's. Opened by itself, a page keeps the visitor's own choice whatever its address says.
+    try { const asked = window.parent !== window ? new URLSearchParams(location.search).get("theme") : null; document.querySelector('meta[name="color-scheme"]').content = asked === "light" || asked === "dark" ? asked : localStorage.getItem("color-scheme") ?? "light dark"; } catch {}
+  </script>
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  {%- if site.googleSiteVerification %}
+  <meta name="google-site-verification" content="{{ site.googleSiteVerification }}">
+  {%- endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  {#- The picture a shared link shows, where the page names one (`socialImage` in its front matter). -#}
+  {%- if socialImage %}
+  <meta property="og:image" content="{{ site.url }}{{ socialImage.src }}">
+  <meta property="og:image:width" content="{{ socialImage.width }}">
+  <meta property="og:image:height" content="{{ socialImage.height }}">
+  <meta property="og:image:alt" content="{{ socialImage.alt }}">
+  <meta name="twitter:card" content="summary_large_image">
+  {%- endif %}
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css">
+  {%- block head %}{% endblock %}
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  {{ content | safe }}
+  <p class="visually-hidden" role="status" data-status="page"></p>
+  <script type="module" src="/assets/site.js"></script>
+</body>
+</html>

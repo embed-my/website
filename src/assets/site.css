@@ -1,0 +1,1183 @@
+/* Paper & Ink palette, shared with the viewer's default theme. */
+:root {
+  color-scheme: light dark;
+  --bg: #f9f7f4;
+  --surface: #f2efea;
+  --raised: #ffffff;
+  --border: #d8d3cc;
+  --text: #1c1c1c;
+  --muted: #5f5b55;
+  --accent: #2f6db0;
+  --focus: #2f6db0;
+  --control: #8a847b;
+  --tint: rgb(74 144 217 / 14%);
+  --live: #2e6b45;
+  --load: #8a5a00;
+  --t-comment: #6b655d;
+  --t-tag: #9c3d2e;
+  --t-attr: #8a5a00;
+  --t-string: #2e6b45;
+  --t-keyword: #7f3f86;
+  --t-function: #2f6db0;
+  --t-number: #a1452a;
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 6px;
+  --preview-width: clamp(360px, 42vw, 760px);
+  /* The pages of one wide column, the org home and the H5P build page. Their prose keeps --measure. */
+  --page-width: 72rem;
+  --measure: 60ch;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(meta[name="color-scheme"][content="light"])) {
+    --bg: #1b1a18;
+    --surface: #242220;
+    --raised: #26231f;
+    --border: #3a3630;
+    --text: #f2eee8;
+    --muted: #a8a197;
+    --accent: #7db0e4;
+    --focus: #7db0e4;
+    --control: #7d766b;
+    --tint: rgb(125 176 228 / 18%);
+    --live: #8fcf9f;
+    --load: #e0b46a;
+    --t-comment: #a39c91;
+    --t-tag: #e8917f;
+    --t-attr: #e0b46a;
+    --t-string: #9fd19a;
+    --t-keyword: #d6a0dc;
+    --t-function: #7db0e4;
+    --t-number: #e8a07f;
+  }
+}
+
+:root:has(meta[name="color-scheme"][content="dark"]) {
+  color-scheme: dark;
+  --bg: #1b1a18;
+  --surface: #242220;
+  --raised: #26231f;
+  --border: #3a3630;
+  --text: #f2eee8;
+  --muted: #a8a197;
+  --accent: #7db0e4;
+  --focus: #7db0e4;
+  --control: #7d766b;
+  --tint: rgb(125 176 228 / 18%);
+  --live: #8fcf9f;
+  --load: #e0b46a;
+  --t-comment: #a39c91;
+  --t-tag: #e8917f;
+  --t-attr: #e0b46a;
+  --t-string: #9fd19a;
+  --t-keyword: #d6a0dc;
+  --t-function: #7db0e4;
+  --t-number: #e8a07f;
+}
+
+:root:has(meta[name="color-scheme"][content="light"]) {
+  color-scheme: light;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 var(--font);
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+h1, h2, h3 { line-height: 1.25; text-wrap: balance; }
+h2 { margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 1.5rem; }
+h3 { margin: 2rem 0 0.5rem; font-size: 1.125rem; }
+h2, h3 { scroll-margin-top: 1rem; }
+p, ul, ol { margin: 0 0 1rem; }
+li + li { margin-top: 0.25rem; }
+
+code { font-family: var(--mono); font-size: 0.875em; }
+:not(pre) > code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--surface);
+  overflow-wrap: anywhere;
+}
+
+blockquote {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--focus);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--tint);
+}
+blockquote > :last-child { margin-bottom: 0; }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.skip-link:focus { top: 1rem; }
+
+.muted { color: var(--muted); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.button:hover { background: var(--tint); }
+/* A link drawn as a button: its words are not underlined as a link's in text are. */
+a.button { text-decoration: none; }
+.button-primary { border-color: var(--focus); color: var(--accent); font-weight: 600; }
+
+/* Code blocks, on the cards' color: it stands out from the page and from a tinted band alike. */
+.code {
+  margin: 1rem 0 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  overflow: hidden;
+}
+/* The preview pane's bar shares these, so it matches the Current markup bar below it. */
+.code-bar, .preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.code-lang { margin-right: auto; text-transform: uppercase; letter-spacing: 0.04em; }
+.code-bar .button, .preview-bar .button { font-size: 0.75rem; padding: 0.2rem 0.55rem; }
+
+pre[class*="language-"] {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow: auto;
+  background: var(--raised);
+  font: 0.8125rem/1.6 var(--mono);
+  tab-size: 2;
+}
+pre[class*="language-"]:focus-visible { outline-offset: -2px; }
+/* Before the script wraps it, a code block still needs a frame. */
+pre[class*="language-"]:not(.code > pre) { margin: 1rem 0 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); }
+
+.token.comment, .token.prolog, .token.doctype { color: var(--t-comment); font-style: italic; }
+.token.tag, .token.selector, .token.deleted { color: var(--t-tag); }
+.token.attr-name, .token.property, .token.class-name { color: var(--t-attr); }
+.token.string, .token.attr-value, .token.inserted { color: var(--t-string); }
+.token.keyword, .token.atrule, .token.important { color: var(--t-keyword); }
+.token.function, .token.builtin { color: var(--t-function); }
+.token.number, .token.boolean, .token.constant { color: var(--t-number); }
+.token.punctuation, .token.operator { color: var(--muted); }
+
+/* Tables */
+.table-wrap {
+  margin: 1rem 0 1.5rem;
+  overflow-x: auto;
+  container-type: inline-size;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th, td { padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+thead th { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+tbody th { font-weight: normal; white-space: nowrap; }
+tbody th a { color: inherit; text-decoration: none; }
+tbody th a:hover code { text-decoration: underline; }
+.attributes td.default { max-width: 14rem; overflow-wrap: anywhere; }
+.attributes tr:target { background: var(--tint); }
+
+.update { white-space: nowrap; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+.update-live { color: var(--live); }
+.update-load { color: var(--load); }
+
+@container (width < 560px) {
+  .attributes, .attributes tbody, .attributes tr, .attributes th, .attributes td { display: block; }
+  .attributes thead { display: none; }
+  .attributes tr { padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .attributes th, .attributes td { padding: 0.1rem 0; border: 0; max-width: none; }
+  .attributes td.default::before { content: "Default: "; color: var(--muted); }
+  .attributes td:last-child::before { content: "Updates: "; color: var(--muted); font-weight: normal; }
+}
+
+/* Playground */
+.playground {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.playground .control { display: contents; }
+.playground label { font-size: 0.875rem; }
+.playground select, .playground input:not([type="checkbox"]) {
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--control);
+  border-radius: var(--radius);
+  background: var(--raised);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.875rem;
+}
+.playground select:hover, .playground input:not([type="checkbox"]):hover { border-color: var(--text); }
+
+/* Customizable select for mouse and trackpad. Touch keeps the native picker; other browsers keep the styled native select. */
+@media (pointer: fine) {
+  @supports (appearance: base-select) {
+    .playground select,
+    .playground select::picker(select) { appearance: base-select; }
+
+    .playground select {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .playground select:open { border-color: var(--focus); }
+    .playground select::picker-icon {
+      content: "";
+      width: 0.75rem;
+      height: 0.75rem;
+      background: var(--muted);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+      transition: rotate 0.2s ease-out;
+    }
+    .playground select:open::picker-icon { rotate: 180deg; }
+
+    .playground select::picker(select) {
+      margin-block: 0.25rem;
+      padding: 0.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--raised);
+      color: var(--text);
+      box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
+      opacity: 0;
+      translate: 0 -0.25rem;
+      transition:
+        display 0.15s allow-discrete,
+        overlay 0.15s allow-discrete,
+        opacity 0.15s ease-out,
+        translate 0.15s ease-out;
+    }
+    .playground select:open::picker(select) { opacity: 1; translate: 0 0; }
+    @starting-style {
+      .playground select:open::picker(select) { opacity: 0; translate: 0 -0.25rem; }
+    }
+
+    .playground option {
+      gap: 0.5rem;
+      padding: 0.35rem 0.6rem 0.35rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .playground option:hover { background: color-mix(in srgb, var(--text) 8%, transparent); }
+    .playground option:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+    /* Checked: checkmark, weight and background, so the state isn't carried by color alone. */
+    .playground option:checked { font-weight: 600; background: var(--tint); }
+    .playground option::checkmark { color: var(--focus); }
+  }
+}
+
+.playground input[type="checkbox"] { justify-self: start; width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--focus); }
+.playground-hint { grid-column: 1 / -1; margin: 0 0 0.25rem; font-size: 0.8125rem; color: var(--muted); }
+
+/* Docs layout: table of contents | content | preview */
+.docs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--preview-width);
+}
+
+.toc {
+  display: none;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: 1.5rem 1rem 2rem 1.5rem;
+  border-right: 1px solid var(--border);
+  font-size: 0.875rem;
+  scroll-target-group: auto;
+}
+/* The top bar's brand: the logo, then the name over what the organization makes. A hover underlines
+   the name alone, which a line on the link itself would not let the subline out of. */
+.brand { display: inline-flex; align-items: center; gap: 0.625rem; min-inline-size: 0; color: var(--text); text-decoration: none; }
+.brand img { flex: none; width: 2rem; height: 2rem; }
+.brand-text { display: grid; min-inline-size: 0; line-height: 1.25; }
+.brand-name { font-weight: 600; }
+.brand-tagline { color: var(--muted); font-size: 0.8125rem; text-wrap: balance; }
+.brand:hover .brand-name { text-decoration: underline; }
+.toc ol, .toc-inline ol { margin: 0; padding: 0; list-style: none; }
+.toc li + li, .toc-inline li + li { margin-top: 0; }
+.toc ol a, .toc-inline a {
+  display: block;
+  padding: 0.2rem 0.5rem;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc ol a:hover { color: var(--text); }
+.toc ol a:is(:target-current, .\:target-current) { border-left-color: var(--focus); color: var(--text); font-weight: 600; }
+:is(.toc, .toc-inline) .toc-l3 a { padding-left: 1.25rem; font-size: 0.8125rem; }
+
+.content {
+  min-width: 0;
+  width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+}
+
+.docs-header { margin-bottom: 2rem; }
+.docs-header h1 { margin: 0; font-size: 2.25rem; letter-spacing: -0.01em; }
+.lead { margin: 0.5rem 0 0.75rem; font-size: 1.125rem; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin: 0 0 1rem; padding: 0; list-style: none; font-size: 0.875rem; color: var(--muted); }
+.meta li + li { margin-top: 0; }
+
+.toc-inline { margin: 1rem 0 0; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem; }
+.toc-inline summary { padding: 0.5rem 0.75rem; cursor: pointer; font-weight: 600; }
+.toc-inline ol { padding: 0 0.5rem 0.5rem; }
+
+
+/* Theme switch: the knob sits on the sun when light and on the moon when dark. */
+.theme-switch {
+  --track-pad: 0.1875rem;
+  --knob: 1.5rem;
+  position: relative;
+  flex: none;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  width: 3.5rem;
+  height: 1.875rem;
+  padding: 0 var(--track-pad);
+  border: 1px solid var(--control);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.theme-switch:not([hidden]) { display: inline-grid; }
+.theme-switch input {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  border-radius: inherit;
+  cursor: pointer;
+}
+.theme-switch:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.theme-switch input:focus-visible { outline: none; }
+.theme-switch-knob {
+  position: absolute;
+  top: 50%;
+  left: var(--track-pad);
+  width: var(--knob);
+  height: var(--knob);
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 25%);
+  transform: translateY(-50%);
+  transition: transform 0.15s ease-out;
+}
+.theme-switch input:checked ~ .theme-switch-knob {
+  transform: translate(calc(3.5rem - 2px - 2 * var(--track-pad) - var(--knob)), -50%);
+}
+.theme-switch svg {
+  position: relative;
+  z-index: 1;
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-switch input:not(:checked) ~ .theme-switch-sun,
+.theme-switch input:checked ~ .theme-switch-moon { color: var(--bg); }
+
+/* Preview pane */
+.preview {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+}
+.preview-title { margin-right: auto; font-weight: 600; }
+.preview-close { display: none; }
+.preview-stage { position: relative; flex: 1; min-height: 0; }
+.preview-stage pdfjs-viewer-element { height: 100%; }
+.preview-note { padding: 1rem; color: var(--muted); }
+.preview .code { margin: 0; border: 0; border-top: 1px solid var(--border); border-radius: 0; }
+.preview .code-lang { text-transform: none; letter-spacing: 0; font-weight: 600; }
+
+/* Decorative label icons, masked so they take a color like text does. */
+.preview-title, .preview .code-lang { display: inline-flex; align-items: center; gap: 0.4rem; }
+.preview-title::before, .preview .code-lang::before {
+  content: "";
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  background: var(--focus);
+  mask: var(--icon) center / contain no-repeat;
+}
+.preview-title {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+.preview .code-lang {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16 18 6-6-6-6M8 6l-6 6 6 6'/%3E%3C/svg%3E");
+}
+/* Grows with the markup, so a typical setup shows in full; past a third of the screen it scrolls,
+   leaving the viewer most of the pane. On the cards' color, as every code block is. */
+.preview pre.preview-markup { max-height: 35dvh; padding: 0.5rem 0.75rem; font-size: 0.75rem; }
+.preview-markup code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.flash { animation: flash 0.6s ease-out; }
+@keyframes flash { from { box-shadow: inset 0 0 0 3px var(--focus); } to { box-shadow: inset 0 0 0 3px transparent; } }
+
+@media (min-width: 1280px) {
+  .docs { grid-template-columns: 15rem minmax(0, 1fr) var(--preview-width); }
+  .toc { display: block; }
+  .toc-inline { display: none; }
+}
+
+/* The docs' three columns take the window's width, so its top bar and footer do too, their
+   contents at the gutter, and at the contents' edge where they are beside it. Where the panes stay
+   in view beside the text, the bar stays above them, and they fill the window under it. */
+.docs-page .wrap { inline-size: auto; margin-inline: var(--gutter); }
+@media (min-width: 1000px) {
+  :root:has(.docs-page) { scroll-padding-top: var(--topbar-size); }
+  .docs-page .topbar { position: sticky; top: 0; z-index: 30; background: var(--bg); }
+  .docs-page :is(.toc, .preview) { top: var(--topbar-size); height: calc(100dvh - var(--topbar-size)); }
+}
+@media (min-width: 1280px) {
+  .docs-page .wrap { margin-inline: 1.5rem; }
+}
+
+/* Below 1000px the preview becomes a full-screen panel opened from a floating button. */
+@media (max-width: 999px) {
+  .docs { grid-template-columns: minmax(0, 1fr); }
+  .preview {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    height: auto;
+    border: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-out, visibility 0s linear 0.2s;
+  }
+  .preview[data-open] { visibility: visible; transform: none; transition: transform 0.2s ease-out; }
+  .preview-close { display: inline-flex; }
+  .preview-open {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
+    padding: 0.6rem 1rem;
+    border-color: var(--focus);
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 18%);
+  }
+  .preview-open:not([hidden]) { display: inline-flex; }
+  html:has(.preview[data-open]) { overflow: hidden; }
+}
+@media (min-width: 1000px) {
+  .preview-open { display: none; }
+}
+
+/* Forced colors paint transparent borders, so give the TOC marker system colors. */
+@media (forced-colors: active) {
+  /* Masked icons paint with their background, which forced colors would turn into Canvas. */
+  .preview-title::before, .preview .code-lang::before, .playground select::picker-icon { forced-color-adjust: none; background: CanvasText; }
+  .theme-switch-knob { border: 1px solid CanvasText; }
+  .toc ol a { border-left-color: Canvas; }
+  .toc ol a:is(:target-current, .\:target-current) { border-left-color: Highlight; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview, .preview[data-open], .theme-switch-knob { transition: none; }
+  .playground select, .playground select::picker(select), .playground select::picker-icon { transition: none; }
+  .flash { animation: none; }
+}
+
+/* The pages of one column, the skill page and the guide: in the build page's container, under its
+   top bar. */
+:is(.skill, .guide) { padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) clamp(3.5rem, 2rem + 5vw, 6rem); }
+
+/* Org home: the build page's bands, its first screen's words no wider than a heading of two lines. */
+.home .hero-words { max-inline-size: 46rem; }
+/* Its one action, support for the work: a heart before the words, masked as the site's icons are,
+   in the warm red the code's tags take. */
+.button-support::before {
+  content: "";
+  flex: none;
+  inline-size: 1.125em;
+  block-size: 1.125em;
+  background: var(--t-tag);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.6-4.7-9.6-9.6C1 7.9 3 4 6.9 4c2.2 0 3.9 1.2 5.1 3 1.2-1.8 2.9-3 5.1-3C21 4 23 7.9 21.6 11.4 19.6 16.3 12 21 12 21Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+@media (forced-colors: active) {
+  /* Masked icons paint with their background, which forced colors would turn into Canvas. */
+  .button-support::before { forced-color-adjust: none; background: CanvasText; }
+}
+/* Cards: on the home page, the elements and the tools, and at the build page's foot, where else a
+   package plays and how it went; drawn as the build page's steps are. Three to a row on a wide
+   screen, two on a tablet, one on a phone; each an <article> as tall as its row, its title an h2
+   or an h3 by where it stands, with its links or buttons in its <footer>, at its foot. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cards > li { display: grid; margin: 0; }
+.cards article { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--raised); }
+.cards :is(h2, h3) { margin: 0; padding: 0; border: 0; font-size: 1.125rem; }
+.cards p { margin: 0; color: var(--muted); }
+.card-tag code { font-size: 0.8125rem; }
+.cards .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: auto; padding-top: 0.5rem; font-size: 0.875rem; }
+/* The foot of every page (site-foot.njk): what the site is, then where else to go in four columns,
+   two to a row on a phone, and beside it where both fit; under a rule, what the page says of
+   itself and where to fix it. A count, not as many as fit, so a column is never left alone. */
+.site-foot { padding-block: clamp(2.5rem, 2rem + 2vw, 4rem) 2.5rem; border-block-start: 1px solid var(--border); color: var(--muted); font-size: 0.875rem; }
+.site-foot p { max-inline-size: var(--measure); margin: 0 0 0.5rem; }
+.foot-main { display: grid; gap: 2rem 4rem; }
+@media (width >= 72rem) { .foot-main { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); } }
+.foot-about .brand { font-size: 1rem; }
+.foot-about p { margin-block-start: 1rem; }
+.footer-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+@media (width >= 48rem) { .footer-links { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.footer-links h2 { margin: 0 0 0.75rem; padding: 0; border: 0; color: var(--text); font-size: 0.875rem; }
+.footer-links ul { margin: 0; padding: 0; list-style: none; }
+.footer-links li { text-wrap: balance; }
+.footer-links li + li { margin-top: 0.5rem; }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--text); text-decoration: underline; }
+.foot-base { margin-block-start: clamp(2rem, 1.5rem + 2vw, 3rem); padding-block-start: 1.5rem; border-block-start: 1px solid var(--border); }
+.foot-base > :last-child { margin-block-end: 0; }
+
+/* The skill page: one wide column, its prose at --measure, and its sections as steps. */
+.skill > * { max-inline-size: var(--page-width); }
+/* A longer heading than the docs' package names, so it gives way on a phone. */
+:is(.skill, .guide) .docs-header h1 { font-size: clamp(1.75rem, 1.2rem + 3vw, 2.25rem); }
+/* Prose keeps a line a reader can follow; the source, the lists and what plays take the whole width. */
+:is(.build, .skill, .guide) p:not(.status, .sample-note) { max-width: var(--measure); }
+
+/* The skill page's note for a person who opened it, no wider than its prose and the note's padding. */
+.for-person { max-width: calc(var(--measure) + 2rem); }
+
+/* The guide, /h5p/create-with-ai/: an article on the container's left edge, as the build page's
+   steps are, its steps on the skill page's timeline, its prompts in code blocks to copy, and the
+   types it lists by name and use. */
+.guide > * { max-inline-size: 48rem; }
+.guide h3 + .code { margin-top: 0.75rem; }
+/* The privacy, terms and support pages: the guide's column, its lists at its prose's measure, the
+   date a page last changed under its lead, and a problem's name over what to do. */
+.legal :is(ul, dl) { max-width: var(--measure); }
+.legal li + li { margin-top: 0.5rem; }
+.legal-date { margin: 0; color: var(--muted); font-size: 0.875rem; }
+.legal-list dt { margin-top: 1rem; font-weight: 600; }
+.legal-list dd { margin: 0.25rem 0 0; }
+/* A row each, the name beside its use where the list is wide enough for both, over it where not. */
+.type-list {
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  container-type: inline-size;
+}
+.type-list > div { padding: 0.6rem 0.85rem; }
+.type-list > div + div { border-top: 1px solid var(--border); }
+.type-list dt { font-weight: 600; }
+.type-list dd { margin: 0; color: var(--muted); }
+.type-media { color: var(--text); }
+@container (width >= 30rem) {
+  .type-list > div { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1rem; }
+}
+
+/* The build page, /h5p/build/: a landing page for a visitor who came with no source, and the build
+   at once for one a chat sent with the source in the link. What is said to one alone is not shown
+   to the other; the class is on <html> before the page paints (index.njk). */
+.linked .when-unlinked, :root:not(.linked) .when-linked { display: none; }
+/* A link whose source could not be read: what is said of the source it carried gives way to what
+   is said of the link, from when build-page.ts has tried it. */
+.unread .when-read, :root:not(.unread) .when-unread { display: none; }
+
+/* A bar at the top, then bands the width of the window, each holding a column of the page's width. */
+:root {
+  --wide: 85rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --band-space: clamp(3.5rem, 2rem + 6vw, 7rem);
+  /* The top bar's height, a row and its rule, for what sits under it where it stays (the docs). */
+  --topbar-size: calc(4rem + 1px);
+}
+.wrap { inline-size: min(100% - 2 * var(--gutter), var(--wide)); margin-inline: auto; }
+.band { padding-block: var(--band-space); }
+.band-tint, .hero { background: var(--surface); }
+.band-head { max-inline-size: 44rem; margin-block-end: clamp(2rem, 4vw, 3rem); }
+.band-head h2 {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  letter-spacing: -0.015em;
+}
+.band-head p { margin: 0; color: var(--muted); font-size: 1.125rem; text-wrap: pretty; }
+
+.topbar { border-block-end: 1px solid var(--border); }
+.topbar-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 2rem; min-block-size: 4rem; }
+.topbar-end { display: flex; align-items: center; gap: 2rem; }
+.topbar-links { display: flex; gap: 1.75rem; font-size: 0.9375rem; }
+.topbar-links a { color: var(--muted); text-decoration: none; }
+.topbar-links a:hover { color: var(--text); text-decoration: underline; }
+/* Narrower than the brand and the longest section links need side by side, the guide's, the brand
+   and the switch alone, on one row: the subline wraps before the switch would. */
+@media (width < 52rem) {
+  .topbar-links { display: none; }
+  .topbar-row { flex-wrap: nowrap; }
+}
+
+/* The first screen: the title, what the page makes and two ways on, and the sample, which plays,
+   beside them where there is room for both and under them where there is not. The sample takes
+   most of the row: a course presentation scales its slide's text with its width, and its body
+   text reaches about 12.5px only at some 740px, where it was 10px at 610px. */
+.hero { padding-block: clamp(3rem, 1.5rem + 5vw, 6.5rem); }
+.hero-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+@media (width >= 62rem) {
+  :root:not(.linked) .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr); }
+}
+.hero h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.5rem, 1.6rem + 3vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.hero .lead { margin: 0 0 2rem; font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem); text-wrap: pretty; }
+.hero-words > :last-child { margin-block-end: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.hero .button-large { padding: 0.8rem 1.1rem; font-size: 1rem; }
+/* A visitor a chat sent: the title and two lines, and the build right under them. */
+.linked .hero { padding-block: clamp(2rem, 1.5rem + 2vw, 3rem); }
+.linked .hero h1 { font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem); }
+.linked .hero .lead { margin-block-end: 0.75rem; }
+
+.sample { margin: 0; }
+.sample .player-box {
+  position: relative;
+  margin: 0 0 0.75rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 18px 48px -16px rgb(0 0 0 / 28%);
+}
+/* Until the sample's first screen is still (build-page.ts), its box is as tall as that screen and
+   its border: a course presentation's slide, 16:9 of the width inside the border. The page under
+   it does not move as the sample comes, and what the frame is taller by meanwhile is not shown. */
+.sample:not([data-settled]) .player-box { box-sizing: content-box; aspect-ratio: 16 / 9; min-block-size: 0; }
+/* In the box until the sample plays, and in its place where it cannot. */
+.sample .player-box:has(.sample-note:not(:empty)) { background: var(--raised); }
+.sample-note {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+.sample-note:empty { display: none; }
+/* While the sample loads, a ring before the note, as the build step's: it turns, slowly where
+   motion is asked to be reduced, so it still says the page is at work. */
+.sample-note[data-loading]::before {
+  content: "";
+  flex: none;
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  border: 2px solid var(--tint);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: turn 0.9s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sample-note[data-loading]::before { animation-duration: 4s; }
+}
+.sample figcaption { color: var(--muted); font-size: 0.875rem; }
+
+/* What you get: five short points. One to a row on a phone, then two with the last across both,
+   then three, and on a wide screen all five in a row: never one alone under four. In that row a
+   heading that wraps does not push its text below the others' (subgrid). */
+.feature-grid {
+  display: grid;
+  gap: clamp(2rem, 3vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (width >= 40rem) {
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (width >= 56rem) {
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-grid > :last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (width >= 75rem) {
+  .feature-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 0; }
+  .feature-grid > li { display: grid; grid-row: span 3; grid-template-rows: subgrid; }
+  .feature h3 { align-self: end; }
+}
+.feature-grid > li { margin: 0; }
+.feature h3 { margin: 1rem 0 0.4rem; font-size: 1.0625rem; }
+.feature p { margin: 0; color: var(--muted); }
+/* Masked, like the step markers' icons, so they take a color like text does. */
+.feature-icon { display: grid; place-items: center; inline-size: 2.75rem; block-size: 2.75rem; border-radius: 12px; background: var(--tint); }
+.feature-icon::before { content: ""; inline-size: 1.375rem; block-size: 1.375rem; background: var(--accent); mask: var(--icon) center / contain no-repeat; }
+.icon-types { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7.5' height='7.5' rx='1.5'/%3E%3Crect x='13.5' y='3' width='7.5' height='7.5' rx='1.5'/%3E%3Crect x='3' y='13.5' width='7.5' height='7.5' rx='1.5'/%3E%3Ccircle cx='17.25' cy='17.25' r='3.75'/%3E%3C/svg%3E"); }
+.icon-browser { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2.5'/%3E%3Cpath d='M3 9h18M7 6.5h.01M10 6.5h.01'/%3E%3C/svg%3E"); }
+.icon-school { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5 12 5l10 4.5-10 4.5L2 9.5Z'/%3E%3Cpath d='M6 11.3V16c3.5 2.6 8.5 2.6 12 0v-4.7M22 9.5V15'/%3E%3C/svg%3E"); }
+.icon-ai { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4.5Q11 11 17.5 12 11 13 10 19.5 9 13 2.5 12 9 11 10 4.5Z'/%3E%3Cpath d='M19 2.5v4M17 4.5h4'/%3E%3C/svg%3E"); }
+.icon-chat { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2Z'/%3E%3Cpath d='m9 10.5 2 2 4-4'/%3E%3C/svg%3E"); }
+
+/* Make your own: three steps as cards, as many to a row as fit, then the prompt to copy. */
+.how {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  padding: 0;
+  list-style: none;
+  counter-reset: how;
+}
+.how > li { margin: 0; padding: 1.5rem 1.5rem 1.75rem; border: 1px solid var(--border); border-radius: 12px; background: var(--raised); counter-increment: how; }
+.how > li::before {
+  content: counter(how);
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  margin-block-end: 1rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.how h3 { margin: 0 0 0.4rem; font-size: 1.0625rem; }
+.how p { margin: 0; color: var(--muted); }
+/* The prompt, in a code block's frame for its Copy button: prose, so it wraps. */
+.prompt-box { max-inline-size: 48rem; }
+pre.prompt { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.9375rem; }
+
+/* Build it: the steps on the same left edge as the rest, no wider than the source's editor reads. */
+.tool .step { max-inline-size: 60rem; }
+/* A visitor a chat sent: the steps right under the title, whose words the band's title only repeats,
+   so it stays for a screen reader's outline alone. */
+.linked .tool { padding-block-start: clamp(2rem, 1.5rem + 2vw, 3rem); }
+.linked .tool .band-head { position: absolute; inline-size: 1px; block-size: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Build cost: the counts as cards, as many to a row as fit, each number over what it counts. */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; margin: 0; }
+.stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.5rem; margin: 0; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--raised); }
+.stat dt { color: var(--muted); font-size: 0.9375rem; }
+.stat dd { margin: 0; font-size: clamp(2rem, 1.5rem + 1.6vw, 3rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stat-accent { border-color: var(--accent); }
+.stat-accent dd { color: var(--accent); }
+.stats-note { margin: 0.75rem 0 1.5rem; color: var(--muted); font-size: 0.8125rem; }
+.cost-more { margin: 0; color: var(--muted); }
+
+/* Under it all: where else it plays, and how it went, as cards (.cards); the second's footer holds
+   its two buttons. */
+.linked .closing { padding-block-start: 0; }
+.feedback-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block-start: auto; padding-block-start: 0.5rem; }
+
+/* H5P build page, /h5p/build/ */
+.build {
+  --ok: var(--live);
+  --bad: var(--t-tag);
+  /* Masked, like the preview pane's icons, so they take a color like text does. */
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+  --icon-alert: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 5v8.5M12 18.5v.01'/%3E%3C/svg%3E");
+}
+/* The steps are a timeline, on this page and the skill's: a marker for each, on a rail that runs on
+   to the next. A step the page hides, as the files of a source that names none, is not on it, and
+   the rail ends at the last shown. How a step stands, done or wrong, is the build page's alone. */
+.step {
+  --marker: 2rem;
+  --indent: calc(var(--marker) + 1rem);
+  /* How the step stands, which the rules under these set from what the page says of it. */
+  --step-color: var(--accent);
+  --step-fill: var(--bg);
+  --step-rail: var(--border);
+  --step-marked: 0;
+  position: relative;
+  padding: 0 0 1.5rem var(--indent);
+}
+/* The skill page's first step, under its header. */
+.docs-header + .step { margin-top: 2.5rem; }
+/* The source is JSON, every file it names is chosen, the build is ready: the step is done. */
+.build .step:is(
+  :has(#source-state[data-state="ok"]),
+  :has(.file-list > li):not(:has(.file-list > [data-chosen="false"])),
+  :has(.status[data-state="ready"])
+) {
+  --step-fill: var(--accent);
+  --step-rail: var(--accent);
+  --step-marked: 1;
+  --step-icon: var(--icon-check);
+}
+/* The text is not JSON, or nothing was built. */
+.build .step:has(#source-state[data-state="error"], .status[data-state="error"]) {
+  --step-color: var(--bad);
+  --step-fill: var(--bad);
+  --step-marked: 1;
+  --step-icon: var(--icon-alert);
+}
+
+/* The rail, from under a step's marker to the next one's. It is a border, which forced colors keep. */
+.step::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--marker) + 0.5rem);
+  bottom: 0.5rem;
+  left: calc(var(--marker) / 2 - 1px);
+  border-left: 2px solid var(--step-rail);
+  transform-origin: top;
+  transition: border-color 0.2s, opacity 0.3s, scale 0.3s ease-out;
+}
+/* None from the last step shown: it is drawn down to a step as that one joins. */
+.step:not(:has(~ .step:not([hidden])))::before { opacity: 0; }
+/* A step that joins the others, the files or the play, comes in. */
+#files-step, #play-step { transition: opacity 0.3s ease-out, translate 0.3s ease-out; }
+@starting-style {
+  #files-step, #play-step { opacity: 0; }
+}
+
+/* A step's title: an h2 on the skill page, an h3 under the build page's Build it. */
+.step > :is(h2, h3) {
+  display: flex;
+  align-items: center;
+  min-height: var(--marker);
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  font-size: 1.25rem;
+}
+.build .step h4 { margin: 1.5rem 0 0.5rem; font-size: 1rem; }
+.step-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: var(--marker);
+  height: var(--marker);
+  border: 2px solid var(--step-color);
+  border-radius: 50%;
+  background: var(--step-fill);
+  color: var(--step-color);
+  font-size: 0.875rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+/* A check or a warning takes the number's place. The number stays in the heading's name. */
+.step-number { opacity: calc(1 - var(--step-marked)); transition: opacity 0.2s; }
+.step-marker::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  mask: var(--step-icon, none) center / 1.125rem no-repeat;
+  opacity: var(--step-marked);
+  transition: opacity 0.2s;
+}
+/* While it builds, and until what was built plays, a ring around the marker, which turns. */
+.step-marker::before {
+  content: "";
+  position: absolute;
+  inset: -0.3125rem;
+  border: 2px solid var(--tint);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.build .step:has(.status[data-state="building"]) .step-marker::before { opacity: 1; }
+@keyframes turn { to { rotate: 1turn; } }
+
+.build label { display: block; margin-bottom: 0.35rem; font-weight: 600; }
+.build label.inline-label { display: inline; margin-right: 0.5rem; }
+.build textarea {
+  display: block;
+  width: 100%;
+  min-height: 12rem;
+  resize: vertical;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--control);
+  border-radius: var(--radius);
+  background: var(--raised);
+  color: var(--text);
+  font: 0.8125rem/1.6 var(--mono);
+}
+.build textarea:hover { border-color: var(--text); }
+/* The source's editor hides its textarea, which stays under it as the field the page reads. */
+.build textarea[hidden] { display: none; }
+.build .field { margin: 0 0 0.5rem; }
+.source-editor { display: block; }
+/* A line of its own, kept when it is empty, so that what is under it does not move as a mistake comes and goes:
+   two lines where the column is narrow enough for a message to wrap. */
+.build #source-state { margin: 0.5rem 0 0.25rem; min-height: 1.5em; }
+@media (max-width: 700px) { .build #source-state { min-height: 3em; } }
+.build #source-state[data-state="error"] { color: var(--bad); }
+.build .link-button, .build .problems .jump {
+  padding: 0; border: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer;
+}
+.build .problems .jump code { color: inherit; }
+.build input[type="file"] { max-width: 100%; font: inherit; font-size: 0.875rem; color: var(--muted); }
+.build input[type="file"]::file-selector-button {
+  margin-right: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.build input[type="file"]::file-selector-button:hover { background: var(--tint); }
+.button-large { padding: 0.55rem 1.1rem; font-size: 0.9375rem; }
+/* The page's two main actions, Build and Download, filled where the site's other buttons are outlined. */
+.button-solid, .button-solid:hover { border-color: var(--accent); background: var(--accent); color: var(--bg); font-weight: 600; }
+.button-solid:hover:not(:disabled) { border-color: transparent; background: color-mix(in oklab, var(--accent) 85%, var(--text)); }
+.build .button:disabled { opacity: 0.6; cursor: progress; }
+.build .status {
+  padding: 0.6rem 0.85rem;
+  border-left: 3px solid var(--border);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+}
+.build .status:empty { display: none; }
+.build .status[data-state="building"] { border-left-color: var(--focus); background: var(--tint); }
+.build .status[data-state="ready"] { border-left-color: var(--ok); }
+.build .status[data-state="error"] { border-left-color: var(--bad); }
+/* The problems, the notes and the files, a row each; on the skill page, its addresses. */
+.build .messages, .build .file-list, .skill-files {
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--raised);
+  list-style: none;
+}
+.build .messages li, .build .file-list li, .skill-files li { margin: 0; padding: 0.55rem 0.85rem; overflow-wrap: anywhere; }
+.build .messages li + li, .build .file-list li + li, .skill-files li + li { border-top: 1px solid var(--border); }
+/* A whole address in the site's mono font, and what the file is, muted, after it. */
+.skill-files { color: var(--muted); }
+.skill-files li { font-size: 0.875rem; }
+.skill-files a { font-family: var(--mono); font-size: 0.9375em; }
+/* A file's name, then whether it is chosen: at the row's end where both fit on a line, under the name where they do not. */
+.build .file-list li {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 0.6rem;
+  padding-left: 2.45rem;
+  white-space: nowrap;
+}
+.build .file-list code { white-space: normal; }
+/* A chosen file that no path took, and why. */
+.build .file-note { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.9375rem; overflow-wrap: anywhere; }
+.build .file-note[hidden] { display: none; }
+/* Beside the name's first line: a ring to fill, then a check. */
+.build .file-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  width: 1rem;
+  height: 1rem;
+  border: 2px dotted var(--control);
+  border-radius: 50%;
+}
+.build .file-list li[data-chosen="true"]::before { border: 0; border-radius: 0; background: var(--accent); mask: var(--icon-check) center / contain no-repeat; }
+.build .file-list li[data-chosen="false"] { color: var(--muted); }
+.build .hint { color: var(--muted); font-size: 0.875rem; }
+/* The package and its source, side by side, and one under the other where they do not fit. */
+.build .downloads { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+/* H5P content draws on white, whatever the page's theme. */
+/* H5P content draws on white, whatever the page's theme. Clipped to the box's corners. */
+.player-box { margin: 1rem 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: clip; background: #ffffff; }
+.player-box h5p-player { display: block; }
+
+@media (max-width: 480px) {
+  .step { --marker: 1.75rem; --indent: calc(var(--marker) + 0.75rem); }
+  .step-marker { font-size: 0.8125rem; }
+  /* The last step has no rail beside it, so on a phone what plays takes the column's whole width. */
+  .step .player-box { margin-left: calc(-1 * var(--indent)); }
+}
+
+/* A finger's target. */
+@media (pointer: coarse) {
+  .button-large { min-height: 2.75rem; }
+  .build input[type="file"]::file-selector-button { padding-block: 0.6rem; }
+}
+
+/* What moves, only where motion is not asked to be reduced: the rail drawn down, a step coming up, the ring turning. */
+@media (prefers-reduced-motion: no-preference) {
+  .step:not(:has(~ .step:not([hidden])))::before { scale: 1 0; }
+  @starting-style {
+    #files-step, #play-step { translate: 0 0.5rem; }
+  }
+  .build .step:has(.status[data-state="building"]) .step-marker::before { animation: turn 0.9s linear infinite; }
+}
+
+@media (forced-colors: active) {
+  /* Masked icons paint with their background, which forced colors would turn into Canvas. */
+  .step-marker::after, .build .file-list li[data-chosen="true"]::before,
+  .feature-icon::before { forced-color-adjust: none; background: CanvasText; }
+  .step-marker::before, .sample-note[data-loading]::before { border-color: GrayText; border-top-color: Highlight; }
+}
+
+/* The play page, /h5p/play/: the activity alone, for a chat app's frame. Its page has no colour of
+   its own, so a frame shows the chat's behind it; opened by itself it gets room around it. */
+body.play-page { background: transparent; }
+.play { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.5rem; max-width: 60rem; margin: 0 auto; padding: 0.5rem; }
+html[data-standalone] .play { padding: 1rem; }
+
+/* The stage: the player, and over it until it is ready a loader, a question or a problem. Before
+   the player has a size of its own it keeps a video's shape, so what follows does not jump. */
+.play-stage { display: grid; border: 1px solid var(--border); border-radius: 12px; overflow: clip; background: var(--surface); }
+.play-stage > * { grid-area: 1 / 1; min-width: 0; }
+.play:not([data-state="ready"]) .play-stage { aspect-ratio: 16 / 9; }
+/* The activity's own frame keeps its square corners: the stage rounds only what the page draws in it. */
+.play[data-state="ready"] .play-stage { border-radius: 0; }
+.play .player-box { margin: 0; border: 0; border-radius: 0; }
+.play:not([data-state="ready"]) .player-box { visibility: hidden; }
+.play-panel { z-index: 1; display: grid; place-items: center; padding: 1.5rem 1rem; background: var(--surface); text-align: center; }
+.play[data-state="ready"] .play-panel, .play-panel [hidden] { display: none; }
+.play[data-state="asking"] .play-stage { border-style: dashed; border-color: var(--control); }
+.play[data-drop] .play-stage { border-color: var(--accent); }
+.play[data-drop] .play-panel { background: var(--tint); }
+
+.play-loader, .play-ask, .play-error, .play-saved, .play-elsewhere { display: grid; justify-items: center; gap: 0.75rem; width: 100%; min-width: 0; max-width: 26rem; }
+.play-panel .button { white-space: normal; }
+.play-label, .play-text, .play-note, .play-heading { margin: 0; }
+.play-label { font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
+.play-heading { font-size: 1.0625rem; font-weight: 650; line-height: 1.3; }
+.play-text { color: var(--muted); font-size: 0.875rem; line-height: 1.5; overflow-wrap: anywhere; }
+.play-note { color: var(--muted); font-size: 0.8125rem; line-height: 1.4; }
+.play-spinner { width: 2rem; height: 2rem; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; }
+.play-progress { width: min(18rem, 100%); height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.play-progress span { display: block; width: var(--done, 0%); height: 100%; border-radius: inherit; background: var(--accent); }
+.play-icon { box-sizing: border-box; width: 3rem; height: 3rem; padding: 0.75rem; border-radius: 50%; background: var(--tint); color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.play-error .play-icon { background: color-mix(in srgb, var(--t-tag) 14%, transparent); color: var(--t-tag); }
+.play-saved-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin: 0; }
+.play-saved-actions:not(:has(> :not([hidden]))) { display: none; }
+/* The address to copy where no tab opens: the page's own, long, so it scrolls in its box. */
+.play-copy { display: grid; justify-items: center; gap: 0.4rem; width: 100%; }
+.play-copy-row { display: flex; gap: 0.375rem; width: 100%; }
+.play-copy-row input { flex: 1; min-width: 0; padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--muted); font: 0.75rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.play-copy-row input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+/* Under the stage: what the activity is, and what to do with it. Until its name is known a bar
+   of its size stands there. */
+.play-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.125rem 0.25rem; }
+.play-about { flex: 1 1 12rem; min-width: 0; }
+.play-title, .play-meta { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.play-title { font-size: 0.9375rem; font-weight: 600; line-height: 1.35; }
+.play-meta { color: var(--muted); font-size: 0.8125rem; line-height: 1.35; }
+.play-title:empty, .play-meta:empty { border-radius: 4px; background: var(--border); }
+.play-title:empty { width: 11rem; height: 0.9rem; margin: 0.2rem 0; }
+/* A link that carried no activity has no name to wait for, nor has an activity that plays elsewhere. */
+.play:is([data-state="error"], [data-state="elsewhere"]) :is(.play-title, .play-meta):empty { display: none; }
+.play-meta:empty { width: 6rem; height: 0.7rem; margin: 0.2rem 0; }
+.play-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
+.play-actions [hidden] { display: none; }
+/* Download of a preview: the file's bytes coming, under the bar, while the activity plays on. */
+.play-keep { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; padding: 0.625rem 0.75rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.play-keep[hidden], .play-keep [hidden] { display: none; }
+.play-keep-text { display: grid; flex: 1 1 14rem; gap: 0.4rem; min-width: 0; }
+.play-keep-label { margin: 0; font-size: 0.875rem; line-height: 1.4; overflow-wrap: anywhere; }
+.play-keep .play-progress { width: 100%; }
+.play-progress[data-indeterminate] span { width: 30%; opacity: 0.85; }
+#download[aria-disabled="true"] { opacity: 0.7; cursor: progress; }
+.button-icon { width: 1.05em; height: 1.05em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .play-spinner { animation: turn 0.8s linear infinite; }
+  .play-progress span { transition: width 0.3s ease-out; }
+  .play-progress[data-indeterminate] span { animation: slide 1.3s ease-in-out infinite; }
+  .play[data-state="building"] .play-panel, .play[data-state="fetching"] .play-panel {
+    background: linear-gradient(100deg, var(--surface) 40%, color-mix(in srgb, var(--raised) 70%, var(--surface)) 50%, var(--surface) 60%) 0 0 / 250% 100%;
+    animation: sheen 1.8s linear infinite;
+  }
+  .play-title:empty, .play-meta:empty { animation: breathe 1.4s ease-in-out infinite alternate; }
+}
+@keyframes sheen { from { background-position: 125% 0; } to { background-position: -125% 0; } }
+@keyframes slide { from { translate: -100% 0; } to { translate: 340% 0; } }
+@keyframes breathe { from { opacity: 1; } to { opacity: 0.45; } }
+
+@media (forced-colors: active) {
+  .play-spinner { border-color: GrayText; border-top-color: Highlight; }
+  .play-progress { border: 1px solid CanvasText; }
+  .play-progress span { background: Highlight; }
+}

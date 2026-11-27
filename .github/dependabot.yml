@@ -1,14 +1,32 @@
-# Keeps the pinned action SHAs and the npm dependencies current, one pull request a week each.
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
+  # The play page runs the H5P packages it builds with, so their releases arrive as their own PRs.
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
+      interval: daily
     groups:
-      dev:
-        dependency-type: development
+      tooling:
+        patterns: ["*"]
+        exclude-patterns: ["@missing-elements/*"]
+    # New versions wait three days, but ours are taken the day they are released: they are what
+    # these pages run. pnpm-workspace.yaml leaves them out of pnpm's age check to match.
+    cooldown:
+      default-days: 3
+      exclude: ["@missing-elements/*"]
+  # The Worker is a project of its own, with its own lockfile: the server's releases arrive the same way.
+  - package-ecosystem: npm
+    directory: /worker
+    schedule:
+      interval: daily
+    groups:
+      tooling:
+        patterns: ["*"]
+        exclude-patterns: ["@missing-elements/*"]
+    cooldown:
+      default-days: 3
+      exclude: ["@missing-elements/*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
