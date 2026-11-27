@@ -1,0 +1,71 @@
+---
+layout: base.njk
+title: Embed My
+description: Apps that make and play H5P activities with no H5P server, built on an open-source player. The first, EmbedMy Lesson, turns a lesson you describe in ChatGPT into an activity you can play and download.
+---
+{% include "topbar.njk" %}
+
+{#- The hub: what Embed My is, then its apps and the player they are built on, as cards. The cards
+    and links are lists drawn without bullets, and Safari then reads one as a list only if it is
+    told. A card's links say whose they are to a screen reader, which may list them apart from the
+    card: "Privacy, EmbedMy Lesson". -#}
+<main class="home" id="main">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap">
+      <div class="hero-words">
+        <h1 id="page-title">H5P activities, made and played with no H5P server</h1>
+        <p class="lead">
+          Apps that turn what you describe into an interactive H5P activity, built and played in
+          your browser, with a <code>.h5p</code> file for Moodle or any other H5P site. Free, with
+          no account, and nothing you make is kept by us.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="apps-heading">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="apps-heading">Apps</h2>
+        <p>Where you already work: in a chat app, which writes the activity from your request.</p>
+      </header>
+      <ul class="cards" role="list">
+        {%- for app in site.apps %}
+        <li><article>
+          <h3><a href="{{ app.links[0].href }}">{{ app.name }}</a></h3>
+          <p class="card-tag">{{ app.kind }}</p>
+          <p>{{ app.description }}</p>
+          <footer class="links">
+            {%- for link in app.links %}
+            <a href="{{ link.href }}">{{ link.text }}<span class="visually-hidden">, {{ app.name }}</span></a>
+            {%- endfor %}
+          </footer>
+        </article></li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band-tint" aria-labelledby="player-heading">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="player-heading">Built on an open-source player</h2>
+        <p>The apps play H5P with Missing Elements' player and tools, which you can host yourself.</p>
+      </header>
+      <ul class="cards" role="list">
+        <li><article>
+          <h3><a href="{{ site.player.links[0].href }}">{{ site.player.name }}</a></h3>
+          <p class="card-tag"><code>{{ site.player.package }}</code></p>
+          <p>{{ site.player.description }}</p>
+          <footer class="links">
+            {%- for link in site.player.links %}
+            <a href="{{ link.href }}">{{ link.text }}<span class="visually-hidden">, {{ site.player.name }}</span></a>
+            {%- endfor %}
+          </footer>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+{% include "site-foot.njk" %}

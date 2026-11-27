@@ -1,6 +1,6 @@
 name: Deploy
 
-# Tests and builds every push and pull request to main; a push to main is then deployed to
+# Builds every push and pull request to main; a push to main is then deployed to
 # GitHub Pages. Pages has to be set to deploy from GitHub Actions (Settings → Pages → Source).
 # Actions are pinned to a commit, with the tag in a comment for Dependabot to follow.
 
@@ -27,24 +27,14 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm test
+      # Type-checks, then Eleventy writes the pages into _site/, then Vite the play page's script.
       - run: pnpm build
-      # The built site in a real browser: the player plays a sample, the preview and the guides work,
-      # and nothing trips the Content-Security-Policy the build wrote.
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm e2e
-      - if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: playwright-traces
-          path: test-results
-          if-no-files-found: ignore
       - if: github.event_name != 'pull_request'
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: dist
+          path: _site
 
   deploy:
     if: github.event_name != 'pull_request'

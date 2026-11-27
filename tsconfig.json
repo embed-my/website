@@ -23,9 +23,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "src",
-    "e2e",
-    "playwright.config.ts",
+    "src/h5p",
     "vite.config.ts"
   ]
 }

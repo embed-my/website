@@ -1,0 +1,7 @@
+# The Worker is a project of its own, apart from the site's: its own lockfile and install.
+#
+# Dependabot holds every new version back three days and runs pnpm with that minimum release age,
+# which then refuses any locked version younger than it. The Worker pins @missing-elements releases
+# on the day they come out, so they are left out of the age; every other package keeps it.
+minimumReleaseAgeExclude:
+  - "@missing-elements/*"

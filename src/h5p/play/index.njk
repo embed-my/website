@@ -1,0 +1,90 @@
+---
+layout: base.njk
+title: "Play an H5P activity"
+bodyClass: play-page
+description: "An H5P activity an AI chat wrote, built and played in your browser, with its .h5p file to download. Nothing is sent to a server."
+# Not a page to land on from a search: it is opened with an activity's source in its link.
+eleventyExcludeFromCollections: true
+# As the build page's policy: packages it built play in the player's frame, under the policy the
+# player's Service Worker gives each response there.
+csp: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src * data: blob:; worker-src 'self' blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'"
+---
+{#- The player alone, for an activity's source in the link (#source=, as the build page takes it),
+    so that a chat app can show the activity in its reply: play-page.ts builds it and plays it. -#}
+<main class="play" id="main" data-state="building">
+  {#- What a screen reader is told of each step; what is seen is drawn below. -#}
+  <p class="visually-hidden" id="status" role="status" data-state="building">Building the activity in your browser…</p>
+  <div class="play-stage" id="stage">
+    <div class="player-box" id="player-box" hidden>
+      <h5p-player id="player"></h5p-player>
+    </div>
+    {#- Over the player until it is ready: one of the three below. -#}
+    <div class="play-panel" id="panel">
+      <div class="play-loader" id="loader">
+        <span class="play-spinner" aria-hidden="true"></span>
+        <p class="play-label" id="label">Building the activity in your browser…</p>
+        <div class="play-progress" id="progress" role="progressbar" aria-label="Getting the file" aria-valuemin="0" aria-valuemax="100" hidden><span id="progress-bar"></span></div>
+        <p class="play-note" id="note">Nothing is sent to a server.</p>
+        <button type="button" class="button" id="instead" hidden>Choose it from your computer instead</button>
+      </div>
+      {#- For a source that names files of the person's own, a video beside it: chosen here or
+          dropped, they stay in the browser. The field is hidden, and the button opens it. -#}
+      <div class="play-ask" id="files-box" hidden>
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
+        <h1 class="play-heading" id="ask-title">Add your file</h1>
+        <p class="play-text" id="ask-text"></p>
+        <button type="button" class="button button-solid button-large" id="choose">Choose the file</button>
+        <p class="play-note">or drop it here</p>
+        <input type="file" id="files" multiple hidden>
+      </div>
+      <div class="play-error" id="error" hidden>
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5M12 16.5v.5M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <h1 class="play-heading" id="error-title"></h1>
+        <p class="play-text" id="error-text"></p>
+        <a class="button button-solid button-large" id="fix" target="_blank" rel="noopener" hidden>Open in the build page</a>
+      </div>
+      {#- Where the player cannot start in this frame or this browser (#116): the way on, a tab of
+          the page's own or another browser, with the address to copy where no tab opens. -#}
+      <div class="play-elsewhere" id="elsewhere" hidden>
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M19 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4"/></svg>
+        <h1 class="play-heading" id="elsewhere-title"></h1>
+        <p class="play-text" id="elsewhere-text"></p>
+        <a class="button button-solid button-large" id="elsewhere-open" target="_blank" rel="noopener" hidden>Open in a new tab</a>
+        <div class="play-copy">
+          <p class="play-note" id="elsewhere-note"></p>
+          <span class="play-copy-row"><input id="elsewhere-address" readonly aria-label="The activity's address"><button type="button" class="button" id="elsewhere-copy">Copy</button></span>
+        </div>
+      </div>
+      {#- In a tab a link asked to save the package (&save=1): it is saved, and the tab closes itself. -#}
+      <div class="play-saved" id="saved" hidden>
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>
+        <h1 class="play-heading">Your .h5p is saved</h1>
+        <p class="play-text" id="saved-text"></p>
+        <p class="play-saved-actions">
+          <button type="button" class="button" id="saved-stay">Keep this tab open</button>
+          <button type="button" class="button" id="saved-play" hidden>Play it here</button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="play-bar">
+    <div class="play-about">
+      <p class="play-title" id="title"></p>
+      <p class="play-meta" id="meta"></p>
+    </div>
+    <p class="play-actions">
+      <a class="button" id="edit" target="_blank" rel="noopener">Open in the build page</a>
+      <a class="button button-solid" id="download" download hidden><svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg><span id="download-label">Download .h5p</span></a>
+    </p>
+  </div>
+  {#- What a download is doing, where it is not one press: an activity whose video plays from the chat has its bytes
+      brought first, while it plays on, and a page that frames this one may save the file itself. -#}
+  <div class="play-keep" id="keep" hidden>
+    <div class="play-keep-text">
+      <p class="play-keep-label" id="keep-label"></p>
+      <div class="play-progress" id="keep-progress" role="progressbar" aria-label="Getting the file for the download" aria-valuemin="0" aria-valuemax="100" data-indeterminate><span id="keep-bar"></span></div>
+    </div>
+    <button type="button" class="button" id="keep-instead">Choose it from your computer instead</button>
+  </div>
+</main>
+<script type="module" src="/h5p/play/play-page.js"></script>

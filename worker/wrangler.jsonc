@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "h5p-mcp",
+  "main": "src/worker.mjs",
+  "compatibility_date": "2026-11-01",
+  // The server's entry is Node's: it reads the files below with node:fs.
+  "compatibility_flags": ["nodejs_compat"],
+  // What the server reads as it runs rides in the Worker as modules, which its file system
+  // shows under /bundle: scripts/stage.mjs gathers them into staged/.
+  "find_additional_modules": true,
+  "base_dir": "staged",
+  "rules": [
+    { "type": "Data", "globs": ["parts/*.h5p"], "fallthrough": true },
+    { "type": "Text", "globs": ["parts/index.json", "references/**/*.md", "SKILL.md", "LICENSE"], "fallthrough": true }
+  ],
+  // Workers Logs off: no invocation log and no trace of a call is stored. The test holds the
+  // file to it. What Cloudflare counts for any Worker is not this setting's (README.md).
+  "observability": { "enabled": false },
+  "send_metrics": false,
+  // One address, ours: no workers.dev name beside it, and no preview addresses.
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "mcp.embed-my.org", "custom_domain": true }]
+}

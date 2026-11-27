@@ -1,0 +1,27 @@
+{
+  "name": "embed-my-lesson-worker",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "stage": "node scripts/stage.mjs",
+    "dev": "pnpm stage && wrangler dev",
+    "deploy": "pnpm stage && wrangler deploy",
+    "test": "pnpm stage && vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@missing-elements/h5p-author": "1.1.1",
+    "@missing-elements/h5p-libraries": "1.1.1",
+    "@missing-elements/h5p-mcp": "0.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0",
+    "wrangler": "4.167.0"
+  }
+}
