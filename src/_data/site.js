@@ -15,7 +15,7 @@ export default {
   // When the privacy and terms pages last changed what they say: the date they show.
   legalUpdated: "27 November 2026",
   // What the site is, in a line: under the name in the top bar.
-  tagline: "H5P that plays anywhere",
+  tagline: "Authoring learning activities",
   url: "https://embed-my.org",
   github: "https://github.com/embed-my",
   // Where to give to the project's development: the footer.
