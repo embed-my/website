@@ -14,6 +14,18 @@ updates:
     cooldown:
       default-days: 3
       exclude: ["@missing-elements/*"]
+  # The Worker is a project of its own, with its own lockfile: the server's releases arrive the same way.
+  - package-ecosystem: npm
+    directory: /worker
+    schedule:
+      interval: daily
+    groups:
+      tooling:
+        patterns: ["*"]
+        exclude-patterns: ["@missing-elements/*"]
+    cooldown:
+      default-days: 3
+      exclude: ["@missing-elements/*"]
   - package-ecosystem: github-actions
     directory: /
     schedule:

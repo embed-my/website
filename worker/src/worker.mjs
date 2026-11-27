@@ -32,8 +32,10 @@ export default {
         references: `${CARRIED}/references`
       })
       server = await app
-    } catch {
+    } catch (error) {
       app = undefined
+      // The cause goes to `wrangler tail` only, as logs are off; it holds no request's content.
+      console.error('The server could not start:', error)
       // Said plainly and with nothing of the failure in it: it is the Worker's, not the caller's.
       return new Response('The server could not start\n', { status: 500, headers: { 'content-type': 'text/plain; charset=utf-8' } })
     }

@@ -16,8 +16,8 @@ const card = join(dirname(at('@missing-elements/h5p-mcp/package.json')), 'lib', 
 await rm(staged, { recursive: true, force: true })
 await mkdir(staged, { recursive: true })
 await cp(parts, join(staged, 'parts'), { recursive: true })
-// The skill, served over MCP (#280): its references/ whole, and SKILL.md and LICENSE beside it.
-await cp(references, join(staged, 'references'), { recursive: true, filter: (from) => !/\.[^/]+$/.test(from) || from.endsWith('.md') })
+// The skill, served over MCP (#280): every .md file in its references/, and SKILL.md and LICENSE.
+await cp(references, join(staged, 'references'), { recursive: true, filter: async (from) => from.endsWith('.md') || (await stat(from)).isDirectory() })
 await cp(join(author, 'SKILL.md'), join(staged, 'SKILL.md'))
 await cp(join(author, 'LICENSE'), join(staged, 'LICENSE'))
 await cp(card, join(staged, 'card.html'))

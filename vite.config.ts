@@ -65,8 +65,8 @@ export default defineConfig({
     outDir: '_site',
     emptyOutDir: false,
     assetsDir: ASSETS,
-    // Every package bundled into the page's scripts with its licence (zod, zip.js, CodeMirror and
-    // ours), beside the runtime's and the pack's: MIT and BSD-3-Clause ask it to travel with them.
+    // Every package bundled into the page's script with its licence (zod, zip.js and ours), beside
+    // the runtime's and the pack's: MIT and BSD-3-Clause ask it to travel with them.
     license: { fileName: `${ASSETS}/play-page-LICENSES.txt` },
     rolldownOptions: {
       input: { 'play-page': 'src/h5p/play/play-page.ts' },

@@ -29,7 +29,8 @@ async function ask(asked: Asked, method: string, params: unknown = {}) {
     body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params })
   }))
   const text = await response.text()
-  return JSON.parse(text.split('\n').find((line) => line.startsWith('data: '))?.slice(6) ?? text).result
+  const { result, error } = JSON.parse(text.split('\n').find((line) => line.startsWith('data: '))?.slice(6) ?? text)
+  return result ?? { error }
 }
 
 beforeAll(async () => {

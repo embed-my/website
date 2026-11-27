@@ -10,8 +10,11 @@ export default function (eleventyConfig) {
   // the color-scheme script has to run before the page paints, so it stays inline.
   eleventyConfig.addTransform("csp-inline-script-hashes", function (content) {
     if (!(this.page.outputPath || "").endsWith(".html")) return content;
+    const policy = /<meta http-equiv="Content-Security-Policy" content="[^"]*/.exec(content);
+    if (!policy) return content;
     const scriptSrc = /<meta http-equiv="Content-Security-Policy" content="[^"]*?script-src [^;"]*/;
-    if (!scriptSrc.test(content)) return content;
+    // Without script-src the color-scheme script would fall to default-src, unhashed, and be blocked.
+    if (!scriptSrc.test(content)) throw new Error(`${this.page.inputPath}: its csp has no script-src`);
     const hashes = [...content.matchAll(/<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/g)]
       .map(([, source]) => ` 'sha256-${createHash("sha256").update(source).digest("base64")}'`)
       .join("");

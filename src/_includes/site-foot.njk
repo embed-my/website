@@ -18,7 +18,7 @@
           <h2>Apps</h2>
           <ul role="list">
             {%- for app in site.apps %}
-            <li><a href="{{ app.links[0].href }}">{{ app.name }}</a></li>
+            <li><a href="{{ app.href or '/#apps' }}">{{ app.name }}</a></li>
             {%- endfor %}
             <li><a href="{{ site.guides }}/h5p/build/">Build page</a></li>
           </ul>

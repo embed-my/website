@@ -1,6 +1,9 @@
 ---
 layout: base.njk
 title: Embed My
+# No script but the site's: base.njk writes the policy first in <head>, and the color-scheme script
+# is added to script-src by its hash at build (eleventy.config.js).
+csp: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'"
 description: Apps that make and play H5P activities with no H5P server, built on an open-source player. The first, EmbedMy Lesson, turns a lesson you describe in ChatGPT into an activity you can play and download.
 ---
 {% include "topbar.njk" %}
@@ -23,7 +26,7 @@ description: Apps that make and play H5P activities with no H5P server, built on
     </div>
   </section>
 
-  <section class="band" aria-labelledby="apps-heading">
+  <section class="band" id="apps" aria-labelledby="apps-heading">
     <div class="wrap">
       <header class="band-head">
         <h2 id="apps-heading">Apps</h2>
@@ -32,7 +35,7 @@ description: Apps that make and play H5P activities with no H5P server, built on
       <ul class="cards" role="list">
         {%- for app in site.apps %}
         <li><article>
-          <h3><a href="{{ app.links[0].href }}">{{ app.name }}</a></h3>
+          <h3>{% if app.href %}<a href="{{ app.href }}">{{ app.name }}</a>{% else %}{{ app.name }}{% endif %}</h3>
           <p class="card-tag">{{ app.kind }}</p>
           <p>{{ app.description }}</p>
           <footer class="links">
