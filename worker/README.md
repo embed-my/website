@@ -15,8 +15,8 @@ deployed again.
   bundle: `version`, `card`, `references` and `libraries`. The library pack's parts, the h5p-author
   skill (its `references/`, with `SKILL.md` and `LICENSE` beside it) and the card are gathered into
   `staged/` by `scripts/stage.mjs` and carried as modules (`find_additional_modules`), which the
-  Worker's file system shows under `/bundle` (`nodejs_compat`). About 17 MB of the 64 MiB a Worker
-  may be. Modules, not static assets: nothing of them is served.
+  Worker's file system shows under `/bundle` (`nodejs_compat`). About 15 MB, as `pnpm stage` prints, of
+  the 64 MiB a Worker may be. Modules, not static assets: nothing of them is served.
 - **It writes no log of a call and has nowhere to keep one.** `observability.enabled` is `false`,
   which switches off Workers Logs; no store is bound to it; it has one address, no `workers.dev`
   name and no preview addresses. What Cloudflare counts for any Worker, the requests, their

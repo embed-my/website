@@ -12,7 +12,10 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // h5p-mcp ships JavaScript with JSDoc and no .d.ts: read two levels deep, its app and what the
+    // app imports, with nothing deeper (a dependency's own JavaScript does not check strictly).
+    "maxNodeModuleJsDepth": 2
   },
   "include": ["src/**/*.mjs", "scripts/**/*.mjs", "tests/**/*.ts", "vitest.config.ts"]
 }
