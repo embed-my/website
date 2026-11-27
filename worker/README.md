@@ -37,7 +37,7 @@ cd worker
 pnpm install
 pnpm exec wrangler login --use-keyring   # once per computer; the token stays in the Keychain
 pnpm test                                # the Worker in the Workers runtime, against the server on Node
-pnpm deploy                              # gathers staged/, then uploads the Worker h5p-mcp
+pnpm run deploy                          # gathers staged/, then uploads the Worker h5p-mcp (plain pnpm deploy is pnpm's own command)
 curl https://mcp.embed-my.org/           # one line of text answers
 ```
 
